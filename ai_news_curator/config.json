@@ -1,0 +1,11 @@
+{
+  "limit": 15,
+  "trigger_at": [
+    "08:00",
+    "13:00"
+  ],
+  "resume": {
+    "max_length": 500,
+    "temperature": 0.4
+  }
+}
