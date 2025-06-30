@@ -2,5 +2,17 @@
   {
     "name": "Symfony Blog",
     "url": "https://feeds.feedburner.com/symfony/blog"
+  },
+  {
+    "name": "Cal Newport",
+    "url": "https://kill-the-newsletter.com/feeds/s8tp31dehgakt76rpoef.xml"
+  },
+  {
+    "name": "Ploum",
+    "url": "https://ploum.net/atom_fr.xml"
+  },
+  {
+    "name": "Louis Derrac",
+    "url": "https://louisderrac.com/feed/"
   }
 ]
