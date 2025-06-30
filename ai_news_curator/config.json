@@ -8,7 +8,7 @@
     "max_length": 500,
     "temperature": 0.4
   },
-  recipients: [
+  "recipients": [
     "franck.matsos@akawaka.fr"
   ]
 }
