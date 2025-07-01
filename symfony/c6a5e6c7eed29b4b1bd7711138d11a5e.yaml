@@ -1,0 +1,100 @@
+```yaml
+category: Controllers
+questions:
+  - question: 'Which of the following is the correct way to access the session in a Symfony controller action?'
+    answers:
+      - { value: '$session = $this->get("session");', correct: false }
+      - { value: '$session = $request->getSession();', correct: true }
+      - { value: '$session = $this->session;', correct: false }
+      - { value: '$session = Session::getInstance();', correct: false }
+    help: |
+      'https://symfony.com/doc/current/session.html#accessing-the-session'
+  - question: 'How can you add a flash message in a Symfony controller extending `AbstractController`?'
+    answers:
+      - { value: '$this->get("session")->getFlashBag()->add("success", "Item added!");', correct: false }
+      - { value: '$this->addFlash("success", "Item added!");', correct: true }
+      - { value: '$this->flash("success", "Item added!");', correct: false }
+      - { value: '$this->getFlashBag()->add("success", "Item added!");', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller.html#flash-messages'
+  - question: 'Which method should you use in a controller extending `AbstractController` to render a Twig template and return a `Response` object?'
+    answers:
+      - { value: '$this->renderView("template.html.twig", []);', correct: false }
+      - { value: '$this->render("template.html.twig", []);', correct: true }
+      - { value: '$this->display("template.html.twig", []);', correct: false }
+      - { value: '$this->get("twig")->render("template.html.twig", []);', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller.html#rendering-templates'
+  - question: 'How do you perform an internal forward to another controller action in Symfony?'
+    answers:
+      - { value: 'return $this->forward("App\\\\Controller\\\\AnotherController::action", ["param" => "value"]);', correct: true }
+      - { value: 'return $this->redirect("App\\\\Controller\\\\AnotherController::action");', correct: false }
+      - { value: 'return $this->call("App\\\\Controller\\\\AnotherController::action");', correct: false }
+      - { value: 'return $this->dispatch("App\\\\Controller\\\\AnotherController::action");', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller/forwarding.html'
+  - question: 'What is the correct way to generate a 404 Not Found HTTP response in a Symfony controller?'
+    answers:
+      - { value: 'return new Response("Not Found", 404);', correct: false }
+      - { value: 'throw new HttpException(404, "Not Found");', correct: false }
+      - { value: 'throw $this->createNotFoundException("The resource was not found.");', correct: true }
+      - { value: 'return $this->notFound("The resource was not found.");', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller/error_pages.html#handling-404-pages'
+  - question: 'How can you inject a service, such as `Psr\\Log\\LoggerInterface`, directly into a controller action method in Symfony 7?'
+    answers:
+      - { value: 'public function myAction(LoggerInterface $logger): Response { ... }', correct: true }
+      - { value: 'public function myAction(): Response { $logger = $this->get("logger"); ... }', correct: false }
+      - { value: 'public function myAction(#[Inject("logger")] $logger): Response { ... }', correct: false }
+      - { value: 'public function myAction(Logger $logger): Response { ... }', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller.html#injecting-services-into-controllers'
+  - question: 'Which attribute is used to automatically map an uploaded file to a controller argument in Symfony 7?'
+    answers:
+      - { value: '`#[MapFile]`', correct: false }
+      - { value: '`#[MapUploadedFile]`', correct: true }
+      - { value: '`#[FileArgument]`', correct: false }
+      - { value: '`#[Upload]`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller.html#mapping-uploaded-files'
+  - question: 'Consider the following controller action:
+```php
+use Symfony\\Component\\HttpFoundation\\Request;
+use Symfony\\Component\\HttpFoundation\\Response;
+use Symfony\\Component\\HttpKernel\\Attribute\\MapQueryParameter;
+
+class MyController
+{
+    public function showProduct(
+        #[MapQueryParameter] string $id,
+        #[MapQueryParameter] string $category = "all"
+    ): Response {
+        // ...
+    }
+}
+```
+If a request comes in for `/products?id=123`, what will be the value of `$category`?'
+    answers:
+      - { value: '`null`', correct: false }
+      - { value: '`"all"`', correct: true }
+      - { value: 'An empty string `""`', correct: false }
+      - { value: 'An `HttpException` will be thrown.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller.html#mapping-query-parameters'
+  - question: 'What is the recommended way to define a controller as an invokable service in Symfony 7 using PHP attributes?'
+    answers:
+      - { value: 'Define a public `__invoke()` method and use `#[Route]` on the class.', correct: true }
+      - { value: 'Define a public `index()` method and use `#[Route]` on the class.', correct: false }
+      - { value: 'Define a public `handle()` method and use `#[Route]` on the class.', correct: false }
+      - { value: 'Define a public `run()` method and register it in `services.yaml`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller/service.html#invokable-controllers'
+  - question: 'Which of the following methods can be used to redirect a user to an external URL from a Symfony controller?'
+    answers:
+      - { value: '`$this->redirectToRoute("http://example.com");`', correct: false }
+      - { value: '`$this->redirect("http://example.com");`', correct: true }
+      - { value: '`$this->forward("http://example.com");`', correct: false }
+      - { value: '`$this->redirectExternal("http://example.com");`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller/redirect.html#redirecting-externally'
+```
