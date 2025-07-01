@@ -1,4 +1,3 @@
-```yaml
 category: Controllers
 questions:
   - question: 'Which of the following is the recommended way to define a controller in Symfony 7 using PHP attributes?'
@@ -81,4 +80,3 @@ questions:
       - { value: 'A controller that is configured to be called via an AJAX request only.', correct: false }
     help: |
       'https://symfony.com/doc/current/controller/service.html#invokable-controllers'
-```
