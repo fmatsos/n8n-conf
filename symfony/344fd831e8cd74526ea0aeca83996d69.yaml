@@ -1,0 +1,93 @@
+```yaml
+category: Controllers
+questions:
+  - question: 'Which of the following is the recommended way to register controllers as services in Symfony 7?'
+    answers:
+      - { value: 'Manually defining each controller as a service in services.yaml.', correct: false }
+      - { value: 'Using autowiring and autoconfiguration by importing the `src/Controller/` directory in services.yaml with the `controller.service_arguments` tag.', correct: true }
+      - { value: 'By extending `Symfony\Bundle\FrameworkBundle\Controller\Controller`.', correct: false }
+      - { value: 'Controllers are automatically registered and do not require any configuration.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller/service'
+
+  - question: 'What is the primary benefit of extending `AbstractController` in Symfony 7?'
+    answers:
+      - { value: 'It automatically registers the controller as a public service.', correct: false }
+      - { value: 'It provides convenient helper methods for common tasks like rendering templates, redirecting, and accessing services.', correct: true }
+      - { value: 'It forces the controller to be invokable.', correct: false }
+      - { value: 'It enables automatic dependency injection for all controller arguments without any configuration.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/book/page_creation'
+
+  - question: 'How can you access the `Request` object within a controller action method in Symfony 7?'
+    answers:
+      - { value: 'By calling `$this->getRequest()`.', correct: false }
+      - { value: 'By type-hinting `Symfony\Component\HttpFoundation\Request` as an argument in the action method.', correct: true }
+      - { value: 'By using the global `$_REQUEST` superglobal.', correct: false }
+      - { value: 'The Request object is not directly accessible in controller actions; you must use argument resolvers for specific data.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/book/controller'
+
+  - question: 'Which of the following methods is used to render a Twig template and return a `Response` object from a Symfony controller?'
+    answers:
+      - { value: '$this->renderView(''template.html.twig'', []);', correct: false }
+      - { value: '$this->display(''template.html.twig'', []);', correct: false }
+      - { value: '$this->render(''template.html.twig'', []);', correct: true }
+      - { value: '$this->createResponse(''template.html.twig'', []);', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller'
+
+  - question: 'How do you access the session from within a Symfony controller action?'
+    answers:
+      - { value: 'By calling `$this->getSession()`.', correct: false }
+      - { value: 'By type-hinting `Symfony\Component\HttpFoundation\Session\SessionInterface` in the controller method.', correct: false }
+      - { value: 'By calling `$request->getSession()` after type-hinting `Request $request`.', correct: true }
+      - { value: 'The session is automatically available as a global variable `$session`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/session'
+
+  - question: 'Which method should you use in a Symfony controller to add a flash message?'
+    answers:
+      - { value: '$this->get(''session'')->getFlashBag()->add(''type'', ''message'');', correct: false }
+      - { value: '$this->addFlash(''type'', ''message'');', correct: true }
+      - { value: '$this->session->flash(''type'', ''message'');', correct: false }
+      - { value: '$this->getFlashBag()->add(''type'', ''message'');', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller.html#flash-messages'
+
+  - question: 'To redirect a user to another route named `app_homepage` with an HTTP 302 status code from a Symfony controller, which method is correct?'
+    answers:
+      - { value: 'return $this->redirect(''app_homepage'');', correct: false }
+      - { value: 'return $this->redirectToRoute(''app_homepage'');', correct: true }
+      - { value: 'return new RedirectResponse($this->generateUrl(''app_homepage''), 302);', correct: true }
+      - { value: 'return $this->forward(''app_homepage'');', correct: false }
+    help: |
+      'https://symfony.com/doc/current/book/controller'
+
+  - question: 'How do you generate a 404 Not Found page from a Symfony controller when a resource is not found?'
+    answers:
+      - { value: 'return new Response(''Not Found'', 404);', correct: false }
+      - { value: 'throw new \Symfony\Component\HttpKernel\Exception\HttpException(404, ''Not Found'');', correct: false }
+      - { value: 'throw $this->createNotFoundException(''The resource does not exist'');', correct: true }
+      - { value: 'return $this->notFound();', correct: false }
+    help: |
+      'https://symfony.com/doc/current/book/controller'
+
+  - question: 'Which attribute can be used in a Symfony controller action to automatically map an uploaded file to an `UploadedFile` object?'
+    answers:
+      - { value: '`#[MapFile]`', correct: false }
+      - { value: '`#[MapUploadedFile]`', correct: true }
+      - { value: '`#[FileParam]`', correct: false }
+      - { value: '`#[RequestFile]`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller'
+
+  - question: 'What is the purpose of Argument Value Resolvers in Symfony controllers?'
+    answers:
+      - { value: 'To convert controller return values into `Response` objects.', correct: false }
+      - { value: 'To automatically inject services into controller methods based on type-hints.', correct: true }
+      - { value: 'To resolve controller arguments from the request, services, or other sources, allowing for cleaner controller signatures.', correct: true }
+      - { value: 'To validate incoming request data before it reaches the controller.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller/argument_value_resolvers.html'
+```
