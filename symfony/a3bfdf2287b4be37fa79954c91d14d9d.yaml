@@ -1,0 +1,84 @@
+```yaml
+category: Controllers
+questions:
+  - question: 'Which of the following is the recommended way to register controllers as services in Symfony 7?'
+    answers:
+      - { value: 'Manually defining each controller as a service in services.yaml.', correct: false }
+      - { value: 'Using autowiring and autoconfiguration by importing the `src/Controller/` directory in services.yaml with the `controller.service_arguments` tag.', correct: true }
+      - { value: 'By extending `Symfony\Bundle\FrameworkBundle\Controller\Controller`.', correct: false }
+      - { value: 'By adding the `#[AsController]` attribute to the controller class.', correct: true }
+    help: |
+      'https://symfony.com/doc/current/controller/service.html'
+  - question: 'What is the primary benefit of extending `AbstractController` in Symfony 7?'
+    answers:
+      - { value: 'It automatically makes the controller a service without any configuration.', correct: false }
+      - { value: 'It provides convenient helper methods for common tasks like rendering templates, redirecting, and accessing services.', correct: true }
+      - { value: 'It enforces a specific naming convention for controller actions.', correct: false }
+      - { value: 'It allows direct access to the global `$_GET` and `$_POST` superglobals.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/book/page_creation.html#a-controller-is-a-php-function'
+  - question: 'How can you access the `Request` object within a Symfony 7 controller action method?'
+    answers:
+      - { value: 'By calling `$this->getRequest()`.', correct: false }
+      - { value: 'By type-hinting `Symfony\Component\HttpFoundation\Request` as an argument in the action method.', correct: true }
+      - { value: 'By accessing the global `$_REQUEST` variable.', correct: false }
+      - { value: 'By calling `Request::createFromGlobals()`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/book/controller.html#accessing-the-request'
+  - question: 'Which of the following methods can be used in an `AbstractController` to return an HTML response by rendering a Twig template?'
+    answers:
+      - { value: '$this->renderView(''template.html.twig'', $data);', correct: false }
+      - { value: '$this->render(''template.html.twig'', $data);', correct: true }
+      - { value: 'new Response($this->get(''twig'')->render(''template.html.twig'', $data));', correct: false }
+      - { value: '$this->display(''template.html.twig'', $data);', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller.html#rendering-a-template'
+  - question: 'How do you access the session in a Symfony 7 controller?'
+    answers:
+      - { value: 'Through `$this->get(''session'')`.', correct: false }
+      - { value: 'By calling `$request->getSession()` after type-hinting `Request $request` in the action.', correct: true }
+      - { value: 'Directly via the global `$_SESSION` variable.', correct: false }
+      - { value: 'Using `$this->session()`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/session.html#accessing-the-session'
+  - question: 'To add a flash message named "success" with the content "Item saved!" in a Symfony 7 controller, which method should you use?'
+    answers:
+      - { value: '$this->get(''session'')->getFlashBag()->add(''success'', ''Item saved!'');', correct: false }
+      - { value: '$this->addFlash(''success'', ''Item saved!'');', correct: true }
+      - { value: '$this->flash(''success'', ''Item saved!'');', correct: false }
+      - { value: '$this->getFlashBag()->add(''success'', ''Item saved!'');', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller.html#flash-messages'
+  - question: 'Which of the following methods is used to redirect to a named route in Symfony 7, and how can you specify a permanent (HTTP 301) redirect?'
+    answers:
+      - { value: '$this->redirect(''route_name'', 301);', correct: false }
+      - { value: '$this->redirectToRoute(''route_name'', [], Response::HTTP_MOVED_PERMANENTLY);', correct: true }
+      - { value: '$this->redirectRoute(''route_name'', [], 301);', correct: false }
+      - { value: '$this->redirectToRoute(''route_name'', [], 301);', correct: true }
+    help: |
+      'https://symfony.com/doc/current/book/controller.html#redirecting'
+  - question: 'How can you generate a 404 "Not Found" page from a Symfony 7 controller when a resource is not found?'
+    answers:
+      - { value: 'Return `new Response(''Not Found'', 404);`.', correct: false }
+      - { value: 'Throw `new HttpException(404, ''Resource not found'');`.', correct: false }
+      - { value: 'Throw `$this->createNotFoundException(''The product does not exist'');`.', correct: true }
+      - { value: 'Return `$this->notFound();`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/book/controller.html#handling-404-pages'
+  - question: 'In Symfony 7, how can you automatically map an uploaded file to a controller argument using attributes?'
+    answers:
+      - { value: 'By type-hinting `UploadedFile $file` and using `#[FileParam]`.', correct: false }
+      - { value: 'By type-hinting `Symfony\Component\HttpFoundation\File\UploadedFile $file` and using `#[MapUploadedFile]`.', correct: true }
+      - { value: 'By accessing `$request->files->get(''file'')`.', correct: false }
+      - { value: 'By using `#[UploadFile]` attribute.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller.html#mapping-uploaded-files'
+  - question: 'Which component is responsible for automatically injecting services and request attributes into controller method arguments in Symfony 7?'
+    answers:
+      - { value: 'The `ControllerResolver`.', correct: false }
+      - { value: 'The `EventDispatcher`.', correct: false }
+      - { value: 'The `ArgumentResolver`.', correct: true }
+      - { value: 'The `ServiceContainer`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/create_framework/http_kernel_controller_resolver.html#argument-resolver'
+```
