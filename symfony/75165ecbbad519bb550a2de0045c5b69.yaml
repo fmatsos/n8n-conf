@@ -1,0 +1,105 @@
+```yaml
+category: Controllers
+questions:
+  - question: 'Which of the following is the recommended way to make a Symfony controller accessible as a service and benefit from autowiring?'
+    answers:
+      - { value: 'Extend `Symfony\Bundle\FrameworkBundle\Controller\AbstractController`.', correct: true }
+      - { value: 'Manually define the controller in `services.yaml` with `public: true`.', correct: false }
+      - { value: 'Add the `#[AsController]` attribute to the controller class.', correct: true }
+      - { value: 'Implement `Symfony\Component\DependencyInjection\ContainerAwareInterface`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller/service.html'
+  - question: 'How can you access the current `Request` object within a Symfony controller action method?'
+    answers:
+      - { value: 'By calling `$this->getRequest()`.', correct: false }
+      - { value: 'By type-hinting `Symfony\Component\HttpFoundation\Request` as an argument in the action method.', correct: true }
+      - { value: 'By accessing the global `$_REQUEST` superglobal.', correct: false }
+      - { value: 'By calling `Request::createFromGlobals()`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/book/controller.html#accessing-the-request'
+  - question: 'What is the correct way to return an HTTP 404 Not Found response from a Symfony controller?'
+    answers:
+      - { value: 'Throw a `Symfony\Component\HttpKernel\Exception\NotFoundHttpException`.', correct: true }
+      - { value: 'Return `new Response("Not Found", 404)`.', correct: true }
+      - { value: 'Call `$this->createNotFoundException("Message")`.', correct: true }
+      - { value: 'Return `null` from the controller action.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/book/controller.html#handling-404-pages'
+  - question: 'Consider the following controller action. What will be the `Response` if the URL `/lucky/number` is accessed without a `max` parameter?'
+    code: |
+      ```php
+      // src/Controller/LuckyController.php
+      namespace App\Controller;
+
+      use Symfony\Component\HttpFoundation\Response;
+      use Symfony\Component\Routing\Attribute\Route;
+
+      class LuckyController
+      {
+          #[Route('/lucky/number/{max}', name: 'app_lucky_number')]
+          public function number(int $max = 100): Response
+          {
+              $number = random_int(0, $max);
+
+              return new Response(
+                  '<html><body>Lucky number: '.$number.'</body></html>'
+              );
+          }
+      }
+      ```
+    answers:
+      - { value: 'A `Response` with a random number between 0 and 100.', correct: true }
+      - { value: 'An HTTP 404 Not Found error.', correct: false }
+      - { value: 'An HTTP 500 Internal Server Error due to missing parameter.', correct: false }
+      - { value: 'A `Response` with a random number between 0 and `PHP_INT_MAX`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/create_framework/http_kernel_controller_resolver.html#controller-method-signature-with-default-parameter-value'
+  - question: 'Which method should you use in an `AbstractController` to redirect the user to another route within your Symfony application?'
+    answers:
+      - { value: '`$this->redirect("http://example.com/some-path")`', correct: false }
+      - { value: '`$this->redirectToRoute("app_homepage")`', correct: true }
+      - { value: '`$this->forward("App\\Controller\\OtherController::index")`', correct: false }
+      - { value: '`$this->redirectResponse("app_homepage")`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/book/controller.html#redirecting'
+  - question: 'How can you add a "flash message" to the session from a Symfony controller that extends `AbstractController`?'
+    answers:
+      - { value: '`$this->get("session")->getFlashBag()->add("success", "Item added!");`', correct: false }
+      - { value: '`$this->addFlash("success", "Item added!");`', correct: true }
+      - { value: '`$this->session->flash("success", "Item added!");`', correct: false }
+      - { value: '`$this->getFlashBag()->add("success", "Item added!");`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller.html#flash-messages'
+  - question: 'What is the purpose of the `#[MapUploadedFile]` attribute in a Symfony controller action?'
+    answers:
+      - { value: 'To automatically move an uploaded file to a specific directory.', correct: false }
+      - { value: 'To validate the MIME type of an uploaded file.', correct: false }
+      - { value: 'To automatically inject an `UploadedFile` object into the controller argument from the request.', correct: true }
+      - { value: 'To create a new `UploadedFile` instance from a file path.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller.html#mapping-uploaded-files'
+  - question: 'Which of the following is true about "invokable controllers" in Symfony?'
+    answers:
+      - { value: 'They must implement the `__invoke()` magic method.', correct: true }
+      - { value: 'They are typically used for controllers with a single action.', correct: true }
+      - { value: 'Their routes are configured by directly referencing the controller class name.', correct: true }
+      - { value: 'They cannot extend `AbstractController`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller/service.html#invokable-controllers'
+  - question: 'How can you internally call another controller action from within a Symfony controller, effectively "forwarding" the request?'
+    answers:
+      - { value: 'By making an HTTP request to the target controller''s URL.', correct: false }
+      - { value: 'By using the `$this->forward()` method.', correct: true }
+      - { value: 'By directly instantiating the target controller and calling its method.', correct: false }
+      - { value: 'By returning a `RedirectResponse` to the internal route.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller/forwarding.html'
+  - question: 'You need to inject a service, such as `Psr\Log\LoggerInterface`, into a controller action. Assuming the controller is registered as a service (which is default), what is the correct way to do this?'
+    answers:
+      - { value: '`public function index(LoggerInterface $logger)`', correct: true }
+      - { value: '`public function index($logger)` and then `$logger = $this->container->get("logger");`', correct: false }
+      - { value: '`public function index(): Response { $logger = $this->get("logger"); ... }`', correct: false }
+      - { value: '`public function index(Psr\Log\LoggerInterface $logger = null)`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller.html#injecting-services-into-controllers'
+```
