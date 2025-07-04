@@ -1,0 +1,2068 @@
+```yaml
+category: Forms
+questions:
+  - question: 'Which method is used in a Symfony controller to create a form instance from a custom form type?'
+    answers:
+      - { value: '$this->buildForm(TaskType::class);', correct: false }
+      - { value: '$this->createForm(TaskType::class, $data);', correct: true }
+      - { value: '$this->getFormFactory()->create(TaskType::class);', correct: false }
+      - { value: '$this->form(TaskType::class, $data);', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#creating-form-classes'
+  - question: 'In a custom form type, which method is responsible for defining the form fields and their options?'
+    answers:
+      - { value: 'configureOptions(OptionsResolver $resolver)', correct: false }
+      - { value: 'buildForm(FormBuilderInterface $builder, array $options)', correct: true }
+      - { value: 'setDefaultOptions(OptionsResolverInterface $resolver)', correct: false }
+      - { value: 'createFields(FormBuilderInterface $builder)', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#creating-form-classes'
+  - question: 'To process submitted data from a form in a Symfony controller, which method must be called on the form object?'
+    answers:
+      - { value: '$form->submit();', correct: false }
+      - { value: '$form->processRequest($request);', correct: false }
+      - { value: '$form->handleRequest($request);', correct: true }
+      - { value: '$form->bind($request);', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#handling-form-submissions'
+  - question: 'After calling `handleRequest()`, how do you check if the form submission was successful and the data is valid?'
+    answers:
+      - { value: '$form->isSubmitted() && $form->isValid()', correct: true }
+      - { value: '$form->hasErrors() === false', correct: false }
+      - { value: '$form->isBound() && $form->isValid()', correct: false }
+      - { value: '$form->getData() !== null', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#handling-form-submissions'
+  - question: 'What is the simplest way to render an entire Symfony form, including the `<form>` tags and all fields, in a Twig template?'
+    answers:
+      - { value: '{{ form_widget(form) }}', correct: false }
+      - { value: '{{ form_start(form) }}{{ form_end(form) }}', correct: false }
+      - { value: '{{ form(form) }}', correct: true }
+      - { value: '{{ form_row(form) }}', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#rendering-the-form'
+  - question: 'Which built-in Symfony form type is used for a standard single-line text input field?'
+    answers:
+      - { value: 'TextareaType::class', correct: false }
+      - { value: 'StringType::class', correct: false }
+      - { value: 'TextType::class', correct: true }
+      - { value: 'InputType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/text.html'
+  - question: 'To display a date input field in a Symfony form, which form type should be used?'
+    answers:
+      - { value: 'DateTimeType::class', correct: false }
+      - { value: 'DateType::class', correct: true }
+      - { value: 'CalendarType::class', correct: false }
+      - { value: 'TimeType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html'
+  - question: 'How can you apply a custom form theme to a specific form instance within a Twig template, without affecting other forms?'
+    answers:
+      - { value: '{% form_theme form "my_theme.html.twig" %}', correct: true }
+      - { value: '{{ form.setTheme("my_theme.html.twig") }}', correct: false }
+      - { value: '{% include "my_theme.html.twig" with { form: form } %}', correct: false }
+      - { value: '{{ form_theme_apply(form, "my_theme.html.twig") }}', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_themes.html#how-to-apply-a-theme-to-a-specific-form'
+  - question: 'By default, how does Symfony protect forms against Cross-Site Request Forgery (CSRF) attacks?'
+    answers:
+      - { value: 'By automatically adding a hidden `_csrf_token` field.', correct: true }
+      - { value: 'By validating the `Referer` header.', correct: false }
+      - { value: 'By requiring a CAPTCHA for every submission.', correct: false }
+      - { value: 'By encrypting all form data.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#csrf-protection'
+  - question: 'Which Symfony form type is specifically designed for handling file uploads?'
+    answers:
+      - { value: 'ImageType::class', correct: false }
+      - { value: 'UploadType::class', correct: false }
+      - { value: 'FileType::class', correct: true }
+      - { value: 'BinaryType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/file.html'
+  - question: 'When creating a form using `createFormBuilder($data)`, what does `$data` typically represent?'
+    answers:
+      - { value: 'The initial data to populate the form fields.', correct: true }
+      - { value: 'The submitted data from the request.', correct: false }
+      - { value: 'An array of form options.', correct: false }
+      - { value: 'The name of the form.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#building-the-form'
+  - question: 'What is the purpose of the `configureOptions(OptionsResolver $resolver)` method in a custom form type?'
+    answers:
+      - { value: 'To define the default values and validation rules for the form options.', correct: true }
+      - { value: 'To add form fields to the builder.', correct: false }
+      - { value: 'To set the form action and method.', correct: false }
+      - { value: 'To configure data transformers for the form.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#configuring-your-form'
+  - question: 'If a form is submitted but `isValid()` returns `false`, how can you retrieve the errors associated with the form?'
+    answers:
+      - { value: 'Using `$form->getErrors(true, true)` to get all errors, including children and flattened.', correct: true }
+      - { value: 'Errors are automatically flashed to the session.', correct: false }
+      - { value: 'You must manually iterate over each field and call `getErrors()`.', correct: false }
+      - { value: 'Call `$form->getValidationMessages();`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/form.html#accessing-form-errors'
+  - question: 'To render a specific form field''s label in Twig, which function should you use?'
+    answers:
+      - { value: '{{ form_label(form.fieldName) }}', correct: true }
+      - { value: '{{ form.fieldName.label }}', correct: false }
+      - { value: '{{ label(form.fieldName) }}', correct: false }
+      - { value: '{{ form_row(form.fieldName).label }}', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#rendering-each-field-by-hand'
+  - question: 'Which Twig function is used to render the HTML input element for a specific form field?'
+    answers:
+      - { value: '{{ form_input(form.fieldName) }}', correct: false }
+      - { value: '{{ form_widget(form.fieldName) }}', correct: true }
+      - { value: '{{ form_element(form.fieldName) }}', correct: false }
+      - { value: '{{ form_field(form.fieldName) }}', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#rendering-each-field-by-hand'
+  - question: 'What is the purpose of the `CollectionType` in Symfony forms?'
+    answers:
+      - { value: 'To create a group of related checkboxes.', correct: false }
+      - { value: 'To embed a collection of forms for a one-to-many relationship.', correct: true }
+      - { value: 'To display a list of selectable options.', correct: false }
+      - { value: 'To handle multiple file uploads.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_collections.html'
+  - question: 'When embedding a form type (e.g., `CategoryType` into `TaskType`), what is the common practice to add it to the parent form builder?'
+    answers:
+      - { value: '$builder->add(\'category\', CategoryType::class);', correct: true }
+      - { value: '$builder->embed(\'category\', CategoryType::class);', correct: false }
+      - { value: '$builder->addForm(\'category\', CategoryType::class);', correct: false }
+      - { value: '$builder->create(\'category\', CategoryType::class);', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/embedded.html'
+  - question: 'What is the `debug:form` console command primarily used for?'
+    answers:
+      - { value: 'To submit a form programmatically for testing.', correct: false }
+      - { value: 'To list all available form types, extensions, and their options.', correct: true }
+      - { value: 'To generate form classes from entities.', correct: false }
+      - { value: 'To clear the form cache.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#debugging-forms'
+  - question: 'How can you set a custom HTML attribute (e.g., `placeholder`) for a form field in its definition?'
+    answers:
+      - { value: 'By passing an `attr` option array: `''attr'' => [''placeholder'' => ''Enter text'']`', correct: true }
+      - { value: 'By using `setHtmlAttribute(''placeholder'', ''Enter text'')` on the builder.', correct: false }
+      - { value: 'By defining it directly in the Twig template.', correct: false }
+      - { value: 'By using a dedicated `placeholder` option: `''placeholder'' => ''Enter text''`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#attr'
+  - question: 'What is the purpose of a data transformer in Symfony forms?'
+    answers:
+      - { value: 'To convert data between the format used in the underlying object and the format used in the form field.', correct: true }
+      - { value: 'To validate the submitted form data.', correct: false }
+      - { value: 'To encrypt sensitive form data.', correct: false }
+      - { value: 'To render custom HTML for form fields.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/data_transformers.html'
+  - question: 'Which form event is dispatched *before* the form maps the request data to the form fields?'
+    answers:
+      - { value: 'FormEvents::POST_SUBMIT', correct: false }
+      - { value: 'FormEvents::PRE_SET_DATA', correct: false }
+      - { value: 'FormEvents::PRE_SUBMIT', correct: true }
+      - { value: 'FormEvents::SUBMIT', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/events.html#pre-submit-and-post-submit-events'
+  - question: 'Which form event is dispatched *after* the form has been populated with the initial data from the object?'
+    answers:
+      - { value: 'FormEvents::PRE_SUBMIT', correct: false }
+      - { value: 'FormEvents::POST_SET_DATA', correct: true }
+      - { value: 'FormEvents::PRE_SET_DATA', correct: false }
+      - { value: 'FormEvents::SUBMIT', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/events.html#pre-set-data-and-post-set-data-events'
+  - question: 'What is a Form Type Extension in Symfony?'
+    answers:
+      - { value: 'A way to add new form types to Symfony.', correct: false }
+      - { value: 'A mechanism to modify existing form types by adding or overriding options and behaviors.', correct: true }
+      - { value: 'A custom Twig block for form rendering.', correct: false }
+      - { value: 'A service that validates form data.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_type_extensions.html'
+  - question: 'To add a submit button to a Symfony form, which type should be used?'
+    answers:
+      - { value: 'ButtonType::class', correct: false }
+      - { value: 'SubmitType::class', correct: true }
+      - { value: 'InputType::class with type="submit"', correct: false }
+      - { value: 'ActionType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/submit.html'
+  - question: 'How do you explicitly set the HTML `action` attribute for a form in Symfony?'
+    answers:
+      - { value: 'By passing `''action'' => $this->generateUrl(''my_route'')` in the form options.', correct: true }
+      - { value: 'By calling `$form->setAction(''my_route'');`', correct: false }
+      - { value: 'It''s automatically set to the current route.', correct: false }
+      - { value: 'By defining it in the Twig template using `action=""` attribute.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#form-action-and-method'
+  - question: 'What is the default HTTP method used by Symfony forms if not explicitly specified?'
+    answers:
+      - { value: 'GET', correct: false }
+      - { value: 'PUT', correct: false }
+      - { value: 'POST', correct: true }
+      - { value: 'PATCH', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#form-action-and-method'
+  - question: 'Which Twig function is used to render a form field''s help message?'
+    answers:
+      - { value: '{{ form_hint(form.fieldName) }}', correct: false }
+      - { value: '{{ form_info(form.fieldName) }}', correct: false }
+      - { value: '{{ form_help(form.fieldName) }}', correct: true }
+      - { value: '{{ form_description(form.fieldName) }}', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#rendering-each-field-by-hand'
+  - question: 'To render only the errors for a specific form field in Twig, which function should be used?'
+    answers:
+      - { value: '{{ form_errors(form.fieldName) }}', correct: true }
+      - { value: '{{ form.fieldName.errors }}', correct: false }
+      - { value: '{{ errors(form.fieldName) }}', correct: false }
+      - { value: '{{ form_row(form.fieldName).errors }}', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#rendering-each-field-by-hand'
+  - question: 'What is the `data_class` option used for in a form type''s `configureOptions` method?'
+    answers:
+      - { value: 'To specify the CSS class for the form element.', correct: false }
+      - { value: 'To define the PHP class that the form data will be mapped to.', correct: true }
+      - { value: 'To set the default value for the form.', correct: false }
+      - { value: 'To indicate if the form should be rendered as a compound field.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#configuring-your-form'
+  - question: 'When using `CollectionType` with `allow_add` and `allow_delete` options, what is typically required in the underlying entity to manage the collection?'
+    answers:
+      - { value: 'Public properties for the collection elements.', correct: false }
+      - { value: '`add` and `remove` methods for the associated entities.', correct: true }
+      - { value: 'A custom data transformer for the collection.', correct: false }
+      - { value: 'A dedicated form event listener.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_collections.html#allowing-new-tags-with-the-prototype'
+  - question: 'What is the purpose of the `prototype` variable available in Twig when using `CollectionType` with `allow_add`?'
+    answers:
+      - { value: 'It contains the current number of items in the collection.', correct: false }
+      - { value: 'It provides a template for a new collection item, useful for JavaScript-based "add new" functionality.', correct: true }
+      - { value: 'It stores the default values for new collection items.', correct: false }
+      - { value: 'It is a placeholder for the collection''s parent form.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_collections.html#allowing-new-tags-with-the-prototype'
+  - question: 'Which form type is suitable for a dropdown list of options?'
+    answers:
+      - { value: 'EntityType::class', correct: false }
+      - { value: 'SelectType::class', correct: false }
+      - { value: 'ChoiceType::class', correct: true }
+      - { value: 'DropdownType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html'
+  - question: 'When would you typically use `FormEvents::PRE_SET_DATA`?'
+    answers:
+      - { value: 'To modify data after it has been submitted by the user.', correct: false }
+      - { value: 'To add or remove fields based on the initial data of the form.', correct: true }
+      - { value: 'To perform final validation before saving the entity.', correct: false }
+      - { value: 'To transform data from the request format to the normalized format.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/events.html#pre-set-data-and-post-set-data-events'
+  - question: 'What is the primary benefit of using form type extensions?'
+    answers:
+      - { value: 'They allow you to create entirely new form types without extending `AbstractType`.', correct: false }
+      - { value: 'They enable you to add or override options and functionality of existing form types without modifying their original classes.', correct: true }
+      - { value: 'They provide a way to define global form themes.', correct: false }
+      - { value: 'They are used for translating form labels.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_type_extensions.html'
+  - question: 'To add custom HTML attributes to the `<div>` or `<tr>` element that renders a form field''s row, which option should be used?'
+    answers:
+      - { value: '`attr`', correct: false }
+      - { value: '`widget_attr`', correct: false }
+      - { value: '`row_attr`', correct: true }
+      - { value: '`label_attr`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#row-attr'
+  - question: 'What is the purpose of the `compound` option in Symfony forms?'
+    answers:
+      - { value: 'It determines if the form is a single HTML element or a group of fields.', correct: true }
+      - { value: 'It specifies if the form should be submitted via AJAX.', correct: false }
+      - { value: 'It controls whether the form uses CSRF protection.', correct: false }
+      - { value: 'It indicates if the form can be extended by other form types.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#compound'
+  - question: 'How can you disable CSRF protection for a specific form?'
+    answers:
+      - { value: 'Set the `csrf_protection` option to `false` in the form type options.', correct: true }
+      - { value: 'Remove the `_csrf_token` field from the Twig template.', correct: false }
+      - { value: 'Set the form method to `GET`.', correct: false }
+      - { value: 'Call `$form->disableCsrf();` in the controller.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#disabling-csrf-protection'
+  - question: 'When handling file uploads, how do you access the uploaded file object from the submitted form data?'
+    answers:
+      - { value: '`$form->get(''fileField'')->getData()` which returns an instance of `UploadedFile`.', correct: true }
+      - { value: '`$request->files->get(''fileField'')`', correct: false }
+      - { value: '`$form->getUploadedFile(''fileField'')`', correct: false }
+      - { value: '`$form->getData()[''fileField'']` which returns the file path.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#file-uploads'
+  - question: 'What is the purpose of `FormEvents::SUBMIT`?'
+    answers:
+      - { value: 'It is dispatched before any data is set on the form.', correct: false }
+      - { value: 'It is dispatched after the form has been submitted and data is mapped, but before validation.', correct: true }
+      - { value: 'It is dispatched after validation and before saving the data.', correct: false }
+      - { value: 'It is dispatched when the form is rendered.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/events.html#pre-submit-and-post-submit-events'
+  - question: 'When creating a custom data transformer, which interface must it implement?'
+    answers:
+      - { value: 'DataTransformerInterface', correct: true }
+      - { value: 'FormTransformerInterface', correct: false }
+      - { value: 'ValueTransformerInterface', correct: false }
+      - { value: 'ModelTransformerInterface', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/data_transformers.html#creating-a-data-transformer'
+  - question: 'In a data transformer, what is the role of the `transform()` method?'
+    answers:
+      - { value: 'Converts data from the format used in the underlying object (model) to the format used in the form field (view).', correct: true }
+      - { value: 'Converts data from the format used in the form field (view) to the format used in the underlying object (model).', correct: false }
+      - { value: 'Validates the data before it is submitted.', correct: false }
+      - { value: 'Applies default values to the form data.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/data_transformers.html#creating-a-data-transformer'
+  - question: 'In a data transformer, what is the role of the `reverseTransform()` method?'
+    answers:
+      - { value: 'Converts data from the format used in the underlying object (model) to the format used in the form field (view).', correct: false }
+      - { value: 'Converts data from the format used in the form field (view) to the format used in the underlying object (model).', correct: true }
+      - { value: 'Validates the data after it has been submitted.', correct: false }
+      - { value: 'Applies default values to the form data.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/data_transformers.html#creating-a-data-transformer'
+  - question: 'Which form type is used for a multi-line text input area?'
+    answers:
+      - { value: 'TextType::class', correct: false }
+      - { value: 'TextAreaType::class', correct: true }
+      - { value: 'LongTextType::class', correct: false }
+      - { value: 'StringAreaType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/textarea.html'
+  - question: 'What is the purpose of the `empty_data` option in a form field?'
+    answers:
+      - { value: 'To define the value used when the field is submitted empty.', correct: true }
+      - { value: 'To set the default placeholder text for the field.', correct: false }
+      - { value: 'To specify the data type of the field when it''s null.', correct: false }
+      - { value: 'To indicate if the field is optional.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#empty-data'
+  - question: 'How can you prevent a form field from being mapped to the underlying object?'
+    answers:
+      - { value: 'Set the `mapped` option to `false`.', correct: true }
+      - { value: 'Set the `data_class` option to `null`.', correct: false }
+      - { value: 'Do not add the field to the form builder.', correct: false }
+      - { value: 'Set the `required` option to `false`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#mapped'
+  - question: 'Which form type is used for a checkbox input?'
+    answers:
+      - { value: 'BooleanType::class', correct: false }
+      - { value: 'CheckType::class', correct: false }
+      - { value: 'CheckboxType::class', correct: true }
+      - { value: 'ToggleType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/checkbox.html'
+  - question: 'When customizing form rendering in Twig, what is the correct block name for rendering the entire row of a field named `myField`?'
+    answers:
+      - { value: '`_myField_row`', correct: true }
+      - { value: '`myField_row`', correct: false }
+      - { value: '`form_row_myField`', correct: false }
+      - { value: '`_form_myField_row`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_customization.html#field-blocks'
+  - question: 'What is the purpose of `FormEvents::POST_SUBMIT`?'
+    answers:
+      - { value: 'To modify the data before it is submitted.', correct: false }
+      - { value: 'To perform actions after the form has been submitted and validated, typically for saving data.', correct: true }
+      - { value: 'To add or remove fields dynamically based on submitted data.', correct: false }
+      - { value: 'To transform the view data to normalized data.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/events.html#pre-submit-and-post-submit-events'
+  - question: 'How do you register a data transformer for a specific form field?'
+    answers:
+      - { value: 'By calling `$builder->addModelTransformer(new MyTransformer());` on the field.', correct: true }
+      - { value: 'By setting a `transformer` option on the field.', correct: false }
+      - { value: 'By implementing `DataTransformerInterface` directly in the form type.', correct: false }
+      - { value: 'Data transformers are automatically detected by Symfony.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/data_transformers.html#registering-a-data-transformer'
+  - question: 'What is the `by_reference` option used for in `CollectionType`?'
+    answers:
+      - { value: 'To specify if the collection elements should be passed by reference to the underlying object (default `true`).', correct: true }
+      - { value: 'To indicate if the collection should be rendered as a single HTML element.', correct: false }
+      - { value: 'To control if the collection data is validated.', correct: false }
+      - { value: 'To define the default value for new collection items.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_collections.html#using-a-custom-setter'
+  - question: 'When using `CollectionType` with `by_reference` set to `false`, what is typically required in the entity to correctly handle additions and removals?'
+    answers:
+      - { value: 'Public properties for the collection.', correct: false }
+      - { value: '`add` and `remove` methods for the associated entities, and ensuring the inverse side is also updated.', correct: true }
+      - { value: 'A custom data transformer for the collection.', correct: false }
+      - { value: 'A dedicated form event listener to manage the collection.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_collections.html#using-a-custom-setter'
+  - question: 'Which form type is used for a password input field?'
+    answers:
+      - { value: 'TextType::class with `input_type` option.', correct: false }
+      - { value: 'PasswordType::class', correct: true }
+      - { value: 'HiddenType::class with validation.', correct: false }
+      - { value: 'SecretType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/password.html'
+  - question: 'What is the purpose of the `label` option in a form field?'
+    answers:
+      - { value: 'To define the HTML `id` attribute for the label.', correct: false }
+      - { value: 'To set the text displayed for the field''s label.', correct: true }
+      - { value: 'To specify the CSS class for the label.', correct: false }
+      - { value: 'To indicate if the label should be rendered.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#label'
+  - question: 'How can you dynamically add or remove fields from a form based on user input (e.g., a dropdown selection)?'
+    answers:
+      - { value: 'By using JavaScript to manipulate the DOM directly.', correct: false }
+      - { value: 'By adding an event listener to `FormEvents::PRE_SET_DATA` or `FormEvents::PRE_SUBMIT` and modifying the form builder.', correct: true }
+      - { value: 'By creating separate forms for each possible state.', correct: false }
+      - { value: 'Symfony forms do not support dynamic field modification.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/dynamic_form_modification.html'
+  - question: 'Which form type is used for a hidden input field?'
+    answers:
+      - { value: 'InvisibleType::class', correct: false }
+      - { value: 'HiddenType::class', correct: true }
+      - { value: 'SecretType::class', correct: false }
+      - { value: 'NoRenderType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/hidden.html'
+  - question: 'What is the `required` option used for in a form field?'
+    answers:
+      - { value: 'To indicate if the field must be present in the submitted data (HTML5 `required` attribute).', correct: true }
+      - { value: 'To specify if the field is mandatory for validation (always `true` by default for non-nullable fields).', correct: false }
+      - { value: 'To make the field visible to the user.', correct: false }
+      - { value: 'To ensure the field has a default value.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#required'
+  - question: 'How can you render a form field without its label, errors, or help message, only the input widget itself?'
+    answers:
+      - { value: '{{ form_widget(form.fieldName) }}', correct: true }
+      - { value: '{{ form_input(form.fieldName) }}', correct: false }
+      - { value: '{{ form_field(form.fieldName) }}', correct: false }
+      - { value: '{{ form_element(form.fieldName) }}', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#rendering-each-field-by-hand'
+  - question: 'What is the purpose of the `block_prefixes` in Symfony form theming?'
+    answers:
+      - { value: 'They define the order in which form themes are applied.', correct: false }
+      - { value: 'They are an ordered list of names that Symfony uses to find the correct Twig block for rendering a form type.', correct: true }
+      - { value: 'They are used to group form fields into logical sections.', correct: false }
+      - { value: 'They specify the CSS classes to apply to form elements.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_customization.html#form-types-and-block-names'
+  - question: 'Which form type is used for a number input field?'
+    answers:
+      - { value: 'IntegerType::class', correct: false }
+      - { value: 'NumberType::class', correct: true }
+      - { value: 'NumericType::class', correct: false }
+      - { value: 'FloatType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/number.html'
+  - question: 'What is the `choice_label` option used for in `ChoiceType`?'
+    answers:
+      - { value: 'To specify the HTML `value` attribute for each choice.', correct: false }
+      - { value: 'To define the text displayed for each choice in the dropdown or radio/checkbox list.', correct: true }
+      - { value: 'To set the label for the entire choice field.', correct: false }
+      - { value: 'To provide a translation key for the choices.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html#choice-label'
+  - question: 'How can you make a form field read-only (disabled) in Symfony?'
+    answers:
+      - { value: 'Set the `disabled` option to `true`.', correct: true }
+      - { value: 'Set the `readonly` option to `true`.', correct: false }
+      - { value: 'Add the `disabled` attribute in Twig.', correct: false }
+      - { value: 'Set the `editable` option to `false`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#disabled'
+  - question: 'Which form type is used for a range input field (slider)?'
+    answers:
+      - { value: 'SliderType::class', correct: false }
+      - { value: 'RangeType::class', correct: true }
+      - { value: 'ScaleType::class', correct: false }
+      - { value: 'InputType::class with type="range"', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/range.html'
+  - question: 'What is the purpose of the `mapped` option when set to `false` for a form field?'
+    answers:
+      - { value: 'The field will not be rendered in the HTML form.', correct: false }
+      - { value: 'The field''s data will not be read from or written to the underlying object.', correct: true }
+      - { value: 'The field will not be validated.', correct: false }
+      - { value: 'The field will be hidden from the user.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#mapped'
+  - question: 'How can you apply a global form theme to all forms in your Symfony application?'
+    answers:
+      - { value: 'By configuring it in `config/packages/twig.yaml` under `form_themes`.', correct: true }
+      - { value: 'By adding `{% form_theme _self %}` to `base.html.twig`.', correct: false }
+      - { value: 'By creating a service that implements `FormThemeInterface`.', correct: false }
+      - { value: 'By setting a parameter in `services.yaml`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_themes.html#global-form-themes'
+  - question: 'Which form type is used for a URL input field?'
+    answers:
+      - { value: 'LinkType::class', correct: false }
+      - { value: 'UrlType::class', correct: true }
+      - { value: 'WebAddressType::class', correct: false }
+      - { value: 'TextType::class with URL validation.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/url.html'
+  - question: 'What is the `attr` option used for in a form field?'
+    answers:
+      - { value: 'To add custom HTML attributes directly to the input element.', correct: true }
+      - { value: 'To define attributes for the field''s label.', correct: false }
+      - { value: 'To set attributes for the entire form row.', correct: false }
+      - { value: 'To specify data attributes for JavaScript.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#attr'
+  - question: 'Which form type is used for an email input field?'
+    answers:
+      - { value: 'TextType::class with email validation.', correct: false }
+      - { value: 'EmailType::class', correct: true }
+      - { value: 'MailType::class', correct: false }
+      - { value: 'AddressType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/email.html'
+  - question: 'What is the purpose of `FormEvents::PRE_SET_DATA` when used with dynamic forms?'
+    answers:
+      - { value: 'To modify the data submitted by the user before validation.', correct: false }
+      - { value: 'To add or remove fields based on the initial data of the form, before it''s displayed.', correct: true }
+      - { value: 'To perform final data transformation before saving.', correct: false }
+      - { value: 'To handle file uploads.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/dynamic_form_modification.html#form-events-pre-set-data'
+  - question: 'Which form type is used for a telephone number input field?'
+    answers:
+      - { value: 'PhoneType::class', correct: false }
+      - { value: 'TelType::class', correct: true }
+      - { value: 'NumberType::class with pattern.', correct: false }
+      - { value: 'ContactType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/tel.html'
+  - question: 'How can you add a custom validation constraint to a form field directly in the form type?'
+    answers:
+      - { value: 'By using the `constraints` option with an array of constraint objects.', correct: true }
+      - { value: 'By calling `$builder->addConstraint(new MyConstraint());`', correct: false }
+      - { value: 'By defining a validation group for the field.', correct: false }
+      - { value: 'Constraints can only be defined in the entity.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/form.html#adding-validation'
+  - question: 'What is the `widget` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the HTML input type (e.g., `single_text`, `choice`, `text`).', correct: true }
+      - { value: 'To define the CSS class for the date picker widget.', correct: false }
+      - { value: 'To enable or disable the JavaScript date picker.', correct: false }
+      - { value: 'To set the default date format.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#widget'
+  - question: 'Which form type is used for a color input field?'
+    answers:
+      - { value: 'HexColorType::class', correct: false }
+      - { value: 'ColorType::class', correct: true }
+      - { value: 'PaletteType::class', correct: false }
+      - { value: 'InputType::class with type="color"', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/color.html'
+  - question: 'What is the purpose of the `choice_value` option in `ChoiceType`?'
+    answers:
+      - { value: 'To define the HTML `value` attribute for each choice, which is submitted to the server.', correct: true }
+      - { value: 'To set the label displayed for each choice.', correct: false }
+      - { value: 'To specify the default selected choice.', correct: false }
+      - { value: 'To map the choice to an entity ID.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html#choice-value'
+  - question: 'Which form type is used for a search input field?'
+    answers:
+      - { value: 'QueryType::class', correct: false }
+      - { value: 'SearchType::class', correct: true }
+      - { value: 'FindType::class', correct: false }
+      - { value: 'TextType::class with search attributes.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/search.html'
+  - question: 'What is the `placeholder` option used for in a form field?'
+    answers:
+      - { value: 'To set the default value of the field.', correct: false }
+      - { value: 'To provide a hint or example text inside the input field when it''s empty.', correct: true }
+      - { value: 'To define the label for the field.', correct: false }
+      - { value: 'To specify a validation message.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#placeholder'
+  - question: 'Which form type is used for a time input field?'
+    answers:
+      - { value: 'TimeType::class', correct: true }
+      - { value: 'ClockType::class', correct: false }
+      - { value: 'HourType::class', correct: false }
+      - { value: 'DateTimeType::class with date disabled.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html'
+  - question: 'When creating a custom form field type, which base class should it extend?'
+    answers:
+      - { value: 'FormType::class', correct: false }
+      - { value: 'AbstractType::class', correct: true }
+      - { value: 'BaseType::class', correct: false }
+      - { value: 'CustomType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/create_custom_field_type.html#creating-a-custom-field-type'
+  - question: 'What is the purpose of the `expanded` option in `ChoiceType`?'
+    answers:
+      - { value: 'To render choices as a dropdown select box.', correct: false }
+      - { value: 'To render choices as radio buttons or checkboxes instead of a select box.', correct: true }
+      - { value: 'To allow multiple choices to be selected.', correct: false }
+      - { value: 'To display additional information for each choice.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html#expanded'
+  - question: 'Which form type is used for a date and time input field?'
+    answers:
+      - { value: 'DateType::class and TimeType::class combined.', correct: false }
+      - { value: 'DateTimeType::class', correct: true }
+      - { value: 'TimestampType::class', correct: false }
+      - { value: 'CalendarType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/datetime.html'
+  - question: 'What is the `multiple` option used for in `ChoiceType`?'
+    answers:
+      - { value: 'To allow the user to select more than one option from the choices.', correct: true }
+      - { value: 'To display choices in multiple columns.', correct: false }
+      - { value: 'To enable multiple forms to be submitted simultaneously.', correct: false }
+      - { value: 'To define multiple labels for a single choice.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html#multiple'
+  - question: 'When creating a custom form type, how do you ensure it maps to a specific PHP class (e.g., an entity)?'
+    answers:
+      - { value: 'By setting the `data_class` option in `configureOptions`.', correct: true }
+      - { value: 'By passing the class name as the first argument to `buildForm`.', correct: false }
+      - { value: 'By implementing `DataMapperInterface`.', correct: false }
+      - { value: 'Symfony automatically infers the class from the form name.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#configuring-your-form'
+  - question: 'Which form type is used for a range of dates (e.g., start and end date)?'
+    answers:
+      - { value: 'DateRangeType::class', correct: false }
+      - { value: 'DateIntervalType::class', correct: true }
+      - { value: 'PeriodType::class', correct: false }
+      - { value: 'Two DateType fields.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/dateinterval.html'
+  - question: 'What is the purpose of the `translation_domain` option in a form field?'
+    answers:
+      - { value: 'To specify the message domain for translating labels, help messages, and error messages.', correct: true }
+      - { value: 'To define the language of the form.', correct: false }
+      - { value: 'To enable or disable translation for the form.', correct: false }
+      - { value: 'To set the default locale for the form.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#translation-domain'
+  - question: 'Which form type is used for a country selection dropdown?'
+    answers:
+      - { value: 'CountryType::class', correct: true }
+      - { value: 'LocaleType::class', correct: false }
+      - { value: 'ChoiceType::class with country list.', correct: false }
+      - { value: 'RegionType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/country.html'
+  - question: 'What is the `help` option used for in a form field?'
+    answers:
+      - { value: 'To provide a tooltip for the field.', correct: false }
+      - { value: 'To display a small help message below the field.', correct: true }
+      - { value: 'To link to external documentation for the field.', correct: false }
+      - { value: 'To define a placeholder for the field.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#help'
+  - question: 'Which form type is used for a language selection dropdown?'
+    answers:
+      - { value: 'LanguageType::class', correct: true }
+      - { value: 'LocaleType::class', correct: false }
+      - { value: 'ChoiceType::class with language list.', correct: false }
+      - { value: 'CultureType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/language.html'
+  - question: 'What is the `error_bubbling` option used for in a form field?'
+    answers:
+      - { value: 'To control whether errors for a child field "bubble up" and are displayed on its parent form.', correct: true }
+      - { value: 'To display all form errors at the top of the form.', correct: false }
+      - { value: 'To prevent validation errors from being displayed.', correct: false }
+      - { value: 'To group errors by validation constraint.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#error-bubbling'
+  - question: 'Which form type is used for a currency selection dropdown?'
+    answers:
+      - { value: 'MoneyType::class', correct: false }
+      - { value: 'CurrencyType::class', correct: true }
+      - { value: 'AmountType::class', correct: false }
+      - { value: 'ChoiceType::class with currency list.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/currency.html'
+  - question: 'What is the `label_attr` option used for in a form field?'
+    answers:
+      - { value: 'To add custom HTML attributes to the input element.', correct: false }
+      - { value: 'To add custom HTML attributes to the field''s label element.', correct: true }
+      - { value: 'To set attributes for the entire form row.', correct: false }
+      - { value: 'To define the text of the label.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#label-attr'
+  - question: 'Which form type is used for a timezone selection dropdown?'
+    answers:
+      - { value: 'TimeZoneType::class', correct: true }
+      - { value: 'DateTimeZoneType::class', correct: false }
+      - { value: 'LocaleType::class with timezone option.', correct: false }
+      - { value: 'ZoneType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/timezone.html'
+  - question: 'What is the purpose of `FormEvents::POST_SUBMIT` when used with dynamic forms?'
+    answers:
+      - { value: 'To modify the data before it is submitted by the user.', correct: false }
+      - { value: 'To perform actions after the form has been submitted and validated, such as saving related entities that depend on the main form data.', correct: true }
+      - { value: 'To add or remove fields based on the initial data of the form.', correct: false }
+      - { value: 'To transform the view data to normalized data.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/events.html#pre-submit-and-post-submit-events'
+  - question: 'Which form type is used for a locale selection dropdown?'
+    answers:
+      - { value: 'LanguageType::class', correct: false }
+      - { value: 'LocaleType::class', correct: true }
+      - { value: 'CountryType::class', correct: false }
+      - { value: 'ChoiceType::class with locale list.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/locale.html'
+  - question: 'What is the `widget_attr` option used for in a form field?'
+    answers:
+      - { value: 'To add custom HTML attributes to the field''s label.', correct: false }
+      - { value: 'To add custom HTML attributes to the HTML element that renders the field''s widget (e.g., `<input>`, `<select>`).', correct: true }
+      - { value: 'To set attributes for the entire form row.', correct: false }
+      - { value: 'To define the text of the widget.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#widget-attr'
+  - question: 'Which form type is used for a percent input field?'
+    answers:
+      - { value: 'NumberType::class with percentage formatting.', correct: false }
+      - { value: 'PercentType::class', correct: true }
+      - { value: 'RatioType::class', correct: false }
+      - { value: 'DecimalType::class with percent sign.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/percent.html'
+  - question: 'What is the purpose of `FormEvents::PRE_SUBMIT` when used with dynamic forms?'
+    answers:
+      - { value: 'To modify the initial data before the form is displayed.', correct: false }
+      - { value: 'To add or remove fields based on the raw submitted data before it is mapped to the object.', correct: true }
+      - { value: 'To perform final validation after data mapping.', correct: false }
+      - { value: 'To handle file uploads.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/dynamic_form_modification.html#form-events-pre-submit'
+  - question: 'Which form type is used for a money input field?'
+    answers:
+      - { value: 'NumberType::class with currency formatting.', correct: false }
+      - { value: 'CurrencyType::class', correct: false }
+      - { value: 'MoneyType::class', correct: true }
+      - { value: 'AmountType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/money.html'
+  - question: 'What is the `inherit_data` option used for in a form field?'
+    answers:
+      - { value: 'If `true`, the form field inherits data from its parent form, and data transformers are not applied.', correct: true }
+      - { value: 'If `true`, the form field will automatically populate its data from the request.', correct: false }
+      - { value: 'If `true`, the field will use the parent form''s validation groups.', correct: false }
+      - { value: 'If `true`, the field will be rendered as part of the parent form''s row.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/datetime.html#inherit-data'
+  - question: 'Which form type is used for a week input field (e.g., "2024-W25")?'
+    answers:
+      - { value: 'WeekType::class', correct: true }
+      - { value: 'DateType::class with week format.', correct: false }
+      - { value: 'CalendarWeekType::class', correct: false }
+      - { value: 'IntervalType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/week.html'
+  - question: 'How can you access the original data object bound to the form (before submission) within a form type or event listener?'
+    answers:
+      - { value: '`$form->getData()`', correct: true }
+      - { value: '`$form->getOriginalData()`', correct: false }
+      - { value: '`$form->getInitialData()`', correct: false }
+      - { value: '`$form->get(''_data'')`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#accessing-form-data'
+  - question: 'What is the purpose of the `entry_type` option in `CollectionType`?'
+    answers:
+      - { value: 'To specify the form type used for each item in the collection.', correct: true }
+      - { value: 'To define the data type of the collection itself.', correct: false }
+      - { value: 'To set the default value for new entries.', correct: false }
+      - { value: 'To control the rendering of the collection wrapper.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_collections.html#embedding-a-collection-of-forms'
+  - question: 'Which form type is used for a button that does not submit the form (e.g., a reset button)?'
+    answers:
+      - { value: 'ResetType::class', correct: false }
+      - { value: 'ButtonType::class', correct: true }
+      - { value: 'InputType::class with type="button"', correct: false }
+      - { value: 'ActionType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/button.html'
+  - question: 'What is the `entry_options` option used for in `CollectionType`?'
+    answers:
+      - { value: 'To pass options to the `CollectionType` itself.', correct: false }
+      - { value: 'To pass options to each individual form type used for the collection entries.', correct: true }
+      - { value: 'To define options for the collection''s prototype.', correct: false }
+      - { value: 'To set default options for all child forms.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_collections.html#embedding-a-collection-of-forms'
+  - question: 'How can you get the submitted and transformed data from a form after it has been handled and validated?'
+    answers:
+      - { value: '`$form->getData()`', correct: true }
+      - { value: '`$form->getSubmittedData()`', correct: false }
+      - { value: '`$form->getTransformedData()`', correct: false }
+      - { value: '`$request->request->all()`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#accessing-form-data'
+  - question: 'Which form type is used for a URL input field that automatically validates the URL format?'
+    answers:
+      - { value: 'TextType::class with Url constraint.', correct: false }
+      - { value: 'UrlType::class', correct: true }
+      - { value: 'LinkType::class', correct: false }
+      - { value: 'WebAddressType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/url.html'
+  - question: 'What is the `allow_extra_fields` option used for in a form type?'
+    answers:
+      - { value: 'To allow fields that are not explicitly defined in the form type to be submitted without causing an error.', correct: true }
+      - { value: 'To allow users to add new fields to the form dynamically.', correct: false }
+      - { value: 'To enable file uploads for the form.', correct: false }
+      - { value: 'To permit multiple submissions of the same form.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#allow-extra-fields'
+  - question: 'How do you add an event listener to a form builder?'
+    answers:
+      - { value: '`$builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, ''onPreSubmit'']);`', correct: true }
+      - { value: '`$builder->addEventSubscriber(new MyFormSubscriber());`', correct: false }
+      - { value: '`$builder->on(''pre_submit'', function() {});`', correct: false }
+      - { value: '`$builder->listen(''pre_submit'', [$this, ''onPreSubmit'']);`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/events.html#adding-an-event-listener'
+  - question: 'What is the difference between `form_widget(form.field)` and `form_row(form.field)` in Twig?'
+    answers:
+      - { value: '`form_widget` renders the input element only, while `form_row` renders the label, errors, help, and the widget within a wrapper element.', correct: true }
+      - { value: '`form_widget` renders the entire field including label and errors, while `form_row` only renders the input.', correct: false }
+      - { value: '`form_widget` is for simple fields, `form_row` is for compound fields.', correct: false }
+      - { value: 'They are interchangeable.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#rendering-each-field-by-hand'
+  - question: 'Which form type is used for a choice field where choices are rendered as radio buttons?'
+    answers:
+      - { value: 'RadioType::class', correct: false }
+      - { value: 'ChoiceType::class with `expanded` set to `true` and `multiple` set to `false`.', correct: true }
+      - { value: 'ButtonType::class with `type="radio"`', correct: false }
+      - { value: 'SelectType::class with `expanded` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html#expanded'
+  - question: 'What is the `model_data` in the context of data transformers?'
+    answers:
+      - { value: 'The data as it exists in the underlying PHP object (e.g., an entity).', correct: true }
+      - { value: 'The data as it is submitted from the HTML form.', correct: false }
+      - { value: 'The data after normalization, but before transformation to the view format.', correct: false }
+      - { value: 'The data displayed in the HTML form field.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/data_transformers.html#data-transformation-workflow'
+  - question: 'What is the `norm_data` in the context of data transformers?'
+    answers:
+      - { value: 'The data as it exists in the underlying PHP object (model).', correct: false }
+      - { value: 'The data after it has been submitted from the HTML form.', correct: false }
+      - { value: 'The data in a normalized format, typically a simple PHP type (string, int, array), before being transformed to the view format or after being transformed from the view format.', correct: true }
+      - { value: 'The data displayed in the HTML form field.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/data_transformers.html#data-transformation-workflow'
+  - question: 'What is the `view_data` in the context of data transformers?'
+    answers:
+      - { value: 'The data as it exists in the underlying PHP object (model).', correct: false }
+      - { value: 'The data as it is submitted from the HTML form.', correct: false }
+      - { value: 'The data in a normalized format.', correct: false }
+      - { value: 'The data displayed in the HTML form field, ready for rendering (e.g., a string for a text input).', correct: true }
+    help: |
+      'https://symfony.com/doc/current/form/data_transformers.html#data-transformation-workflow'
+  - question: 'When would you use `FormEvents::POST_SET_DATA`?'
+    answers:
+      - { value: 'To modify the data after it has been submitted by the user.', correct: false }
+      - { value: 'To perform actions or add fields after the form has been populated with initial data from the object, but before rendering.', correct: true }
+      - { value: 'To validate the form data.', correct: false }
+      - { value: 'To transform data from the request format.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/events.html#pre-set-data-and-post-set-data-events'
+  - question: 'Which form type is used for a checkbox choice field where multiple options can be selected?'
+    answers:
+      - { value: 'CheckboxType::class with `multiple` option.', correct: false }
+      - { value: 'ChoiceType::class with `expanded` set to `true` and `multiple` set to `true`.', correct: true }
+      - { value: 'MultiCheckboxType::class', correct: false }
+      - { value: 'CollectionType::class with CheckboxType.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html#expanded'
+  - question: 'How can you test a custom form type in Symfony using `TypeTestCase`?'
+    answers:
+      - { value: 'By extending `KernelTestCase` and submitting a test request.', correct: false }
+      - { value: 'By extending `TypeTestCase` and implementing methods like `testSubmitValidData` to simulate form submission and data mapping.', correct: true }
+      - { value: 'By using the `debug:form` command with test data.', correct: false }
+      - { value: 'Form types cannot be unit tested in isolation.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/unit_testing.html'
+  - question: 'What is the purpose of the `block_name` option in a form field?'
+    answers:
+      - { value: 'To define a custom Twig block name for rendering a specific field, overriding the default naming convention.', correct: true }
+      - { value: 'To set the HTML `id` attribute for the field.', correct: false }
+      - { value: 'To specify the CSS class for the field.', correct: false }
+      - { value: 'To group related fields together.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_customization.html#field-blocks'
+  - question: 'Which form type is used for a date input field that only allows selecting a year and month?'
+    answers:
+      - { value: 'DateType::class with `format` option.', correct: false }
+      - { value: 'MonthType::class', correct: false }
+      - { value: 'DateType::class with `years` and `months` options, and `days` set to `false`.', correct: true }
+      - { value: 'YearMonthType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#years-months-days'
+  - question: 'What is the `validation_groups` option used for in a form?'
+    answers:
+      - { value: 'To specify which validation groups should be applied when the form is submitted.', correct: true }
+      - { value: 'To group form fields for rendering purposes.', correct: false }
+      - { value: 'To define different sets of validation rules for different form types.', correct: false }
+      - { value: 'To disable validation for certain fields.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#validation-groups'
+  - question: 'How can you render a form field''s label with custom HTML attributes in Twig?'
+    answers:
+      - { value: '{{ form_label(form.fieldName, null, { ''attr'': { ''class'': ''my-label'' } }) }}', correct: true }
+      - { value: '{{ form_label(form.fieldName).setAttr({ ''class'': ''my-label'' }) }}', correct: false }
+      - { value: '{{ form_label(form.fieldName, { ''class'': ''my-label'' }) }}', correct: false }
+      - { value: '{{ form_label(form.fieldName, ''my-label'') }}', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#rendering-each-field-by-hand'
+  - question: 'Which form type is used for a single radio button input?'
+    answers:
+      - { value: 'ChoiceType::class with `expanded` and `multiple` false.', correct: false }
+      - { value: 'RadioType::class', correct: true }
+      - { value: 'BooleanType::class with radio widget.', correct: false }
+      - { value: 'OptionType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/radio.html'
+  - question: 'What is the `error_mapping` option used for in a form type?'
+    answers:
+      - { value: 'To map validation errors from one field to another, or from a global error to a specific field.', correct: true }
+      - { value: 'To define custom error messages for validation constraints.', correct: false }
+      - { value: 'To translate error messages.', correct: false }
+      - { value: 'To group errors by severity.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#error-mapping'
+  - question: 'How can you pass custom options from the controller to a custom form type?'
+    answers:
+      - { value: 'By passing an array as the third argument to `createForm(MyType::class, $data, $options)`.', correct: true }
+      - { value: 'By setting public properties on the form type class.', correct: false }
+      - { value: 'By using `setOption()` on the form builder.', correct: false }
+      - { value: 'Custom options are not supported.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#passing-options-to-your-form-type'
+  - question: 'Which form type is used for a hidden field that stores a date and time value?'
+    answers:
+      - { value: 'HiddenType::class with `data_transformer`.', correct: false }
+      - { value: 'DateTimeType::class with `widget` set to `hidden`.', correct: true }
+      - { value: 'TimestampType::class', correct: false }
+      - { value: 'InvisibleDateTimeType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/datetime.html#widget'
+  - question: 'What is the purpose of the `data` option in a form field?'
+    answers:
+      - { value: 'To set the initial value of the field, overriding the value from the underlying object.', correct: true }
+      - { value: 'To define the data type of the field.', correct: false }
+      - { value: 'To specify the default value for the field if it''s empty.', correct: false }
+      - { value: 'To store the submitted value of the field.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#data'
+  - question: 'Which form type is used for a text input field that suggests values from a list (datalist)?'
+    answers:
+      - { value: 'TextType::class with `attr` option for `list`.', correct: true }
+      - { value: 'DatalistType::class', correct: false }
+      - { value: 'AutocompleteType::class', correct: false }
+      - { value: 'ChoiceType::class with `expanded` and `multiple` false.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/text.html#list'
+  - question: 'When implementing a custom form type, what is the purpose of the `getParent()` method?'
+    answers:
+      - { value: 'To return the FQCN of the parent form type from which this type inherits options and blocks.', correct: true }
+      - { value: 'To get the parent form builder.', correct: false }
+      - { value: 'To define the parent entity of the form data.', correct: false }
+      - { value: 'To retrieve the parent form view in Twig.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#creating-form-classes'
+  - question: 'Which form type is used for a range of numbers (e.g., min and max)?'
+    answers:
+      - { value: 'NumberRangeType::class', correct: false }
+      - { value: 'RangeType::class', correct: false }
+      - { value: 'IntegerType::class or NumberType::class with min/max constraints.', correct: true }
+      - { value: 'MinMaxType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/number.html'
+  - question: 'What is the `auto_initialize` option used for in a form type?'
+    answers:
+      - { value: 'If `true`, the form type will be automatically initialized by the form factory.', correct: true }
+      - { value: 'If `true`, the form will automatically populate its data from the request.', correct: false }
+      - { value: 'If `true`, the form will automatically handle CSRF protection.', correct: false }
+      - { value: 'If `true`, the form will automatically render itself in Twig.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#auto-initialize'
+  - question: 'How can you add a custom form type extension to your Symfony application?'
+    answers:
+      - { value: 'By creating a class that implements `FormTypeExtensionInterface` and registering it as a service with the `form.type_extension` tag.', correct: true }
+      - { value: 'By extending `AbstractTypeExtension` and overriding `buildForm`.', correct: false }
+      - { value: 'By modifying the core form types directly.', correct: false }
+      - { value: 'Form type extensions are automatically discovered by Symfony.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_type_extensions.html#creating-a-form-type-extension'
+  - question: 'What is the purpose of the `getExtendedType()` method in a form type extension?'
+    answers:
+      - { value: 'To return the FQCN of the form type that this extension modifies.', correct: true }
+      - { value: 'To get the parent type of the extension.', correct: false }
+      - { value: 'To define the new options added by the extension.', correct: false }
+      - { value: 'To retrieve the extended form builder.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_type_extensions.html#creating-a-form-type-extension'
+  - question: 'Which form type is used for a checkbox input that represents a boolean value?'
+    answers:
+      - { value: 'BooleanType::class', correct: false }
+      - { value: 'CheckboxType::class', correct: true }
+      - { value: 'ToggleType::class', correct: false }
+      - { value: 'SwitchType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/checkbox.html'
+  - question: 'How do you render a specific form field''s errors in Twig, without rendering the label or widget?'
+    answers:
+      - { value: '{{ form_errors(form.fieldName) }}', correct: true }
+      - { value: '{{ form.fieldName.errors }}', correct: false }
+      - { value: '{{ errors(form.fieldName) }}', correct: false }
+      - { value: '{{ form_row(form.fieldName).errors }}', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#rendering-each-field-by-hand'
+  - question: 'What is the purpose of the `choice_translation_domain` option in `ChoiceType`?'
+    answers:
+      - { value: 'To specify the translation domain for the choices themselves, separate from the field label.', correct: true }
+      - { value: 'To define the default translation domain for the entire form.', correct: false }
+      - { value: 'To enable or disable translation for the choices.', correct: false }
+      - { value: 'To set the locale for choice translation.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html#choice-translation-domain'
+  - question: 'Which form type is used for a number input field that accepts decimal values?'
+    answers:
+      - { value: 'IntegerType::class', correct: false }
+      - { value: 'NumberType::class', correct: true }
+      - { value: 'FloatType::class', correct: false }
+      - { value: 'DecimalType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/number.html'
+  - question: 'What is the `input` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the format of the data stored in the underlying object (e.g., `string`, `datetime_immutable`, `array`).', correct: true }
+      - { value: 'To define the HTML input type (e.g., `text`, `date`).', correct: false }
+      - { value: 'To set the default value for the date field.', correct: false }
+      - { value: 'To control whether the field is required.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#input'
+  - question: 'How can you render a form field''s label with a custom text, overriding the default label?'
+    answers:
+      - { value: '{{ form_label(form.fieldName, ''My Custom Label'') }}', correct: true }
+      - { value: '{{ form.fieldName.label = ''My Custom Label'' }}', correct: false }
+      - { value: '{{ label(form.fieldName, ''My Custom Label'') }}', correct: false }
+      - { value: '{{ form_row(form.fieldName, { ''label'': ''My Custom Label'' }) }}', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#rendering-each-field-by-hand'
+  - question: 'What is the `html5` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'If `true`, it renders an HTML5 date/datetime input type; otherwise, it renders select tags.', correct: true }
+      - { value: 'If `true`, it enables client-side validation for the date field.', correct: false }
+      - { value: 'If `true`, it uses JavaScript for date picking.', correct: false }
+      - { value: 'If `true`, it formats the date according to HTML5 standards.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#html5'
+  - question: 'Which form type is used for a range of time (e.g., start and end time)?'
+    answers:
+      - { value: 'TimeRangeType::class', correct: false }
+      - { value: 'TimeIntervalType::class', correct: true }
+      - { value: 'PeriodType::class', correct: false }
+      - { value: 'Two TimeType fields.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/timeinterval.html'
+  - question: 'What is the `format` option used for in `DateType` or `DateTimeType` when `widget` is `single_text`?'
+    answers:
+      - { value: 'To define the display format of the date/time string in the input field.', correct: true }
+      - { value: 'To specify the internal data format.', correct: false }
+      - { value: 'To set the format for validation.', correct: false }
+      - { value: 'To define the format for the date picker.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#format'
+  - question: 'How can you render a form field with a custom CSS class on its input element?'
+    answers:
+      - { value: 'By using the `attr` option: `''attr'' => [''class'' => ''my-class'']`', correct: true }
+      - { value: 'By using the `class` option directly on the field.', correct: false }
+      - { value: 'By adding a Twig block for the widget and applying the class there.', correct: false }
+      - { value: 'By setting `widget_class` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#attr'
+  - question: 'What is the `choices` option used for in `ChoiceType`?'
+    answers:
+      - { value: 'To define the available options for the select box, radio buttons, or checkboxes.', correct: true }
+      - { value: 'To specify the default selected choice.', correct: false }
+      - { value: 'To set the label for the choice field.', correct: false }
+      - { value: 'To provide a translation key for the choices.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html#choices'
+  - question: 'Which form type is used for a text input field that automatically suggests values from a list (e.g., for tags)?'
+    answers:
+      - { value: 'ChoiceType::class with `multiple` and `expanded` options.', correct: false }
+      - { value: 'TextType::class with `attr` option for `list` and a `<datalist>` element.', correct: true }
+      - { value: 'TagType::class', correct: false }
+      - { value: 'AutocompleteType::class', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/text.html#list'
+  - question: 'What is the `choice_attr` option used for in `ChoiceType`?'
+    answers:
+      - { value: 'To add custom HTML attributes to the `<option>` or `<input type="radio/checkbox">` elements.', correct: true }
+      - { value: 'To set attributes for the entire choice field.', correct: false }
+      - { value: 'To define attributes for the choice labels.', correct: false }
+      - { value: 'To specify data attributes for JavaScript.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html#choice-attr'
+  - question: 'How can you render a form field with a custom CSS class on its label element?'
+    answers:
+      - { value: 'By using the `label_attr` option: `''label_attr'' => [''class'' => ''my-label-class'']`', correct: true }
+      - { value: 'By using the `attr` option on the label.', correct: false }
+      - { value: 'By adding a Twig block for the label and applying the class there.', correct: false }
+      - { value: 'By setting `label_class` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#label-attr'
+  - question: 'What is the `preferred_choices` option used for in `ChoiceType`?'
+    answers:
+      - { value: 'To display a subset of choices at the top of the list, separated from the rest (e.g., common countries).', correct: true }
+      - { value: 'To set the default selected choices.', correct: false }
+      - { value: 'To filter the available choices based on user preferences.', correct: false }
+      - { value: 'To mark certain choices as mandatory.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html#preferred-choices'
+  - question: 'Which form type is used for a text input field that is specifically for a search query?'
+    answers:
+      - { value: 'TextType::class with `input_type` set to `search`.', correct: false }
+      - { value: 'SearchType::class', correct: true }
+      - { value: 'QueryType::class', correct: false }
+      - { value: 'InputType::class with `type="search"`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/search.html'
+  - question: 'What is the `group_by` option used for in `ChoiceType`?'
+    answers:
+      - { value: 'To group choices under optgroups in a select box, based on a callable that returns the group name.', correct: true }
+      - { value: 'To group form fields for validation purposes.', correct: false }
+      - { value: 'To categorize choices for better organization in the code.', correct: false }
+      - { value: 'To apply different styling to groups of choices.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html#group-by'
+  - question: 'How can you render a form field with a custom CSS class on its row element (the `div` or `tr` wrapping the field)?'
+    answers:
+      - { value: 'By using the `row_attr` option: `''row_attr'' => [''class'' => ''my-row-class'']`', correct: true }
+      - { value: 'By using the `attr` option on the row.', correct: false }
+      - { value: 'By adding a Twig block for the row and applying the class there.', correct: false }
+      - { value: 'By setting `row_class` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/locale.html#row-attr'
+  - question: 'What is the `choice_loader` option used for in `ChoiceType`?'
+    answers:
+      - { value: 'To load choices dynamically from a data source, typically for large datasets or complex logic.', correct: true }
+      - { value: 'To define the default selected choices.', correct: false }
+      - { value: 'To specify the translation domain for choices.', correct: false }
+      - { value: 'To filter choices based on user input.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html#choice-loader'
+  - question: 'Which form type is used for a text input field that is specifically for a URL?'
+    answers:
+      - { value: 'TextType::class with `input_type` set to `url`.', correct: false }
+      - { value: 'UrlType::class', correct: true }
+      - { value: 'LinkType::class', correct: false }
+      - { value: 'InputType::class with `type="url"`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/url.html'
+  - question: 'What is the `query_builder` option used for in `EntityType`?'
+    answers:
+      - { value: 'To customize the Doctrine query used to fetch the entities for the choices.', correct: true }
+      - { value: 'To build the form fields for the entity.', correct: false }
+      - { value: 'To define the default selected entity.', correct: false }
+      - { value: 'To filter entities based on user input.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#query-builder'
+  - question: 'How can you render a form field with a custom ID attribute on its input element?'
+    answers:
+      - { value: 'By using the `attr` option: `''attr'' => [''id'' => ''my_custom_id'']`', correct: true }
+      - { value: 'By using the `id` option directly on the field.', correct: false }
+      - { value: 'By adding a Twig block for the widget and applying the ID there.', correct: false }
+      - { value: 'By setting `widget_id` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#attr'
+  - question: 'What is the `choice_translation_parameters` option used for in `ChoiceType`?'
+    answers:
+      - { value: 'To pass parameters to the translation message for each choice label.', correct: true }
+      - { value: 'To define global translation parameters for the form.', correct: false }
+      - { value: 'To specify the locale for choice translation.', correct: false }
+      - { value: 'To enable or disable translation for the choices.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/choice.html#choice-translation-parameters'
+  - question: 'Which form type is used for a text input field that is specifically for an email address?'
+    answers:
+      - { value: 'TextType::class with `input_type` set to `email`.', correct: false }
+      - { value: 'EmailType::class', correct: true }
+      - { value: 'MailType::class', correct: false }
+      - { value: 'InputType::class with `type="email"`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/email.html'
+  - question: 'What is the `choice_loader` option used for in `EntityType`?'
+    answers:
+      - { value: 'To load entities dynamically from a data source, typically for large datasets or complex logic, instead of using `query_builder`.', correct: true }
+      - { value: 'To define the default selected entity.', correct: false }
+      - { value: 'To specify the translation domain for entities.', correct: false }
+      - { value: 'To filter entities based on user input.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#choice-loader'
+  - question: 'How can you render a form field with a custom `data-` attribute on its input element?'
+    answers:
+      - { value: 'By using the `attr` option: `''attr'' => [''data-custom'' => ''value'']`', correct: true }
+      - { value: 'By using the `data` option directly on the field.', correct: false }
+      - { value: 'By adding a Twig block for the widget and applying the attribute there.', correct: false }
+      - { value: 'By setting `data_attr` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#attr'
+  - question: 'What is the `choice_translation_domain` option used for in `EntityType`?'
+    answers:
+      - { value: 'To specify the translation domain for the entity choice labels.', correct: true }
+      - { value: 'To define the default translation domain for the form.', correct: false }
+      - { value: 'To enable or disable translation for the entities.', correct: false }
+      - { value: 'To set the locale for entity translation.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#choice-translation-domain'
+  - question: 'Which form type is used for a text input field that is specifically for a password?'
+    answers:
+      - { value: 'TextType::class with `input_type` set to `password`.', correct: false }
+      - { value: 'PasswordType::class', correct: true }
+      - { value: 'SecretType::class', correct: false }
+      - { value: 'InputType::class with `type="password"`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/password.html'
+  - question: 'What is the `choice_value` option used for in `EntityType`?'
+    answers:
+      - { value: 'To define the property of the entity that will be used as the HTML `value` attribute for each choice (e.g., `id`).', correct: true }
+      - { value: 'To set the label displayed for each entity choice.', correct: false }
+      - { value: 'To specify the default selected entity.', correct: false }
+      - { value: 'To map the choice to an entity object.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#choice-value'
+  - question: 'How can you render a form field with a custom `id` attribute on its label element?'
+    answers:
+      - { value: 'By using the `label_attr` option: `''label_attr'' => [''id'' => ''my_label_id'']`', correct: true }
+      - { value: 'By using the `id` option on the label.', correct: false }
+      - { value: 'By adding a Twig block for the label and applying the ID there.', correct: false }
+      - { value: 'By setting `label_id` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#label-attr'
+  - question: 'What is the `choice_label` option used for in `EntityType`?'
+    answers:
+      - { value: 'To define the property of the entity that will be used as the text displayed for each choice in the dropdown or radio/checkbox list.', correct: true }
+      - { value: 'To specify the HTML `value` attribute for each entity choice.', correct: false }
+      - { value: 'To set the label for the entire entity field.', correct: false }
+      - { value: 'To provide a translation key for the entity choices.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#choice-label'
+  - question: 'Which form type is used for a text input field that is specifically for a telephone number?'
+    answers:
+      - { value: 'TextType::class with `input_type` set to `tel`.', correct: false }
+      - { value: 'TelType::class', correct: true }
+      - { value: 'PhoneType::class', correct: false }
+      - { value: 'InputType::class with `type="tel"`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/tel.html'
+  - question: 'What is the `expanded` option used for in `EntityType`?'
+    answers:
+      - { value: 'To render entities as a dropdown select box.', correct: false }
+      - { value: 'To render entities as radio buttons or checkboxes instead of a select box.', correct: true }
+      - { value: 'To allow multiple entities to be selected.', correct: false }
+      - { value: 'To display additional information for each entity.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#expanded'
+  - question: 'How can you render a form field with a custom `id` attribute on its row element?'
+    answers:
+      - { value: 'By using the `row_attr` option: `''row_attr'' => [''id'' => ''my_row_id'']`', correct: true }
+      - { value: 'By using the `id` option on the row.', correct: false }
+      - { value: 'By adding a Twig block for the row and applying the ID there.', correct: false }
+      - { value: 'By setting `row_id` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/locale.html#row-attr'
+  - question: 'What is the `multiple` option used for in `EntityType`?'
+    answers:
+      - { value: 'To allow the user to select more than one entity from the choices.', correct: true }
+      - { value: 'To display entities in multiple columns.', correct: false }
+      - { value: 'To enable multiple forms to be submitted simultaneously.', correct: false }
+      - { value: 'To define multiple labels for a single entity.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#multiple'
+  - question: 'Which form type is used for a text input field that is specifically for a color?'
+    answers:
+      - { value: 'TextType::class with `input_type` set to `color`.', correct: false }
+      - { value: 'ColorType::class', correct: true }
+      - { value: 'HexColorType::class', correct: false }
+      - { value: 'InputType::class with `type="color"`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/color.html'
+  - question: 'What is the `placeholder` option used for in `EntityType`?'
+    answers:
+      - { value: 'To set the default selected entity.', correct: false }
+      - { value: 'To provide a hint or example text inside the select box when no option is selected.', correct: true }
+      - { value: 'To define the label for the entity field.', correct: false }
+      - { value: 'To specify a validation message.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#placeholder'
+  - question: 'How can you render a form field with a custom `data-` attribute on its label element?'
+    answers:
+      - { value: 'By using the `label_attr` option: `''label_attr'' => [''data-custom'' => ''value'']`', correct: true }
+      - { value: 'By using the `data` option on the label.', correct: false }
+      - { value: 'By adding a Twig block for the label and applying the attribute there.', correct: false }
+      - { value: 'By setting `label_data_attr` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#label-attr'
+  - question: 'What is the `group_by` option used for in `EntityType`?'
+    answers:
+      - { value: 'To group entities under optgroups in a select box, based on a callable that returns the group name (e.g., by category).', correct: true }
+      - { value: 'To group form fields for validation purposes.', correct: false }
+      - { value: 'To categorize entities for better organization in the code.', correct: false }
+      - { value: 'To apply different styling to groups of entities.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#group-by'
+  - question: 'Which form type is used for a text input field that is specifically for a number?'
+    answers:
+      - { value: 'TextType::class with `input_type` set to `number`.', correct: false }
+      - { value: 'NumberType::class', correct: true }
+      - { value: 'IntegerType::class', correct: false }
+      - { value: 'InputType::class with `type="number"`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/number.html'
+  - question: 'What is the `choice_loader` option used for in `EntityType`?'
+    answers:
+      - { value: 'To load entities dynamically from a data source, typically for large datasets or complex logic, instead of using `query_builder`.', correct: true }
+      - { value: 'To define the default selected entity.', correct: false }
+      - { value: 'To specify the translation domain for entities.', correct: false }
+      - { value: 'To filter entities based on user input.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#choice-loader'
+  - question: 'How can you render a form field with a custom `data-` attribute on its row element?'
+    answers:
+      - { value: 'By using the `row_attr` option: `''row_attr'' => [''data-custom'' => ''value'']`', correct: true }
+      - { value: 'By using the `data` option on the row.', correct: false }
+      - { value: 'By adding a Twig block for the row and applying the attribute there.', correct: false }
+      - { value: 'By setting `row_data_attr` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/locale.html#row-attr'
+  - question: 'What is the `preferred_choices` option used for in `EntityType`?'
+    answers:
+      - { value: 'To display a subset of entities at the top of the list, separated from the rest (e.g., frequently used categories).', correct: true }
+      - { value: 'To set the default selected entities.', correct: false }
+      - { value: 'To filter the available entities based on user preferences.', correct: false }
+      - { value: 'To mark certain entities as mandatory.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#preferred-choices'
+  - question: 'Which form type is used for a text input field that is specifically for a range?'
+    answers:
+      - { value: 'TextType::class with `input_type` set to `range`.', correct: false }
+      - { value: 'RangeType::class', correct: true }
+      - { value: 'SliderType::class', correct: false }
+      - { value: 'InputType::class with `type="range"`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/range.html'
+  - question: 'What is the `choice_attr` option used for in `EntityType`?'
+    answers:
+      - { value: 'To add custom HTML attributes to the `<option>` or `<input type="radio/checkbox">` elements for each entity.', correct: true }
+      - { value: 'To set attributes for the entire entity field.', correct: false }
+      - { value: 'To define attributes for the entity labels.', correct: false }
+      - { value: 'To specify data attributes for JavaScript.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#choice-attr'
+  - question: 'How can you render a form field with a custom `class` attribute on its widget element?'
+    answers:
+      - { value: 'By using the `widget_attr` option: `''widget_attr'' => [''class'' => ''my-widget-class'']`', correct: true }
+      - { value: 'By using the `attr` option on the widget.', correct: false }
+      - { value: 'By adding a Twig block for the widget and applying the class there.', correct: false }
+      - { value: 'By setting `widget_class` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#widget-attr'
+  - question: 'What is the `class` option used for in `EntityType`?'
+    answers:
+      - { value: 'To specify the FQCN of the Doctrine entity that the field should manage.', correct: true }
+      - { value: 'To define the CSS class for the entity field.', correct: false }
+      - { value: 'To set the default selected entity.', correct: false }
+      - { value: 'To specify the validation group for the entity.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#class'
+  - question: 'Which form type is used for a text input field that is specifically for a date?'
+    answers:
+      - { value: 'TextType::class with `input_type` set to `date`.', correct: false }
+      - { value: 'DateType::class with `widget` set to `single_text`.', correct: true }
+      - { value: 'CalendarType::class', correct: false }
+      - { value: 'InputType::class with `type="date"`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#widget'
+  - question: 'What is the `em` option used for in `EntityType`?'
+    answers:
+      - { value: 'To specify the Doctrine entity manager to use for fetching entities, if not the default one.', correct: true }
+      - { value: 'To enable or disable entity mapping.', correct: false }
+      - { value: 'To define the entity class.', correct: false }
+      - { value: 'To set the default entity for the field.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#em'
+  - question: 'How can you render a form field with a custom `id` attribute on its widget element?'
+    answers:
+      - { value: 'By using the `widget_attr` option: `''widget_attr'' => [''id'' => ''my_widget_id'']`', correct: true }
+      - { value: 'By using the `id` option on the widget.', correct: false }
+      - { value: 'By adding a Twig block for the widget and applying the ID there.', correct: false }
+      - { value: 'By setting `widget_id` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#widget-attr'
+  - question: 'What is the `property` option used for in `EntityType`?'
+    answers:
+      - { value: 'To specify the property of the entity that will be used as the text displayed for each choice (deprecated in favor of `choice_label`).', correct: true }
+      - { value: 'To define the property that will be used as the HTML `value` attribute.', correct: false }
+      - { value: 'To set the default selected entity.', correct: false }
+      - { value: 'To specify the entity class.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#property'
+  - question: 'Which form type is used for a text input field that is specifically for a time?'
+    answers:
+      - { value: 'TextType::class with `input_type` set to `time`.', correct: false }
+      - { value: 'TimeType::class with `widget` set to `single_text`.', correct: true }
+      - { value: 'ClockType::class', correct: false }
+      - { value: 'InputType::class with `type="time"`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#widget'
+  - question: 'What is the `choices` option used for in `EntityType`?'
+    answers:
+      - { value: 'To provide a static array of entity objects to use as choices, instead of fetching them from the database.', correct: true }
+      - { value: 'To define the available options for the select box, radio buttons, or checkboxes.', correct: false }
+      - { value: 'To specify the default selected entity.', correct: false }
+      - { value: 'To filter entities based on user input.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#choices'
+  - question: 'How can you render a form field with a custom `data-` attribute on its widget element?'
+    answers:
+      - { value: 'By using the `widget_attr` option: `''widget_attr'' => [''data-custom'' => ''value'']`', correct: true }
+      - { value: 'By using the `data` option on the widget.', correct: false }
+      - { value: 'By adding a Twig block for the widget and applying the attribute there.', correct: false }
+      - { value: 'By setting `widget_data_attr` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#widget-attr'
+  - question: 'What is the `choice_translation_parameters` option used for in `EntityType`?'
+    answers:
+      - { value: 'To pass parameters to the translation message for each entity choice label.', correct: true }
+      - { value: 'To define global translation parameters for the form.', correct: false }
+      - { value: 'To specify the locale for entity translation.', correct: false }
+      - { value: 'To enable or disable translation for the entities.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/entity.html#choice-translation-parameters'
+  - question: 'Which form type is used for a text input field that is specifically for a date and time?'
+    answers:
+      - { value: 'TextType::class with `input_type` set to `datetime-local`.', correct: false }
+      - { value: 'DateTimeType::class with `widget` set to `single_text`.', correct: true }
+      - { value: 'TimestampType::class', correct: false }
+      - { value: 'InputType::class with `type="datetime-local"`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/datetime.html#widget'
+  - question: 'What is the `data_transformer` option used for in a form field?'
+    answers:
+      - { value: 'To specify a custom data transformer to apply to the field''s data.', correct: true }
+      - { value: 'To define the data type of the field.', correct: false }
+      - { value: 'To set the default value for the field.', correct: false }
+      - { value: 'To validate the field''s data.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/data_transformers.html#registering-a-data-transformer'
+  - question: 'How can you add a custom form type extension to modify the behavior of `TextType`?'
+    answers:
+      - { value: 'Create a class extending `AbstractTypeExtension`, implement `getExtendedType()` to return `TextType::class`, and register it as a service with the `form.type_extension` tag.', correct: true }
+      - { value: 'Override the `TextType` class directly.', correct: false }
+      - { value: 'Use a data transformer on every `TextType` field.', correct: false }
+      - { value: 'Create a new form type that extends `TextType`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_type_extensions.html#creating-a-form-type-extension'
+  - question: 'What is the purpose of `FormEvents::SUBMIT`?'
+    answers:
+      - { value: 'It is dispatched before any data is set on the form.', correct: false }
+      - { value: 'It is dispatched after the form has been submitted and data is mapped, but before validation.', correct: true }
+      - { value: 'It is dispatched after validation and before saving the data.', correct: false }
+      - { value: 'It is dispatched when the form is rendered.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/events.html#pre-submit-and-post-submit-events'
+  - question: 'How can you render a specific form field''s help message in Twig, without rendering the label, widget, or errors?'
+    answers:
+      - { value: '{{ form_help(form.fieldName) }}', correct: true }
+      - { value: '{{ form.fieldName.help }}', correct: false }
+      - { value: '{{ help(form.fieldName) }}', correct: false }
+      - { value: '{{ form_row(form.fieldName).help }}', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#rendering-each-field-by-hand'
+  - question: 'What is the `allow_delete` option used for in `CollectionType`?'
+    answers:
+      - { value: 'To allow existing entries in the collection to be removed when the form is submitted.', correct: true }
+      - { value: 'To allow new entries to be added to the collection.', correct: false }
+      - { value: 'To delete the entire collection if it becomes empty.', correct: false }
+      - { value: 'To prevent accidental deletion of collection items.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_collections.html#allowing-new-tags-with-the-prototype'
+  - question: 'What is the `allow_add` option used for in `CollectionType`?'
+    answers:
+      - { value: 'To allow new entries to be added to the collection when the form is submitted.', correct: true }
+      - { value: 'To allow existing entries in the collection to be removed.', correct: false }
+      - { value: 'To add a default number of entries to the collection.', correct: false }
+      - { value: 'To prevent duplicate entries in the collection.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_collections.html#allowing-new-tags-with-the-prototype'
+  - question: 'When using `CollectionType` with `allow_add` and `allow_delete`, what is the recommended way to handle the JavaScript for adding/removing items?'
+    answers:
+      - { value: 'Symfony provides built-in JavaScript functions for this.', correct: false }
+      - { value: 'Manually implement JavaScript to clone the `prototype` and handle removal, updating indices.', correct: true }
+      - { value: 'Use a third-party JavaScript library that integrates with Symfony forms.', correct: false }
+      - { value: 'It''s handled automatically by the form component.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_collections.html#allowing-new-tags-with-the-prototype'
+  - question: 'What is the purpose of the `label_format` option in a form field?'
+    answers:
+      - { value: 'To define a custom format string for the field''s label, allowing placeholders like `%name%` or `%id%`.', correct: true }
+      - { value: 'To set the default label for all fields of a certain type.', correct: false }
+      - { value: 'To specify the translation key for the label.', correct: false }
+      - { value: 'To control the CSS styling of the label.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#label-format'
+  - question: 'How can you render a specific form field''s label in Twig, without rendering the widget, errors, or help message?'
+    answers:
+      - { value: '{{ form_label(form.fieldName) }}', correct: true }
+      - { value: '{{ form.fieldName.label }}', correct: false }
+      - { value: '{{ label(form.fieldName) }}', correct: false }
+      - { value: '{{ form_row(form.fieldName).label }}', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms.html#rendering-each-field-by-hand'
+  - question: 'What is the `error_mapping` option used for in a form type?'
+    answers:
+      - { value: 'To map validation errors from one field to another, or from a global error to a specific field.', correct: true }
+      - { value: 'To define custom error messages for validation constraints.', correct: false }
+      - { value: 'To translate error messages.', correct: false }
+      - { value: 'To group errors by severity.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#error-mapping'
+  - question: 'When creating a custom form type, what is the purpose of the `getBlockPrefix()` method?'
+    answers:
+      - { value: 'To return the default block prefix for the form type, used in Twig for block naming conventions.', correct: true }
+      - { value: 'To get the parent block prefix.', correct: false }
+      - { value: 'To define the CSS class prefix for the form.', correct: false }
+      - { value: 'To retrieve the form''s name.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/form/form_customization.html#form-types-and-block-names'
+  - question: 'How can you render a form field with a custom `id` attribute on its label element?'
+    answers:
+      - { value: 'By using the `label_attr` option: `''label_attr'' => [''id'' => ''my_label_id'']`', correct: true }
+      - { value: 'By using the `id` option on the label.', correct: false }
+      - { value: 'By adding a Twig block for the label and applying the ID there.', correct: false }
+      - { value: 'By setting `label_id` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#label-attr'
+  - question: 'What is the `validation_groups` option used for in a form?'
+    answers:
+      - { value: 'To specify which validation groups should be applied when the form is submitted.', correct: true }
+      - { value: 'To group form fields for rendering purposes.', correct: false }
+      - { value: 'To define different sets of validation rules for different form types.', correct: false }
+      - { value: 'To disable validation for certain fields.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#validation-groups'
+  - question: 'What is the purpose of the `constraints` option in a form field?'
+    answers:
+      - { value: 'To define the validation rules that apply to the field''s data.', correct: true }
+      - { value: 'To specify the HTML attributes for the field.', correct: false }
+      - { value: 'To set the default value for the field.', correct: false }
+      - { value: 'To control the rendering of the field.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/form.html#adding-validation'
+  - question: 'How can you render a form field with a custom `class` attribute on its row element (the `div` or `tr` wrapping the field)?'
+    answers:
+      - { value: 'By using the `row_attr` option: `''row_attr'' => [''class'' => ''my-row-class'']`', correct: true }
+      - { value: 'By using the `attr` option on the row.', correct: false }
+      - { value: 'By adding a Twig block for the row and applying the class there.', correct: false }
+      - { value: 'By setting `row_class` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/locale.html#row-attr'
+  - question: 'What is the `translation_domain` option used for in a form field?'
+    answers:
+      - { value: 'To specify the message domain for translating labels, help messages, and error messages.', correct: true }
+      - { value: 'To define the language of the form.', correct: false }
+      - { value: 'To enable or disable translation for the form.', correct: false }
+      - { value: 'To set the default locale for the form.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#translation-domain'
+  - question: 'How can you render a form field with a custom `data-` attribute on its row element?'
+    answers:
+      - { value: 'By using the `row_attr` option: `''row_attr'' => [''data-custom'' => ''value'']`', correct: true }
+      - { value: 'By using the `data` option on the row.', correct: false }
+      - { value: 'By adding a Twig block for the row and applying the attribute there.', correct: false }
+      - { value: 'By setting `row_data_attr` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/locale.html#row-attr'
+  - question: 'What is the `help_attr` option used for in a form field?'
+    answers:
+      - { value: 'To add custom HTML attributes to the help message element.', correct: true }
+      - { value: 'To define the text of the help message.', correct: false }
+      - { value: 'To specify the CSS class for the help message.', correct: false }
+      - { value: 'To control whether the help message is displayed.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#help-attr'
+  - question: 'How can you render a form field with a custom `class` attribute on its help message element?'
+    answers:
+      - { value: 'By using the `help_attr` option: `''help_attr'' => [''class'' => ''my-help-class'']`', correct: true }
+      - { value: 'By using the `attr` option on the help message.', correct: false }
+      - { value: 'By adding a Twig block for the help message and applying the class there.', correct: false }
+      - { value: 'By setting `help_class` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#help-attr'
+  - question: 'What is the `help_html` option used for in a form field?'
+    answers:
+      - { value: 'If `true`, the help message will be rendered as raw HTML.', correct: true }
+      - { value: 'If `true`, the help message will be translated.', correct: false }
+      - { value: 'If `true`, the help message will be displayed as a tooltip.', correct: false }
+      - { value: 'If `true`, the help message will be hidden by default.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#help-html'
+  - question: 'How can you render a form field with a custom `id` attribute on its help message element?'
+    answers:
+      - { value: 'By using the `help_attr` option: `''help_attr'' => [''id'' => ''my_help_id'']`', correct: true }
+      - { value: 'By using the `id` option on the help message.', correct: false }
+      - { value: 'By adding a Twig block for the help message and applying the ID there.', correct: false }
+      - { value: 'By setting `help_id` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#help-attr'
+  - question: 'What is the `help_translation_parameters` option used for in a form field?'
+    answers:
+      - { value: 'To pass parameters to the translation message for the help text.', correct: true }
+      - { value: 'To define global translation parameters for the form.', correct: false }
+      - { value: 'To specify the locale for help text translation.', correct: false }
+      - { value: 'To enable or disable translation for the help text.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#help-translation-parameters'
+  - question: 'How can you render a form field with a custom `data-` attribute on its help message element?'
+    answers:
+      - { value: 'By using the `help_attr` option: `''help_attr'' => [''data-custom'' => ''value'']`', correct: true }
+      - { value: 'By using the `data` option on the help message.', correct: false }
+      - { value: 'By adding a Twig block for the help message and applying the attribute there.', correct: false }
+      - { value: 'By setting `help_data_attr` option.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#help-attr'
+  - question: 'What is the `error_mapping` option used for in a form type?'
+    answers:
+      - { value: 'To map validation errors from one field to another, or from a global error to a specific field.', correct: true }
+      - { value: 'To define custom error messages for validation constraints.', correct: false }
+      - { value: 'To translate error messages.', correct: false }
+      - { value: 'To group errors by severity.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#error-mapping'
+  - question: 'What is the `invalid_message` option used for in a form field?'
+    answers:
+      - { value: 'To set a custom error message when the submitted data cannot be transformed to the expected type.', correct: true }
+      - { value: 'To define a generic validation error message.', correct: false }
+      - { value: 'To specify the error message for a required field.', correct: false }
+      - { value: 'To translate error messages.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#invalid-message'
+  - question: 'What is the `invalid_message_parameters` option used for in a form field?'
+    answers:
+      - { value: 'To pass parameters to the `invalid_message` translation.', correct: true }
+      - { value: 'To define global parameters for all error messages.', correct: false }
+      - { value: 'To specify the locale for error message translation.', correct: false }
+      - { value: 'To enable or disable error message translation.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#invalid-message-parameters'
+  - question: 'What is the `compound` option used for in a form type?'
+    answers:
+      - { value: 'It determines if the form is a single HTML element or a group of fields.', correct: true }
+      - { value: 'It specifies if the form should be submitted via AJAX.', correct: false }
+      - { value: 'It controls whether the form uses CSRF protection.', correct: false }
+      - { value: 'It indicates if the form can be extended by other form types.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html#compound'
+  - question: 'What is the `data_empty_message` option used for in a form field?'
+    answers:
+      - { value: 'To set a custom error message when the submitted data is empty and the field is required.', correct: false }
+      - { value: 'To define the message displayed when the field''s data is null or empty.', correct: false }
+      - { value: 'This option does not exist in Symfony forms.', correct: true }
+      - { value: 'To specify a placeholder for empty data.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/form.html'
+  - question: 'What is the `trim` option used for in `TextType` or `TextareaType`?'
+    answers:
+      - { value: 'If `true`, leading and trailing whitespace will be removed from the submitted string data.', correct: true }
+      - { value: 'If `true`, the field will be displayed without padding.', correct: false }
+      - { value: 'If `true`, the text will be truncated if it exceeds a certain length.', correct: false }
+      - { value: 'If `true`, the field will automatically adjust its size to fit the content.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/text.html#trim'
+  - question: 'What is the `input_format` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To define the format of the data as it is received from the HTML form (view data).', correct: false }
+      - { value: 'To define the format of the data as it is stored in the underlying object (model data).', correct: false }
+      - { value: 'To define the format of the data as it is passed to the data transformer (normalized data).', correct: true }
+      - { value: 'To define the display format of the date/time string in the input field.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#input-format'
+  - question: 'What is the `model_timezone` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the timezone of the data in the underlying object (model data).', correct: true }
+      - { value: 'To specify the timezone of the data in the HTML form (view data).', correct: false }
+      - { value: 'To specify the timezone of the user.', correct: false }
+      - { value: 'To specify the default timezone for the application.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#model-timezone'
+  - question: 'What is the `view_timezone` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the timezone of the data in the underlying object (model data).', correct: false }
+      - { value: 'To specify the timezone of the data as it is displayed in the HTML form (view data).', correct: true }
+      - { value: 'To specify the timezone of the server.', correct: false }
+      - { value: 'To specify the default timezone for the application.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#view-timezone'
+  - question: 'What is the `years` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of years to be displayed in the year select box.', correct: true }
+      - { value: 'To set the default year for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed years.', correct: false }
+      - { value: 'To enable or disable the year select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#years'
+  - question: 'What is the `months` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of months to be displayed in the month select box.', correct: true }
+      - { value: 'To set the default month for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed months.', correct: false }
+      - { value: 'To enable or disable the month select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#months'
+  - question: 'What is the `days` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of days to be displayed in the day select box.', correct: true }
+      - { value: 'To set the default day for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed days.', correct: false }
+      - { value: 'To enable or disable the day select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#days'
+  - question: 'What is the `hours` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of hours to be displayed in the hour select box.', correct: true }
+      - { value: 'To set the default hour for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed hours.', correct: false }
+      - { value: 'To enable or disable the hour select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#hours'
+  - question: 'What is the `minutes` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of minutes to be displayed in the minute select box.', correct: true }
+      - { value: 'To set the default minute for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed minutes.', correct: false }
+      - { value: 'To enable or disable the minute select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#minutes'
+  - question: 'What is the `seconds` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of seconds to be displayed in the second select box.', correct: true }
+      - { value: 'To set the default second for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed seconds.', correct: false }
+      - { value: 'To enable or disable the second select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#seconds'
+  - question: 'What is the `with_seconds` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'If `true`, a seconds select box will be displayed.', correct: true }
+      - { value: 'If `true`, the time will include seconds in its format.', correct: false }
+      - { value: 'If `true`, the field will allow input of seconds.', correct: false }
+      - { value: 'If `true`, the seconds will be validated.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#with-seconds'
+  - question: 'What is the `placeholder` option used for in `DateType` or `DateTimeType` when `widget` is `choice`?'
+    answers:
+      - { value: 'To provide a hint or example text inside the input field when it''s empty.', correct: false }
+      - { value: 'To add an empty option (e.g., "Year", "Month", "Day") at the top of the select boxes.', correct: true }
+      - { value: 'To set the default date for the field.', correct: false }
+      - { value: 'To specify a validation message.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#placeholder'
+  - question: 'What is the `input_format` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To define the format of the data as it is received from the HTML form (view data).', correct: false }
+      - { value: 'To define the format of the data as it is stored in the underlying object (model data).', correct: false }
+      - { value: 'To define the format of the data as it is passed to the data transformer (normalized data).', correct: true }
+      - { value: 'To define the display format of the date/time string in the input field.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#input-format'
+  - question: 'What is the `model_timezone` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the timezone of the data in the underlying object (model data).', correct: true }
+      - { value: 'To specify the timezone of the data in the HTML form (view data).', correct: false }
+      - { value: 'To specify the timezone of the user.', correct: false }
+      - { value: 'To specify the default timezone for the application.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#model-timezone'
+  - question: 'What is the `view_timezone` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the timezone of the data in the underlying object (model data).', correct: false }
+      - { value: 'To specify the timezone of the data as it is displayed in the HTML form (view data).', correct: true }
+      - { value: 'To specify the timezone of the server.', correct: false }
+      - { value: 'To specify the default timezone for the application.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#view-timezone'
+  - question: 'What is the `years` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of years to be displayed in the year select box.', correct: true }
+      - { value: 'To set the default year for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed years.', correct: false }
+      - { value: 'To enable or disable the year select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#years'
+  - question: 'What is the `months` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of months to be displayed in the month select box.', correct: true }
+      - { value: 'To set the default month for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed months.', correct: false }
+      - { value: 'To enable or disable the month select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#months'
+  - question: 'What is the `days` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of days to be displayed in the day select box.', correct: true }
+      - { value: 'To set the default day for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed days.', correct: false }
+      - { value: 'To enable or disable the day select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#days'
+  - question: 'What is the `hours` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of hours to be displayed in the hour select box.', correct: true }
+      - { value: 'To set the default hour for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed hours.', correct: false }
+      - { value: 'To enable or disable the hour select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#hours'
+  - question: 'What is the `minutes` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of minutes to be displayed in the minute select box.', correct: true }
+      - { value: 'To set the default minute for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed minutes.', correct: false }
+      - { value: 'To enable or disable the minute select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#minutes'
+  - question: 'What is the `seconds` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of seconds to be displayed in the second select box.', correct: true }
+      - { value: 'To set the default second for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed seconds.', correct: false }
+      - { value: 'To enable or disable the second select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#seconds'
+  - question: 'What is the `with_seconds` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'If `true`, a seconds select box will be displayed.', correct: true }
+      - { value: 'If `true`, the time will include seconds in its format.', correct: false }
+      - { value: 'If `true`, the field will allow input of seconds.', correct: false }
+      - { value: 'If `true`, the seconds will be validated.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#with-seconds'
+  - question: 'What is the `placeholder` option used for in `DateType` or `DateTimeType` when `widget` is `choice`?'
+    answers:
+      - { value: 'To provide a hint or example text inside the input field when it''s empty.', correct: false }
+      - { value: 'To add an empty option (e.g., "Year", "Month", "Day") at the top of the select boxes.', correct: true }
+      - { value: 'To set the default date for the field.', correct: false }
+      - { value: 'To specify a validation message.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#placeholder'
+  - question: 'What is the `input_format` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To define the format of the data as it is received from the HTML form (view data).', correct: false }
+      - { value: 'To define the format of the data as it is stored in the underlying object (model data).', correct: false }
+      - { value: 'To define the format of the data as it is passed to the data transformer (normalized data).', correct: true }
+      - { value: 'To define the display format of the date/time string in the input field.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#input-format'
+  - question: 'What is the `model_timezone` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the timezone of the data in the underlying object (model data).', correct: true }
+      - { value: 'To specify the timezone of the data in the HTML form (view data).', correct: false }
+      - { value: 'To specify the timezone of the user.', correct: false }
+      - { value: 'To specify the default timezone for the application.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#model-timezone'
+  - question: 'What is the `view_timezone` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the timezone of the data in the underlying object (model data).', correct: false }
+      - { value: 'To specify the timezone of the data as it is displayed in the HTML form (view data).', correct: true }
+      - { value: 'To specify the timezone of the server.', correct: false }
+      - { value: 'To specify the default timezone for the application.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#view-timezone'
+  - question: 'What is the `years` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of years to be displayed in the year select box.', correct: true }
+      - { value: 'To set the default year for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed years.', correct: false }
+      - { value: 'To enable or disable the year select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#years'
+  - question: 'What is the `months` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of months to be displayed in the month select box.', correct: true }
+      - { value: 'To set the default month for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed months.', correct: false }
+      - { value: 'To enable or disable the month select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#months'
+  - question: 'What is the `days` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of days to be displayed in the day select box.', correct: true }
+      - { value: 'To set the default day for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed days.', correct: false }
+      - { value: 'To enable or disable the day select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#days'
+  - question: 'What is the `hours` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of hours to be displayed in the hour select box.', correct: true }
+      - { value: 'To set the default hour for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed hours.', correct: false }
+      - { value: 'To enable or disable the hour select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#hours'
+  - question: 'What is the `minutes` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of minutes to be displayed in the minute select box.', correct: true }
+      - { value: 'To set the default minute for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed minutes.', correct: false }
+      - { value: 'To enable or disable the minute select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#minutes'
+  - question: 'What is the `seconds` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of seconds to be displayed in the second select box.', correct: true }
+      - { value: 'To set the default second for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed seconds.', correct: false }
+      - { value: 'To enable or disable the second select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#seconds'
+  - question: 'What is the `with_seconds` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'If `true`, a seconds select box will be displayed.', correct: true }
+      - { value: 'If `true`, the time will include seconds in its format.', correct: false }
+      - { value: 'If `true`, the field will allow input of seconds.', correct: false }
+      - { value: 'If `true`, the seconds will be validated.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#with-seconds'
+  - question: 'What is the `placeholder` option used for in `DateType` or `DateTimeType` when `widget` is `choice`?'
+    answers:
+      - { value: 'To provide a hint or example text inside the input field when it''s empty.', correct: false }
+      - { value: 'To add an empty option (e.g., "Year", "Month", "Day") at the top of the select boxes.', correct: true }
+      - { value: 'To set the default date for the field.', correct: false }
+      - { value: 'To specify a validation message.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#placeholder'
+  - question: 'What is the `input_format` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To define the format of the data as it is received from the HTML form (view data).', correct: false }
+      - { value: 'To define the format of the data as it is stored in the underlying object (model data).', correct: false }
+      - { value: 'To define the format of the data as it is passed to the data transformer (normalized data).', correct: true }
+      - { value: 'To define the display format of the date/time string in the input field.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#input-format'
+  - question: 'What is the `model_timezone` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the timezone of the data in the underlying object (model data).', correct: true }
+      - { value: 'To specify the timezone of the data in the HTML form (view data).', correct: false }
+      - { value: 'To specify the timezone of the user.', correct: false }
+      - { value: 'To specify the default timezone for the application.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#model-timezone'
+  - question: 'What is the `view_timezone` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the timezone of the data in the underlying object (model data).', correct: false }
+      - { value: 'To specify the timezone of the data as it is displayed in the HTML form (view data).', correct: true }
+      - { value: 'To specify the timezone of the server.', correct: false }
+      - { value: 'To specify the default timezone for the application.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#view-timezone'
+  - question: 'What is the `years` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of years to be displayed in the year select box.', correct: true }
+      - { value: 'To set the default year for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed years.', correct: false }
+      - { value: 'To enable or disable the year select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#years'
+  - question: 'What is the `months` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of months to be displayed in the month select box.', correct: true }
+      - { value: 'To set the default month for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed months.', correct: false }
+      - { value: 'To enable or disable the month select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#months'
+  - question: 'What is the `days` option used for in `DateType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of days to be displayed in the day select box.', correct: true }
+      - { value: 'To set the default day for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed days.', correct: false }
+      - { value: 'To enable or disable the day select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#days'
+  - question: 'What is the `hours` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of hours to be displayed in the hour select box.', correct: true }
+      - { value: 'To set the default hour for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed hours.', correct: false }
+      - { value: 'To enable or disable the hour select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#hours'
+  - question: 'What is the `minutes` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of minutes to be displayed in the minute select box.', correct: true }
+      - { value: 'To set the default minute for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed minutes.', correct: false }
+      - { value: 'To enable or disable the minute select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#minutes'
+  - question: 'What is the `seconds` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'To specify the list of seconds to be displayed in the second select box.', correct: true }
+      - { value: 'To set the default second for the field.', correct: false }
+      - { value: 'To define the minimum and maximum allowed seconds.', correct: false }
+      - { value: 'To enable or disable the second select box.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#seconds'
+  - question: 'What is the `with_seconds` option used for in `TimeType` or `DateTimeType`?'
+    answers:
+      - { value: 'If `true`, a seconds select box will be displayed.', correct: true }
+      - { value: 'If `true`, the time will include seconds in its format.', correct: false }
+      - { value: 'If `true`, the field will allow input of seconds.', correct: false }
+      - { value: 'If `true`, the seconds will be validated.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/time.html#with-seconds'
+  - question: 'What is the `placeholder` option used for in `DateType` or `DateTimeType` when `widget` is `choice`?'
+    answers:
+      - { value: 'To provide a hint or example text inside the input field when it''s empty.', correct: false }
+      - { value: 'To add an empty option (e.g., "Year", "Month", "Day") at the top of the select boxes.', correct: true }
+      - { value: 'To set the default date for the field.', correct: false }
+      - { value: 'To specify a validation message.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/forms/types/date.html#placeholder'
+```
