@@ -1,0 +1,2374 @@
+```yaml
+category: Miscellaneous
+questions:
+  - question: 'Which Symfony component is responsible for loading environment variables from a .env file?'
+    answers:
+      - { value: 'The Config component', correct: false }
+      - { value: 'The Dotenv component', correct: true }
+      - { value: 'The Yaml component', correct: false }
+      - { value: 'The Env component', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/dotenv.html'
+
+  - question: 'How can you ensure that a specific environment variable loaded by Dotenv is always treated as a boolean `true` or `false`?'
+    answers:
+      - { value: 'By prefixing the variable name with `BOOL_` in the .env file.', correct: false }
+      - { value: 'By using `Dotenv::loadEnv(__DIR__ . ''/.env'', null, true, [''APP_DEBUG'']);`', correct: false }
+      - { value: 'By casting the variable in PHP after loading.', correct: false }
+      - { value: 'By defining it in the .env file as `APP_DEBUG=true` or `APP_DEBUG=false` and letting Dotenv handle the type conversion.', correct: true }
+    help: |
+      'https://symfony.com/doc/current/components/dotenv.html#type-conversion'
+
+  - question: 'What is the primary purpose of Symfony''s ExpressionLanguage component?'
+    answers:
+      - { value: 'To define routing rules using regular expressions.', correct: false }
+      - { value: 'To parse and evaluate strings as PHP code safely.', correct: true }
+      - { value: 'To generate dynamic SQL queries.', correct: false }
+      - { value: 'To compile Twig templates into PHP classes.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/expression_language.html'
+
+  - question: 'Which of the following is a valid ExpressionLanguage expression to check if a variable `user` has the role `ROLE_ADMIN`?'
+    answers:
+      - { value: '`user.hasRole("ROLE_ADMIN")`', correct: true }
+      - { value: '`user->hasRole("ROLE_ADMIN")`', correct: false }
+      - { value: '`user["roles"] contains "ROLE_ADMIN"`', correct: false }
+      - { value: '`is_granted("ROLE_ADMIN", user)`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/expression_language/usage.html'
+
+  - question: 'When should you use the `ExpressionLanguage` component in a Symfony application?'
+    answers:
+      - { value: 'For complex business logic that needs to be easily configurable by non-developers.', correct: true }
+      - { value: 'As a replacement for standard PHP logic in controllers and services.', correct: false }
+      - { value: 'To define database schema migrations.', correct: false }
+      - { value: 'To handle all form validation rules.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/expression_language/usage.html'
+
+  - question: 'What is the default behavior of Symfony when an unhandled exception occurs in a production environment?'
+    answers:
+      - { value: 'It displays a detailed error page with stack trace.', correct: false }
+      - { value: 'It redirects to a generic 500 error page without revealing sensitive information.', correct: true }
+      - { value: 'It sends an email to the configured administrator.', correct: false }
+      - { value: 'It logs the error and terminates the script silently.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller/error_pages.html'
+
+  - question: 'How can you customize the error pages (e.g., 404, 500) in a Symfony application?'
+    answers:
+      - { value: 'By creating Twig templates named `error.html.twig` in the `templates/bundles/TwigBundle/Exception/` directory.', correct: false }
+      - { value: 'By creating Twig templates named `error<statusCode>.html.twig` (e.g., `error404.html.twig`) in the `templates/bundles/TwigBundle/Exception/` directory.', correct: true }
+      - { value: 'By overriding the `ExceptionController` service.', correct: false }
+      - { value: 'By defining custom routes for error pages in `config/routes.yaml`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/controller/error_pages.html#customizing-error-pages'
+
+  - question: 'Which event listener can you use to catch exceptions and modify the response before it is sent to the client?'
+    answers:
+      - { value: '`kernel.request`', correct: false }
+      - { value: '`kernel.response`', correct: false }
+      - { value: '`kernel.exception`', correct: true }
+      - { value: '`kernel.terminate`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/event_dispatcher/before_after_filters.html#the-kernel-exception-event'
+
+  - question: 'What is the recommended way to log errors and exceptions in a Symfony application?'
+    answers:
+      - { value: 'Using `echo` statements in catch blocks.', correct: false }
+      - { value: 'Directly writing to files using `file_put_contents()`.', correct: false }
+      - { value: 'Using the Monolog integration provided by Symfony, injecting the `LoggerInterface`.', correct: true }
+      - { value: 'Relying solely on PHP''s default error logging.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/logging.html'
+
+  - question: 'When debugging a Symfony application, which environment variable should be set to `1` to enable detailed error reporting and the Web Debug Toolbar?'
+    answers:
+      - { value: '`APP_ENV=dev`', correct: false }
+      - { value: '`APP_DEBUG=1`', correct: true }
+      - { value: '`SYMFONY_DEBUG=true`', correct: false }
+      - { value: '`DEBUG_MODE=on`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/setup/web_server.html#symfony-environments'
+
+  - question: 'Which command-line tool is essential for debugging Symfony console commands?'
+    answers:
+      - { value: '`php bin/console debug:router`', correct: false }
+      - { value: '`php bin/console lint:container`', correct: false }
+      - { value: '`php bin/console` with Xdebug enabled.', correct: true }
+      - { value: '`php bin/console cache:clear`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/console/debug.html'
+
+  - question: 'What is the purpose of the `dump()` function in Symfony, and how does it differ from `var_dump()`?'
+    answers:
+      - { value: '`dump()` is an alias for `var_dump()` and provides the same output.', correct: false }
+      - { value: '`dump()` is a Symfony-specific function that provides a more readable and interactive output, especially in the Web Debug Toolbar, and does not stop script execution.', correct: true }
+      - { value: '`dump()` is used for database debugging only.', correct: false }
+      - { value: '`dump()` is a production-only function for logging.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/var_dumper.html#the-dump-function'
+
+  - question: 'Which Symfony command can you use to check the configuration of your services and parameters?'
+    answers:
+      - { value: '`php bin/console debug:container`', correct: true }
+      - { value: '`php bin/console config:dump`', correct: false }
+      - { value: '`php bin/console cache:warmup`', correct: false }
+      - { value: '`php bin/console about`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/console/commands_overview.html#debug-container'
+
+  - question: 'What is the recommended way to deploy a Symfony application to a production server?'
+    answers:
+      - { value: 'Copying all files via FTP and running `composer install`.', correct: false }
+      - { value: 'Using a deployment tool like Deployer, Capistrano, or SymfonyCloud.', correct: true }
+      - { value: 'Manually clearing the cache and installing dependencies on the server.', correct: false }
+      - { value: 'Pushing directly to the production Git repository.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/deployment.html'
+
+  - question: 'Which command should always be run after deploying a new version of a Symfony application to production?'
+    answers:
+      - { value: '`php bin/console cache:clear --env=prod`', correct: false }
+      - { value: '`php bin/console cache:warmup --env=prod`', correct: true }
+      - { value: '`php bin/console assets:install`', correct: false }
+      - { value: '`php bin/console doctrine:migrations:migrate`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/deployment.html#cache-warm-up'
+
+  - question: 'What is the purpose of the `APP_ENV` environment variable in a Symfony application?'
+    answers:
+      - { value: 'It defines the application''s timezone.', correct: false }
+      - { value: 'It specifies the current environment (e.g., `dev`, `prod`, `test`) and influences configuration loading and debugging behavior.', correct: true }
+      - { value: 'It sets the application''s default language.', correct: false }
+      - { value: 'It determines the database connection parameters.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/setup/web_server.html#symfony-environments'
+
+  - question: 'Which of the following is a best practice for managing sensitive configuration data (e.g., database credentials) in production?'
+    answers:
+      - { value: 'Hardcoding them directly in `config/services.yaml`.', correct: false }
+      - { value: 'Storing them in version control in plain text.', correct: false }
+      - { value: 'Using environment variables or Symfony''s secrets management.', correct: true }
+      - { value: 'Encrypting them and storing the decryption key in the repository.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/configuration/secrets.html'
+
+  - question: 'What is the primary benefit of using Symfony''s Cache component?'
+    answers:
+      - { value: 'To store user session data permanently.', correct: false }
+      - { value: 'To reduce the load on backend systems by storing frequently accessed data temporarily.', correct: true }
+      - { value: 'To manage database transactions.', correct: false }
+      - { value: 'To handle asynchronous message queues.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache.html'
+
+  - question: 'Which cache adapter would you typically use for a production environment requiring high performance and scalability?'
+    answers:
+      - { value: '`FilesystemAdapter`', correct: false }
+      - { value: '`ArrayAdapter`', correct: false }
+      - { value: '`RedisAdapter` or `MemcachedAdapter`', correct: true }
+      - { value: '`PdoAdapter`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache/adapters.html'
+
+  - question: 'How do you invalidate a specific cache item using the Cache component?'
+    answers:
+      - { value: 'By calling `cachePool->deleteItem(''my_key'')`', correct: true }
+      - { value: 'By calling `cachePool->clear()`', correct: false }
+      - { value: 'By manually deleting the cache file.', correct: false }
+      - { value: 'Cache items cannot be individually invalidated.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache/cache_items.html#deleting-cache-items'
+
+  - question: 'What is the purpose of the `PSR-6` and `PSR-16` interfaces in the context of Symfony''s Cache component?'
+    answers:
+      - { value: 'They define how cache data should be serialized.', correct: false }
+      - { value: 'They provide a common interface for caching libraries, allowing interoperability and easy switching between different cache backends.', correct: true }
+      - { value: 'They specify the format for cache keys.', correct: false }
+      - { value: 'They are specific to HTTP caching only.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache.html#psr-6-and-psr-16'
+
+  - question: 'Which Symfony component allows you to execute external commands or processes from your PHP application?'
+    answers:
+      - { value: 'The Console component', correct: false }
+      - { value: 'The Process component', correct: true }
+      - { value: 'The Runtime component', correct: false }
+      - { value: 'The Exec component', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/process.html'
+
+  - question: 'How can you execute a command and get its output using the Process component?'
+    answers:
+      - { value: '`$process = new Process([''ls'', ''-l'']); $process->run(); echo $process->getOutput();`', correct: true }
+      - { value: '`exec(''ls -l'', $output);`', correct: false }
+      - { value: '`shell_exec(''ls -l'');`', correct: false }
+      - { value: '`$process = Process::fromShellCommandline(''ls -l''); $process->start(); echo $process->getOutput();`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/process.html#running-the-process'
+
+  - question: 'What is the difference between `Process::run()` and `Process::start()`?'
+    answers:
+      - { value: '`run()` executes the process synchronously, waiting for it to finish, while `start()` executes it asynchronously, allowing your PHP script to continue.', correct: true }
+      - { value: '`run()` is for foreground processes, `start()` for background processes.', correct: false }
+      - { value: '`run()` returns the output, `start()` does not.', correct: false }
+      - { value: 'There is no functional difference; they are aliases.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/process.html#running-processes-asynchronously'
+
+  - question: 'How can you handle process timeouts when using the Symfony Process component?'
+    answers:
+      - { value: 'By setting the `timeout` option in the Process constructor or using `setTimeout()` method.', correct: true }
+      - { value: 'By wrapping the process execution in a `try-catch` block for `ProcessTimedOutException`.', correct: false }
+      - { value: 'By using PHP''s `set_time_limit()` function.', correct: false }
+      - { value: 'The Process component does not support timeouts.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/process.html#process-timeout'
+
+  - question: 'Which Symfony component is used for converting PHP objects into various formats (like JSON, XML) and vice versa?'
+    answers:
+      - { value: 'The HttpFoundation component', correct: false }
+      - { value: 'The Serializer component', correct: true }
+      - { value: 'The PropertyAccess component', correct: false }
+      - { value: 'The JsonEncoder component', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html'
+
+  - question: 'To serialize an object into JSON using the Serializer component, what encoders and normalizers are typically required?'
+    answers:
+      - { value: 'Only a `JsonEncoder` is needed.', correct: false }
+      - { value: 'A `JsonEncoder` and a `ObjectNormalizer` (or other specific normalizers like `DateTimeNormalizer`).', correct: true }
+      - { value: 'A `XmlEncoder` and a `ArrayNormalizer`.', correct: false }
+      - { value: 'The Serializer component automatically detects the format and normalizes.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#encoders-and-normalizers'
+
+  - question: 'How can you control which properties of an object are serialized or deserialized using the Serializer component?'
+    answers:
+      - { value: 'By using `#[Ignore]` attributes on properties.', correct: false }
+      - { value: 'By using serialization groups with `#[Groups]` attributes on properties/methods.', correct: true }
+      - { value: 'By manually defining a whitelist of properties in the serializer configuration.', correct: false }
+      - { value: 'The Serializer component always serializes all public properties.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#using-serialization-groups'
+
+  - question: 'What is the purpose of the `denormalize()` method in the Serializer component?'
+    answers:
+      - { value: 'To convert a normalized array back into an object.', correct: true }
+      - { value: 'To convert an object into a normalized array.', correct: false }
+      - { value: 'To encode an object into a specific format (e.g., JSON).', correct: false }
+      - { value: 'To decode a string into an array.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#denormalizing-objects'
+
+  - question: 'Which Symfony component provides a message bus for sending and handling messages (commands, events, queries) asynchronously or synchronously?'
+    answers:
+      - { value: 'The EventDispatcher component', correct: false }
+      - { value: 'The Workflow component', correct: false }
+      - { value: 'The Messenger component', correct: true }
+      - { value: 'The Queue component', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html'
+
+  - question: 'What is a "message handler" in the context of the Symfony Messenger component?'
+    answers:
+      - { value: 'A service that dispatches messages to the message bus.', correct: false }
+      - { value: 'A class that defines the structure of a message.', correct: false }
+      - { value: 'A service that receives a specific message type and performs an action based on it.', correct: true }
+      - { value: 'A component that stores messages in a database.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#creating-a-message-handler'
+
+  - question: 'How do you send a message using the Messenger component?'
+    answers:
+      - { value: 'By calling `$bus->dispatch(new MyMessage());` where `$bus` is an instance of `MessageBusInterface`.', correct: true }
+      - { value: 'By directly instantiating the message handler.', correct: false }
+      - { value: 'By using `EventDispatcher->dispatch(new MyMessage());`', correct: false }
+      - { value: 'Messages are sent automatically when created.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#dispatching-messages'
+
+  - question: 'What is the purpose of "transports" in the Symfony Messenger component?'
+    answers:
+      - { value: 'They define the message format (e.g., JSON, XML).', correct: false }
+      - { value: 'They specify how messages are sent and received, acting as a bridge to external message queues (e.g., RabbitMQ, Redis, Doctrine).', correct: true }
+      - { value: 'They are responsible for message validation.', correct: false }
+      - { value: 'They handle message serialization and deserialization.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#transports'
+
+  - question: 'Which Symfony component is used for sending emails?'
+    answers:
+      - { value: 'The SwiftmailerBundle (deprecated in Symfony 5+)', correct: false }
+      - { value: 'The Mailer component', correct: true }
+      - { value: 'The HttpFoundation component', correct: false }
+      - { value: 'The Mime component', correct: false }
+    help: |
+      'https://symfony.com/doc/current/mailer.html'
+
+  - question: 'How do you create and send a basic email using the Mailer component?'
+    answers:
+      - { value: '''
+        use Symfony\Component\Mailer\MailerInterface;
+        use Symfony\Component\Mime\Email;
+
+        // ...
+        public function sendEmail(MailerInterface $mailer)
+        {
+            $email = (new Email())
+                ->from(''hello@example.com'')
+                ->to(''you@example.com'')
+                ->subject(''Time for Symfony!'')
+                ->text(''Sending emails is fun again!'')
+                ->html(''<p>See Twig integration for HTML emails!</p>'');
+
+            $mailer->send($email);
+        }
+        ''', correct: true }
+      - { value: '''
+        // ...
+        public function sendEmail(MailerInterface $mailer)
+        {
+            $mailer->send(''hello@example.com'', ''you@example.com'', ''Subject'', ''Body'');
+        }
+        ''', correct: false }
+      - { value: '''
+        // ...
+        public function sendEmail(MailerInterface $mailer)
+        {
+            $message = new \Swift_Message(''Subject'', ''Body'');
+            $mailer->send($message);
+        }
+        ''', correct: false }
+      - { value: 'Emails are sent via a dedicated `MailService`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/mailer.html#sending-emails'
+
+  - question: 'What is the role of the Mime component in Symfony''s email system?'
+    answers:
+      - { value: 'It handles the actual sending of emails via SMTP.', correct: false }
+      - { value: 'It provides classes for creating and manipulating MIME messages, including email addresses, content types, and attachments.', correct: true }
+      - { value: 'It stores email templates.', correct: false }
+      - { value: 'It validates email addresses.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/mime.html'
+
+  - question: 'How can you add an attachment to an email using the Mailer component?'
+    answers:
+      - { value: '`$email->attachFromPath(''/path/to/file.pdf'');`', correct: true }
+      - { value: '`$email->addAttachment(''/path/to/file.pdf'');`', correct: false }
+      - { value: '`$email->file(''/path/to/file.pdf'');`', correct: false }
+      - { value: 'Attachments are not supported by the Mailer component.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/mailer.html#adding-attachments'
+
+  - question: 'Which Symfony component provides basic utilities for filesystem operations like copying, moving, and deleting files and directories?'
+    answers:
+      - { value: 'The FileSystem component', correct: true }
+      - { value: 'The Finder component', correct: false }
+      - { value: 'The Io component', correct: false }
+      - { value: 'The Stream component', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/filesystem.html'
+
+  - question: 'How do you create a directory recursively using the Filesystem component?'
+    answers:
+      - { value: '`$fs->mkdir(''/path/to/new/dir'', 0777, true);`', correct: false }
+      - { value: '`$fs->mkdir(''/path/to/new/dir'');` (it creates recursively by default)', correct: true }
+      - { value: '`$fs->createDirectory(''/path/to/new/dir'');`', correct: false }
+      - { value: 'You must manually create parent directories first.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/filesystem.html#mkdir'
+
+  - question: 'Which Symfony component helps you find files and directories based on various criteria (e.g., name, size, type, content)?'
+    answers:
+      - { value: 'The Filesystem component', correct: false }
+      - { value: 'The Finder component', correct: true }
+      - { value: 'The Path component', correct: false }
+      - { value: 'The Glob component', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/finder.html'
+
+  - question: 'How can you find all PHP files in a directory and its subdirectories using the Finder component?'
+    answers:
+      - { value: '''
+        use Symfony\Component\Finder\Finder;
+        $finder = new Finder();
+        $finder->files()->in(''.'')->name(''*.php'');
+        foreach ($finder as $file) {
+            // ...
+        }
+        ''', correct: true }
+      - { value: '''
+        use Symfony\Component\Filesystem\Filesystem;
+        $fs = new Filesystem();
+        $files = $fs->findFiles(''.'',''*.php'');
+        ''', correct: false }
+      - { value: '`glob(''**/*.php'');`', correct: false }
+      - { value: 'The Finder component only works for single directories.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/finder.html#basic-usage'
+
+  - question: 'What is the primary purpose of the Symfony Lock component?'
+    answers:
+      - { value: 'To prevent concurrent execution of critical code sections or processes.', correct: true }
+      - { value: 'To encrypt sensitive data.', correct: false }
+      - { value: 'To manage user authentication sessions.', correct: false }
+      - { value: 'To control access to files on the filesystem.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html'
+
+  - question: 'Which of the following is a common use case for the Lock component?'
+    answers:
+      - { value: 'Ensuring a console command runs only once at a time.', correct: true }
+      - { value: 'Protecting database tables from concurrent writes.', correct: false }
+      - { value: 'Managing user login attempts.', correct: false }
+      - { value: 'Caching frequently accessed data.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html#use-cases'
+
+  - question: 'How do you acquire and release a lock using the Lock component?'
+    answers:
+      - { value: '''
+        use Symfony\Component\Lock\LockFactory;
+        // ...
+        $lock = $lockFactory->createLock(''my_resource_lock'');
+        if ($lock->acquire()) {
+            // Do critical stuff
+            $lock->release();
+        }
+        ''', correct: true }
+      - { value: '''
+        use Symfony\Component\Lock\Lock;
+        // ...
+        $lock = new Lock(''my_resource_lock'');
+        $lock->lock();
+        // Do critical stuff
+        $lock->unlock();
+        ''', correct: false }
+      - { value: 'Locks are automatically acquired and released by the container.', correct: false }
+      - { value: 'The Lock component only supports advisory locks, not exclusive.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html#acquiring-and-releasing-a-lock'
+
+  - question: 'What is the Web Profiler in Symfony?'
+    answers:
+      - { value: 'A tool for monitoring server performance metrics.', correct: false }
+      - { value: 'A debugging and introspection tool that collects detailed information about requests, responses, and internal Symfony processes.', correct: true }
+      - { value: 'A component for generating API documentation.', correct: false }
+      - { value: 'A security feature to prevent XSS attacks.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler.html'
+
+  - question: 'Where is the Web Debug Toolbar typically displayed in a Symfony application in the `dev` environment?'
+    answers:
+      - { value: 'In the browser''s developer console.', correct: false }
+      - { value: 'As a floating bar at the bottom of the browser window.', correct: true }
+      - { value: 'As a separate pop-up window.', correct: false }
+      - { value: 'It''s only available in the Symfony CLI.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler.html#web-debug-toolbar'
+
+  - question: 'Which of the following information can you typically find in the Web Profiler?'
+    answers:
+      - { value: 'Request and response headers, executed SQL queries, logged messages, routing information, and service container details.', correct: true }
+      - { value: 'Real-time CPU and memory usage of the server.', correct: false }
+      - { value: 'User login credentials.', correct: false }
+      - { value: 'Network latency between the client and server.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler.html#profiler-panels'
+
+  - question: 'What is a "Data Collector" in the context of the Web Profiler?'
+    answers:
+      - { value: 'A service that stores data in the database.', correct: false }
+      - { value: 'A class that gathers specific data about the current request (e.g., database queries, mailer messages, Twig data) to be displayed in the Web Profiler.', correct: true }
+      - { value: 'A tool for importing data from external sources.', correct: false }
+      - { value: 'A component for data validation.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler/data_collectors.html'
+
+  - question: 'What is the main purpose of Internationalization (i18n) in Symfony?'
+    answers:
+      - { value: 'To translate application messages, templates, and other content into different languages.', correct: true }
+      - { value: 'To handle different date and time formats.', correct: false }
+      - { value: 'To manage user authentication across different countries.', correct: false }
+      - { value: 'To optimize database queries for global users.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation.html'
+
+  - question: 'What is the main purpose of Localization (l10n) in Symfony?'
+    answers:
+      - { value: 'To translate application messages into different languages.', correct: false }
+      - { value: 'To adapt the application to specific cultural and regional settings, including date/time formats, number formats, and currency.', correct: true }
+      - { value: 'To detect the user''s geographical location.', correct: false }
+      - { value: 'To manage time zones for different users.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation.html#localization'
+
+  - question: 'Which component is used for translation in Symfony?'
+    answers:
+      - { value: 'The Intl component', correct: false }
+      - { value: 'The Translator component', correct: true }
+      - { value: 'The Locale component', correct: false }
+      - { value: 'The Message component', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation.html#the-translator-component'
+
+  - question: 'How do you translate a message in a Twig template?'
+    answers:
+      - { value: '`{{ ''hello.world''|trans }}`', correct: true }
+      - { value: '`{{ translate(''hello.world'') }}`', correct: false }
+      - { value: '`{{ ''hello.world''|i18n }}`', correct: false }
+      - { value: '`{{ ''hello.world''|t }}`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation.html#twig-templates'
+
+  - question: 'Where are translation messages typically stored in a Symfony application?'
+    answers:
+      - { value: 'In the database.', correct: false }
+      - { value: 'In YAML, XLIFF, or PHP files within the `translations/` directory.', correct: true }
+      - { value: 'Directly in the Twig templates.', correct: false }
+      - { value: 'In a dedicated `messages.json` file.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation.html#translation-resources'
+
+  - question: 'What is the purpose of the Symfony Runtime component?'
+    answers:
+      - { value: 'To manage application dependencies.', correct: false }
+      - { value: 'To provide a flexible way to boot Symfony applications in different PHP environments (e.g., web servers, CLI, serverless).', correct: true }
+      - { value: 'To handle runtime errors and exceptions.', correct: false }
+      - { value: 'To optimize application performance at runtime.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/runtime.html'
+
+  - question: 'How does the Runtime component simplify application bootstrapping?'
+    answers:
+      - { value: 'By replacing the `public/index.php` file with a single configuration file.', correct: false }
+      - { value: 'By abstracting away the environment-specific bootstrapping logic, allowing a single entry point for various runtimes.', correct: true }
+      - { value: 'By automatically detecting and configuring all bundles.', correct: false }
+      - { value: 'It has no impact on bootstrapping; it''s for runtime execution only.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/runtime.html#how-it-works'
+
+  - question: 'What is the primary benefit of using the Runtime component for serverless deployments?'
+    answers:
+      - { value: 'It reduces the cold start time by pre-loading all services.', correct: false }
+      - { value: 'It allows the same Symfony application to run efficiently on serverless platforms without significant code changes.', correct: true }
+      - { value: 'It provides built-in serverless function definitions.', correct: false }
+      - { value: 'It automatically scales the application based on demand.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/runtime.html#serverless'
+
+  - question: 'Which Symfony component provides an abstraction layer for time-related operations, making it easier to test time-sensitive code?'
+    answers:
+      - { value: 'The DateTime component', correct: false }
+      - { value: 'The Chronos component', correct: false }
+      - { value: 'The Clock component', correct: true }
+      - { value: 'The Time component', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html'
+
+  - question: 'How do you inject the current time into a service using the Clock component?'
+    answers:
+      - { value: 'By injecting `\DateTimeImmutable` directly.', correct: false }
+      - { value: 'By injecting `Psr\Clock\ClockInterface` and calling its `now()` method.', correct: true }
+      - { value: 'By using `new \DateTimeImmutable()` in the service.', correct: false }
+      - { value: 'The Clock component is only for testing, not for production.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html#usage'
+
+  - question: 'What is the main advantage of using `ClockInterface::now()` over `new \DateTimeImmutable()` in your application code?'
+    answers:
+      - { value: 'It is faster and more performant.', correct: false }
+      - { value: 'It allows you to easily control and mock the current time during testing, making time-sensitive logic deterministic.', correct: true }
+      - { value: 'It automatically handles time zones.', correct: false }
+      - { value: 'It provides more precise timestamps.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html#testing'
+
+  - question: 'Which of the following is a valid way to configure a custom `ClockInterface` implementation for testing purposes?'
+    answers:
+      - { value: 'By setting the `clock` parameter in `services_test.yaml` to your custom clock service.', correct: true }
+      - { value: 'By extending the `Clock` class and overriding its `now()` method.', correct: false }
+      - { value: 'By using a global `define` for the current time.', correct: false }
+      - { value: 'The Clock component does not support custom implementations.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html#testing'
+
+  - question: 'What is the purpose of the `config/packages/` directory in a Symfony application?'
+    answers:
+      - { value: 'It stores all application-specific configuration.', correct: false }
+      - { value: 'It contains configuration files for individual Symfony bundles and third-party packages.', correct: true }
+      - { value: 'It holds database migration files.', correct: false }
+      - { value: 'It is used for defining routes only.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/configuration.html#configuration-files'
+
+  - question: 'Which file is responsible for loading environment-specific configuration in Symfony?'
+    answers:
+      - { value: '`config/services.yaml`', correct: false }
+      - { value: '`config/routes.yaml`', correct: false }
+      - { value: '`config/services_<env>.yaml` (e.g., `services_dev.yaml`, `services_prod.yaml`)', correct: true }
+      - { value: '`config/bootstrap.php`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/configuration.html#environment-specific-configuration'
+
+  - question: 'What is the role of the `APP_SECRET` environment variable in Symfony?'
+    answers:
+      - { value: 'It is used for encrypting database connections.', correct: false }
+      - { value: 'It is a unique secret key used for various security-related tasks, such as session encryption, CSRF protection, and signing cookies.', correct: true }
+      - { value: 'It defines the default password for the application.', correct: false }
+      - { value: 'It specifies the API key for external services.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/configuration/framework.html#secret'
+
+  - question: 'When debugging a performance issue in Symfony, which Web Profiler panel would be most useful for identifying slow database queries?'
+    answers:
+      - { value: 'The "Logger" panel', correct: false }
+      - { value: 'The "Time" panel', correct: false }
+      - { value: 'The "Doctrine" panel (if Doctrine is used)', correct: true }
+      - { value: 'The "Router" panel', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler/panels/doctrine.html'
+
+  - question: 'How can you enable Xdebug for debugging a Symfony CLI command?'
+    answers:
+      - { value: 'By running `php -dxdebug.mode=debug bin/console <command>`', correct: true }
+      - { value: 'Xdebug is automatically enabled for CLI commands.', correct: false }
+      - { value: 'By adding `xdebug.remote_enable=1` to `php.ini`.', correct: false }
+      - { value: 'By using the `symfony server:start --debug` command.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/console/debug.html#debugging-commands'
+
+  - question: 'Which command can help you identify missing environment variables or misconfigurations related to Dotenv?'
+    answers:
+      - { value: '`php bin/console lint:container`', correct: false }
+      - { value: '`php bin/console debug:dotenv` (or similar, though not a standard command, the `debug:config` command can help)', correct: false }
+      - { value: '`php bin/console debug:config framework dotenv`', correct: true }
+      - { value: '`php bin/console about`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/dotenv.html#debugging'
+
+  - question: 'What is the purpose of the `symfony server:start` command?'
+    answers:
+      - { value: 'To deploy the application to a production server.', correct: false }
+      - { value: 'To start a local web server for development purposes.', correct: true }
+      - { value: 'To compile assets for the frontend.', correct: false }
+      - { value: 'To run unit tests.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/setup/symfony_server.html'
+
+  - question: 'When deploying to production, why is it important to set `APP_ENV=prod` and `APP_DEBUG=0`?'
+    answers:
+      - { value: 'To enable all debugging features for monitoring.', correct: false }
+      - { value: 'To disable debugging, optimize performance, and prevent sensitive information from being exposed in error messages.', correct: true }
+      - { value: 'To enable development tools and features.', correct: false }
+      - { value: 'It has no impact on performance or security.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/setup/web_server.html#symfony-environments'
+
+  - question: 'What is the role of `composer install --no-dev --optimize-autoloader` during deployment?'
+    answers:
+      - { value: 'It installs all dependencies, including development ones, and generates a non-optimized autoloader.', correct: false }
+      - { value: 'It installs only production dependencies and generates an optimized autoloader for faster class loading.', correct: true }
+      - { value: 'It updates all dependencies to their latest versions.', correct: false }
+      - { value: 'It removes all installed dependencies.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/deployment.html#install-dependencies'
+
+  - question: 'Which command is used to install web assets (e.g., from bundles) into the `public/` directory?'
+    answers:
+      - { value: '`php bin/console assets:install`', correct: true }
+      - { value: '`php bin/console asset:dump`', correct: false }
+      - { value: '`php bin/console public:install`', correct: false }
+      - { value: '`php bin/console webpack:build`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/reference/commands/assets_install.html'
+
+  - question: 'What is the purpose of the `opcache:clear` command in Symfony?'
+    answers:
+      - { value: 'To clear the application''s HTTP cache.', correct: false }
+      - { value: 'To clear the PHP OPcache, ensuring that updated PHP files are recompiled and used by the web server.', correct: true }
+      - { value: 'To clear the Doctrine entity manager cache.', correct: false }
+      - { value: 'To clear the Twig template cache.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/deployment.html#clear-the-opcache'
+
+  - question: 'When should you use `cache:pool:clear` instead of `cache:clear`?'
+    answers:
+      - { value: '`cache:clear` clears all caches, while `cache:pool:clear` allows clearing specific cache pools without affecting others.', correct: true }
+      - { value: '`cache:pool:clear` is for development, `cache:clear` for production.', correct: false }
+      - { value: 'They are aliases and do the same thing.', correct: false }
+      - { value: '`cache:pool:clear` is deprecated.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache/usage.html#clearing-cache-pools'
+
+  - question: 'What is a "cache tag" in Symfony''s Cache component, and what is its benefit?'
+    answers:
+      - { value: 'A tag is a string added to a cache key for better organization.', correct: false }
+      - { value: 'A tag allows you to invalidate multiple related cache items at once by clearing all items associated with that tag.', correct: true }
+      - { value: 'A tag defines the expiration time of a cache item.', correct: false }
+      - { value: 'Cache tags are only used for HTTP caching.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache/cache_items.html#cache-tags'
+
+  - question: 'How can you ensure that a Process component command runs with specific environment variables?'
+    answers:
+      - { value: 'By setting them globally before running the process.', correct: false }
+      - { value: 'By passing an array of environment variables to the `setEnv()` method or the Process constructor.', correct: true }
+      - { value: 'Environment variables cannot be passed to a process.', correct: false }
+      - { value: 'They are inherited from the parent PHP process only.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/process.html#environment-variables'
+
+  - question: 'What is the recommended way to handle long-running processes with the Symfony Process component to avoid memory issues?'
+    answers:
+      - { value: 'By increasing PHP''s memory limit indefinitely.', correct: false }
+      - { value: 'By using `Process::start()` and monitoring the process, potentially restarting it or processing output in chunks.', correct: true }
+      - { value: 'By using `exec()` instead of Process.', correct: false }
+      - { value: 'The Process component automatically manages memory for long-running tasks.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/process.html#running-processes-asynchronously'
+
+  - question: 'When serializing an object that contains circular references, what is the default behavior of the Symfony Serializer component, and how can you handle it?'
+    answers:
+      - { value: 'It throws an error; you must manually break the circular reference.', correct: false }
+      - { value: 'It throws a `CircularReferenceException`; you can handle it by configuring the `ObjectNormalizer` with a `circular_reference_handler`.', correct: true }
+      - { value: 'It automatically detects and skips the circular reference.', correct: false }
+      - { value: 'It enters an infinite loop.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#handling-circular-references'
+
+  - question: 'What is the purpose of the `#[SerializedName]` attribute in the Serializer component?'
+    answers:
+      - { value: 'To define the class name when deserializing.', correct: false }
+      - { value: 'To specify a different name for a property when it is serialized or deserialized (e.g., `myProperty` in PHP becomes `my_property` in JSON).', correct: true }
+      - { value: 'To mark a property as ignored during serialization.', correct: false }
+      - { value: 'To define the serialization group for a property.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#changing-the-property-name'
+
+  - question: 'In the Messenger component, what is a "middleware"?'
+    answers:
+      - { value: 'A class that defines a message transport.', correct: false }
+      - { value: 'A layer that can intercept and modify messages or their handling process on the message bus.', correct: true }
+      - { value: 'A service that handles messages.', correct: false }
+      - { value: 'A tool for monitoring message queues.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#middleware'
+
+  - question: 'How do you configure a message to be retried automatically if its handling fails in the Messenger component?'
+    answers:
+      - { value: 'By adding a `#[Retry]` attribute to the message class.', correct: false }
+      - { value: 'By configuring a `retry_strategy` for the transport in `config/packages/messenger.yaml`.', correct: true }
+      - { value: 'By catching the exception in the handler and re-dispatching the message.', correct: false }
+      - { value: 'Automatic retries are not supported.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#retrying-failed-messages'
+
+  - question: 'What command is used to consume messages from a transport in the Messenger component?'
+    answers:
+      - { value: '`php bin/console messenger:dispatch`', correct: false }
+      - { value: '`php bin/console messenger:consume <transport_name>`', correct: true }
+      - { value: '`php bin/console messenger:receive`', correct: false }
+      - { value: '`php bin/console messenger:process`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#consuming-messages'
+
+  - question: 'How can you send an email asynchronously using the Symfony Mailer and Messenger components?'
+    answers:
+      - { value: 'By configuring the Mailer to use a Messenger transport (e.g., `dsn: ''smtp://localhost?transport=messenger''`).', correct: true }
+      - { value: 'By manually dispatching an email message to the Messenger bus.', correct: false }
+      - { value: 'The Mailer component always sends synchronously.', correct: false }
+      - { value: 'By using a separate background process for email sending.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/mailer.html#sending-emails-asynchronously'
+
+  - question: 'What is the purpose of the `dsn` (Data Source Name) in the Mailer component configuration?'
+    answers:
+      - { value: 'It specifies the email recipient.', correct: false }
+      - { value: 'It defines the connection details for the mailer transport (e.g., SMTP server, port, encryption, username, password).', correct: true }
+      - { value: 'It configures the default sender address.', correct: false }
+      - { value: 'It is used for email template paths.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/mailer.html#configuration'
+
+  - question: 'Which method of the Filesystem component would you use to atomically replace the content of a file?'
+    answers:
+      - { value: '`$fs->dumpFile(''path/to/file.txt'', ''new content'');`', correct: true }
+      - { value: '`$fs->appendToFile(''path/to/file.txt'', ''new content'');`', correct: false }
+      - { value: '`$fs->replaceFile(''path/to/file.txt'', ''new content'');`', correct: false }
+      - { value: '`$fs->putContents(''path/to/file.txt'', ''new content'');`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/filesystem.html#dumpfile'
+
+  - question: 'How can you find files that have been modified within the last 24 hours using the Finder component?'
+    answers:
+      - { value: '`$finder->date(''>= '' . (new \DateTime(''-1 day''))->format(''Y-m-d H:i:s''));`', correct: true }
+      - { value: '`$finder->mtime(''-1 day'');`', correct: false }
+      - { value: '`$finder->lastModified(''-1 day'');`', correct: false }
+      - { value: 'The Finder component cannot filter by modification date.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/finder.html#date'
+
+  - question: 'What is the difference between a `FlockStore` and a `SemaphoreStore` in the Lock component?'
+    answers:
+      - { value: '`FlockStore` uses file-based locking (e.g., `flock()`), suitable for single-server environments, while `SemaphoreStore` uses system semaphores, often for multi-process but single-server scenarios.', correct: true }
+      - { value: '`FlockStore` is for distributed locks, `SemaphoreStore` for local locks.', correct: false }
+      - { value: '`FlockStore` is deprecated; `SemaphoreStore` is the modern approach.', correct: false }
+      - { value: 'They are interchangeable; the choice depends on performance needs.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html#stores'
+
+  - question: 'Which Lock component store would you use for distributed locking across multiple servers?'
+    answers:
+      - { value: '`FlockStore`', correct: false }
+      - { value: '`MemcachedStore` or `RedisStore`', correct: true }
+      - { value: '`PdoStore`', correct: false }
+      - { value: '`InMemoryStore`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html#stores'
+
+  - question: 'How can you disable the Web Debug Toolbar for specific requests (e.g., AJAX requests) in Symfony?'
+    answers:
+      - { value: 'By checking `$_SERVER[''HTTP_X_REQUESTED_WITH'']` in a controller.', correct: false }
+      - { value: 'By configuring `framework.profiler.only_exceptions` or using a custom `Matcher` service for the profiler.', correct: true }
+      - { value: 'By setting a cookie to disable it.', correct: false }
+      - { value: 'The toolbar cannot be selectively disabled.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler.html#disabling-the-profiler-selectively'
+
+  - question: 'What is the purpose of the "Security" panel in the Web Profiler?'
+    answers:
+      - { value: 'To show all security vulnerabilities in the application.', correct: false }
+      - { value: 'To display information about the authenticated user, roles, security voters, and firewall details.', correct: true }
+      - { value: 'To configure security settings.', correct: false }
+      - { value: 'To manage user permissions.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler/panels/security.html'
+
+  - question: 'Which command can you use to update translation files after making changes to your templates or code?'
+    answers:
+      - { value: '`php bin/console translation:update`', correct: false }
+      - { value: '`php bin/console translation:extract --force <locale>`', correct: true }
+      - { value: '`php bin/console translation:dump`', correct: false }
+      - { value: '`php bin/console cache:clear --env=dev`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation/extracting_messages.html'
+
+  - question: 'How do you set the default locale for a Symfony application?'
+    answers:
+      - { value: 'In `config/services.yaml` under `parameters.locale`.', correct: false }
+      - { value: 'In `config/packages/framework.yaml` under `framework.default_locale`.', correct: true }
+      - { value: 'By setting the `LANG` environment variable.', correct: false }
+      - { value: 'The default locale is always `en`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation.html#configuring-the-locale'
+
+  - question: 'What is the `Intl` component primarily used for in Symfony?'
+    answers:
+      - { value: 'To handle international routing.', correct: false }
+      - { value: 'To provide PHP extensions for internationalization capabilities, such as formatting dates, numbers, and currencies according to different locales.', correct: true }
+      - { value: 'To manage international domain names.', correct: false }
+      - { value: 'To translate messages.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/intl.html'
+
+  - question: 'Which of the following is a feature provided by the `Intl` component?'
+    answers:
+      - { value: 'Message translation.', correct: false }
+      - { value: 'Number and currency formatting based on locale.', correct: true }
+      - { value: 'Email sending.', correct: false }
+      - { value: 'Database abstraction.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/intl.html#features'
+
+  - question: 'What is the purpose of the `#[AsCommand]` attribute in Symfony 7 console commands?'
+    answers:
+      - { value: 'To define the command''s description.', correct: false }
+      - { value: 'To automatically register a console command as a service and define its name and description without needing `configure()` method for basic setup.', correct: true }
+      - { value: 'To mark a command as deprecated.', correct: false }
+      - { value: 'To specify the command''s arguments.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/console/commands.html#registering-commands-as-services'
+
+  - question: 'How can you access environment variables in a Symfony application that are not defined in `.env` files but are set by the web server (e.g., Apache, Nginx)?'
+    answers:
+      - { value: 'They are automatically available via `$_ENV` or `$_SERVER`.', correct: true }
+      - { value: 'You must explicitly import them in `config/services.yaml`.', correct: false }
+      - { value: 'Symfony ignores environment variables set by the web server.', correct: false }
+      - { value: 'Only variables defined in `.env` are accessible.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/configuration.html#environment-variables-in-php'
+
+  - question: 'What is the recommended way to manage different configurations for different environments (e.g., `dev`, `prod`, `test`) in Symfony?'
+    answers:
+      - { value: 'Using separate `config_dev.yaml`, `config_prod.yaml` files.', correct: false }
+      - { value: 'Using `config/packages/<package_name>.yaml` and `config/packages/<env>/<package_name>.yaml` files.', correct: true }
+      - { value: 'By using conditional logic in a single `config.yaml` file.', correct: false }
+      - { value: 'By manually changing configuration values before deployment.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/configuration.html#environment-specific-configuration'
+
+  - question: 'Which of the following is a best practice for handling sensitive data in configuration files (e.g., API keys, database passwords)?'
+    answers:
+      - { value: 'Store them directly in `parameters.yaml`.', correct: false }
+      - { value: 'Use Symfony''s Secrets management or environment variables.', correct: true }
+      - { value: 'Commit them to version control in an encrypted format with the key also in the repository.', correct: false }
+      - { value: 'Hardcode them in the application code.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/configuration/secrets.html'
+
+  - question: 'What is the primary benefit of using `ExpressionLanguage` for access control in Symfony security?'
+    answers:
+      - { value: 'It simplifies complex authorization rules by allowing them to be defined as expressions, making them more readable and maintainable than custom voters for simple cases.', correct: true }
+      - { value: 'It replaces the need for security voters entirely.', correct: false }
+      - { value: 'It provides a faster way to check user roles.', correct: false }
+      - { value: 'It is only for public access control, not for authenticated users.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/security/expressions.html'
+
+  - question: 'When debugging a Symfony application, what does the "Timeline" panel in the Web Profiler show?'
+    answers:
+      - { value: 'The sequence of events and their execution times during a request, helping to identify performance bottlenecks.', correct: true }
+      - { value: 'A list of all executed database queries.', correct: false }
+      - { value: 'The history of user sessions.', correct: false }
+      - { value: 'The application''s deployment history.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler/panels/timeline.html'
+
+  - question: 'What is the purpose of the `VarDumper` component in Symfony?'
+    answers:
+      - { value: 'To dump database schemas.', correct: false }
+      - { value: 'To provide a powerful and readable alternative to `var_dump()` for debugging PHP variables.', correct: true }
+      - { value: 'To dump HTTP requests and responses.', correct: false }
+      - { value: 'To create database backups.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/var_dumper.html'
+
+  - question: 'Which of the following is a common strategy for zero-downtime deployment of a Symfony application?'
+    answers:
+      - { value: 'Taking the server offline during deployment.', correct: false }
+      - { value: 'Using symlinks to switch between old and new releases, often combined with a shared storage for uploads and logs.', correct: true }
+      - { value: 'Manually copying files one by one.', correct: false }
+      - { value: 'Restarting the web server after every file change.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/deployment.html#zero-downtime-deployment'
+
+  - question: 'What is the purpose of the `composer dump-env prod` command during deployment?'
+    answers:
+      - { value: 'It creates a `.env.prod` file for production environment variables.', correct: false }
+      - { value: 'It dumps all environment variables into a PHP file (`.env.local.php`) for faster loading in production, avoiding parsing `.env` files on every request.', correct: true }
+      - { value: 'It clears the production cache.', correct: false }
+      - { value: 'It generates a list of all production dependencies.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/dotenv.html#caching-environment-variables'
+
+  - question: 'When should you use the `ArrayAdapter` for caching in Symfony?'
+    answers:
+      - { value: 'In production for high-performance caching.', correct: false }
+      - { value: 'Primarily for testing or in-memory caching during a single request, as it does not persist data across requests.', correct: true }
+      - { value: 'For storing large binary files.', correct: false }
+      - { value: 'When integrating with external cache services like Redis.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache/adapters.html#arrayadapter'
+
+  - question: 'What is the `Cache-Control` HTTP header, and how does Symfony help manage it?'
+    answers:
+      - { value: 'It controls database caching; Symfony manages it via Doctrine.', correct: false }
+      - { value: 'It dictates how responses should be cached by browsers and proxies; Symfony provides `Response::setCache()` and `HttpCache` for management.', correct: true }
+      - { value: 'It is used for internal application caching only.', correct: false }
+      - { value: 'It is a deprecated header.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/http_cache.html#cache-control'
+
+  - question: 'When using the Process component, how can you capture the standard error output (stderr) separately from the standard output (stdout)?'
+    answers:
+      - { value: '`$process->getErrorOutput()`', correct: true }
+      - { value: '`$process->getOutput(true)`', correct: false }
+      - { value: '`$process->getCombinedOutput()`', correct: false }
+      - { value: 'Stderr is always merged with stdout.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/process.html#getting-the-output'
+
+  - question: 'What is the purpose of the `setIdleTimeout()` method in the Process component?'
+    answers:
+      - { value: 'To limit the total execution time of the process.', correct: false }
+      - { value: 'To set a timeout for how long the process can run without producing any output.', correct: true }
+      - { value: 'To define the time before the process starts.', correct: false }
+      - { value: 'To set the maximum memory usage for the process.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/process.html#process-timeout'
+
+  - question: 'Which of the following is a valid way to configure a custom normalizer for the Serializer component?'
+    answers:
+      - { value: 'By tagging the normalizer service with `serializer.normalizer`.', correct: true }
+      - { value: 'By extending the `AbstractNormalizer` class directly.', correct: false }
+      - { value: 'Normalizers cannot be customized.', correct: false }
+      - { value: 'By defining it in `config/serializer.yaml`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#custom-normalizers-and-encoders'
+
+  - question: 'What is the purpose of the `#[Context]` attribute in the Serializer component?'
+    answers:
+      - { value: 'To define the serialization format.', correct: false }
+      - { value: 'To pass additional context (options) to normalizers and encoders during serialization/deserialization.', correct: true }
+      - { value: 'To specify the class to be serialized.', correct: false }
+      - { value: 'To define the serialization version.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#passing-context-to-normalizers-and-encoders'
+
+  - question: 'When using the Messenger component, what is the benefit of using "stamps"?'
+    answers:
+      - { value: 'Stamps are used to mark messages as processed.', correct: false }
+      - { value: 'Stamps are small, immutable objects that can be added to messages to convey additional metadata or instructions to middleware and handlers.', correct: true }
+      - { value: 'Stamps define the message priority.', correct: false }
+      - { value: 'Stamps are used for message encryption.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#stamps'
+
+  - question: 'How can you configure different transports for different message types in the Messenger component?'
+    answers:
+      - { value: 'By defining multiple transports and mapping messages to them in `config/packages/messenger.yaml` using the `routing` configuration.', correct: true }
+      - { value: 'By creating a separate message bus for each transport.', correct: false }
+      - { value: 'Messages automatically choose the best transport.', correct: false }
+      - { value: 'This feature is not supported.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#routing-messages'
+
+  - question: 'What is the purpose of the `Mailer::test()` method?'
+    answers:
+      - { value: 'To send a test email to a predefined address.', correct: false }
+      - { value: 'To simulate sending an email without actually sending it, allowing you to inspect the email content and headers for debugging.', correct: true }
+      - { value: 'To check if the mailer configuration is valid.', correct: false }
+      - { value: 'It is used for performance benchmarking of the mailer.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/mailer.html#testing-emails'
+
+  - question: 'How can you embed an image directly into an HTML email using the Mailer component?'
+    answers:
+      - { value: 'By using a `cid:` (Content-ID) in the HTML and attaching the image with `addPart()` or `embed()`.', correct: true }
+      - { value: 'By linking to an external image URL.', correct: false }
+      - { value: 'By base64 encoding the image directly in the HTML `<img>` tag (though not recommended for large images).', correct: false }
+      - { value: 'The Mailer component does not support embedded images.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/mailer.html#embedding-images'
+
+  - question: 'Which method of the Filesystem component is used to change the permissions of a file or directory?'
+    answers:
+      - { value: '`$fs->chmod(''path/to/file'', 0777);`', correct: true }
+      - { value: '`$fs->setPermissions(''path/to/file'', 0777);`', correct: false }
+      - { value: '`$fs->changeMode(''path/to/file'', 0777);`', correct: false }
+      - { value: '`$fs->perms(''path/to/file'', 0777);`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/filesystem.html#chmod'
+
+  - question: 'How can you find files that match multiple patterns (e.g., `*.php` OR `*.twig`) using the Finder component?'
+    answers:
+      - { value: '`$finder->name(''*.php'')->name(''*.twig'');`', correct: true }
+      - { value: '`$finder->name([''*.php'', ''*.twig'']);`', correct: false }
+      - { value: '`$finder->name(''*.php'' || ''*.twig'');`', correct: false }
+      - { value: 'The Finder component only supports a single pattern.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/finder.html#name'
+
+  - question: 'What happens if you try to acquire a lock that is already held by another process using the Lock component, without a timeout?'
+    answers:
+      - { value: 'The `acquire()` method will immediately return `false`.', correct: false }
+      - { value: 'The `acquire()` method will block until the lock is released or a timeout occurs (if configured).', correct: true }
+      - { value: 'It will throw an exception.', correct: false }
+      - { value: 'The lock will be forcibly acquired.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html#blocking-locks'
+
+  - question: 'What is the purpose of the `LockHandler` service in Symfony?'
+    answers:
+      - { value: 'It is a deprecated service for managing locks.', correct: false }
+      - { value: 'It provides a convenient way to acquire and release locks within console commands or other services, often integrated with the `LockFactory`.', correct: true }
+      - { value: 'It handles database locking mechanisms.', correct: false }
+      - { value: 'It is a specific type of lock store.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html#using-the-lock-factory'
+
+  - question: 'Which Web Profiler panel would you use to inspect the services loaded in the Dependency Injection Container?'
+    answers:
+      - { value: 'The "Container" panel', correct: true }
+      - { value: 'The "Services" panel', correct: false }
+      - { value: 'The "Config" panel', correct: false }
+      - { value: 'The "Debug" panel', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler/panels/container.html'
+
+  - question: 'How can you disable the Web Profiler entirely in a production environment?'
+    answers:
+      - { value: 'By setting `framework.profiler.enabled: false` in `config/packages/prod/framework.yaml` or `APP_DEBUG=0`.', correct: true }
+      - { value: 'By removing the `debug` bundle from `bundles.php`.', correct: false }
+      - { value: 'By commenting out the profiler service definition.', correct: false }
+      - { value: 'The profiler is automatically disabled in production.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler.html#disabling-the-profiler'
+
+  - question: 'What is the purpose of the `trans_default_domain` configuration in Twig?'
+    answers:
+      - { value: 'To set the default locale for translations.', correct: false }
+      - { value: 'To define the default translation domain (e.g., `messages`, `validators`) for messages in Twig templates, avoiding the need to specify it for every `trans` filter.', correct: true }
+      - { value: 'To enable or disable translation in Twig.', correct: false }
+      - { value: 'To specify the path to translation files.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation/templates.html#translation-domains'
+
+  - question: 'How can you pluralize a message in a Twig template based on a count?'
+    answers:
+      - { value: '`{{ ''There are %count% apples''|trans({ ''%count'': count }) }}`', correct: false }
+      - { value: '`{{ ''There is one apple|There are %count% apples''|transchoice(count, { ''%count'': count }) }}`', correct: true }
+      - { value: '`{{ ''apples''|pluralize(count) }}`', correct: false }
+      - { value: 'Pluralization is not directly supported in Twig.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation/pluralization.html'
+
+  - question: 'What is the primary benefit of the `Clock` component for unit testing?'
+    answers:
+      - { value: 'It allows tests to run faster by skipping time-consuming operations.', correct: false }
+      - { value: 'It enables deterministic testing of time-sensitive logic by allowing you to control and mock the current time, ensuring consistent test results regardless of when the tests are run.', correct: true }
+      - { value: 'It automatically generates test data for dates and times.', correct: false }
+      - { value: 'It provides a way to measure test execution time.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html#testing'
+
+  - question: 'Which of the following is a valid way to create a `FrozenClock` for testing purposes?'
+    answers:
+      - { value: '`new FrozenClock(new \DateTimeImmutable(''2023-01-01''));`', correct: true }
+      - { value: '`Clock::freeze(''2023-01-01'');`', correct: false }
+      - { value: '`new MockClock(''2023-01-01'');`', correct: false }
+      - { value: '`Clock::setNow(''2023-01-01'');`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html#frozenclock'
+
+  - question: 'What is the purpose of the `config/bootstrap.php` file in a Symfony application?'
+    answers:
+      - { value: 'It is the main entry point for all web requests.', correct: false }
+      - { value: 'It contains the initial bootstrapping logic for the application, including loading the autoloader and Dotenv, and setting up the environment.', correct: true }
+      - { value: 'It defines all application services.', correct: false }
+      - { value: 'It is used for database connection setup.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/runtime.html#how-it-works'
+
+  - question: 'How does Symfony handle PHP errors and warnings in a production environment by default?'
+    answers:
+      - { value: 'It displays them directly to the user.', correct: false }
+      - { value: 'It logs them to a file (e.g., `var/log/prod.log`) and suppresses display to the user.', correct: true }
+      - { value: 'It converts all warnings into exceptions.', correct: false }
+      - { value: 'It ignores all errors and warnings.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/logging.html#logging-php-errors-and-warnings'
+
+  - question: 'What is the purpose of the `Monolog` component in Symfony?'
+    answers:
+      - { value: 'To manage database connections.', correct: false }
+      - { value: 'To provide a flexible and extensible logging solution, allowing logs to be sent to various destinations (e.g., files, databases, external services).', correct: true }
+      - { value: 'To handle user authentication.', correct: false }
+      - { value: 'To manage application configuration.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/logging.html#monolog'
+
+  - question: 'How can you log a message with a specific severity level (e.g., `ERROR`, `INFO`) using the Monolog logger in Symfony?'
+    answers:
+      - { value: '`$logger->log(''My message'', ''ERROR'');`', correct: false }
+      - { value: '`$logger->error(''My error message'');` or `$logger->info(''My info message'');`', correct: true }
+      - { value: '`$logger->write(''My message'', Logger::ERROR);`', correct: false }
+      - { value: 'All messages are logged at the same level.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/logging.html#logging-messages'
+
+  - question: 'What is the purpose of "channels" in Monolog configuration?'
+    answers:
+      - { value: 'To define different log file names.', correct: false }
+      - { value: 'To categorize log messages and route them to different handlers or log files based on their origin or purpose.', correct: true }
+      - { value: 'To specify the log message format.', correct: false }
+      - { value: 'To set the minimum logging level.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/logging/channels.html'
+
+  - question: 'Which command can you use to check the health of your Symfony application''s dependencies and configuration?'
+    answers:
+      - { value: '`php bin/console check:requirements`', correct: false }
+      - { value: '`php bin/console lint:container` and `lint:yaml` / `lint:twig`', correct: true }
+      - { value: '`php bin/console debug:autowiring`', correct: false }
+      - { value: '`php bin/console about`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/console/commands_overview.html#lint-container'
+
+  - question: 'What is the purpose of the `symfony server:log` command?'
+    answers:
+      - { value: 'To view the web server access logs.', correct: false }
+      - { value: 'To tail the Symfony application logs (`var/log/dev.log`, `prod.log`) in real-time.', correct: true }
+      - { value: 'To clear the application logs.', correct: false }
+      - { value: 'To analyze log files for errors.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/setup/symfony_server.html#logging'
+
+  - question: 'Which of the following is a best practice for managing database schema changes during deployment?'
+    answers:
+      - { value: 'Manually executing SQL queries on the production database.', correct: false }
+      - { value: 'Using Doctrine Migrations to manage and apply schema changes in a version-controlled way.', correct: true }
+      - { value: 'Dropping and recreating the database on every deployment.', correct: false }
+      - { value: 'Relying on automatic schema updates by the ORM.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html'
+
+  - question: 'What is the purpose of the `APP_RUNTIME_OPTIONS` environment variable?'
+    answers:
+      - { value: 'To configure options for the Symfony Runtime component, such as the `dotenv_path` or `debug` flag.', correct: true }
+      - { value: 'To set PHP runtime options globally.', correct: false }
+      - { value: 'To define application-specific runtime parameters.', correct: false }
+      - { value: 'It is used for configuring the web server.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/runtime.html#runtime-options'
+
+  - question: 'How can you ensure that a specific cache pool uses a different adapter (e.g., Redis) than the default one?'
+    answers:
+      - { value: 'By defining a new service for the cache pool and configuring its `adapter` in `config/packages/cache.yaml`.', correct: true }
+      - { value: 'By changing the `CACHE_DSN` environment variable.', correct: false }
+      - { value: 'Cache pools always use the default adapter.', correct: false }
+      - { value: 'By manually instantiating the adapter in your code.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache/cache_pools.html'
+
+  - question: 'What is the purpose of the `CacheItem` class in the Cache component?'
+    answers:
+      - { value: 'It represents a single item stored in the cache, providing methods to get its value, set its expiration, and add tags.', correct: true }
+      - { value: 'It is the main interface for interacting with cache pools.', correct: false }
+      - { value: 'It is used for cache invalidation only.', correct: false }
+      - { value: 'It defines the cache key format.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache/cache_items.html'
+
+  - question: 'When using the Process component, how can you provide input to a running process (e.g., simulating user input)?'
+    answers:
+      - { value: 'By using the `setInput()` method before running the process.', correct: true }
+      - { value: 'By piping input directly to the process via the command line.', correct: false }
+      - { value: 'The Process component does not support input.', correct: false }
+      - { value: 'By writing to a temporary file and passing its path.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/process.html#process-input'
+
+  - question: 'What is the purpose of the `PropertyInfo` component in relation to the Serializer component?'
+    answers:
+      - { value: 'It provides information about class properties (e.g., types, accessors) which the Serializer uses for automatic normalization/denormalization.', correct: true }
+      - { value: 'It is used for validating property values.', correct: false }
+      - { value: 'It generates documentation for class properties.', correct: false }
+      - { value: 'It handles property access for private properties.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#property-info'
+
+  - question: 'How can you handle different serialization formats (e.g., JSON, XML) for the same object using the Serializer component?'
+    answers:
+      - { value: 'By creating separate normalizers for each format.', correct: false }
+      - { value: 'By configuring multiple encoders and passing the desired format to the `serialize()` or `deserialize()` method.', correct: true }
+      - { value: 'The Serializer component only supports one format at a time.', correct: false }
+      - { value: 'By using different serializer services for each format.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#encoders-and-normalizers'
+
+  - question: 'What is the purpose of the `FailedMessageStamp` in the Messenger component?'
+    answers:
+      - { value: 'It marks a message as successfully handled.', correct: false }
+      - { value: 'It is added to a message when its handling fails, containing information about the failure (e.g., exception, retry count).', correct: true }
+      - { value: 'It indicates that a message should be retried.', correct: false }
+      - { value: 'It is used for message prioritization.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#failed-messages'
+
+  - question: 'How can you prevent a message from being retried after a certain number of failures in the Messenger component?'
+    answers:
+      - { value: 'By setting a `max_retries` option in the `retry_strategy` configuration for the transport.', correct: true }
+      - { value: 'By manually removing the message from the queue.', correct: false }
+      - { value: 'By throwing a specific exception that prevents retries.', correct: false }
+      - { value: 'Messages are retried indefinitely by default.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#retrying-failed-messages'
+
+  - question: 'What is the purpose of the `Address` class in the Mime component?'
+    answers:
+      - { value: 'To represent a physical mailing address.', correct: false }
+      - { value: 'To represent an email address, including its name and email string, and to validate its format.', correct: true }
+      - { value: 'To define a network address.', correct: false }
+      - { value: 'To store contact information.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/mime.html#addresses'
+
+  - question: 'How can you send an email with a custom `Reply-To` header using the Mailer component?'
+    answers:
+      - { value: '`$email->addReplyTo(''reply@example.com'');`', correct: false }
+      - { value: '`$email->replyTo(''reply@example.com'');`', correct: true }
+      - { value: '`$email->setHeader(''Reply-To'', ''reply@example.com'');`', correct: false }
+      - { value: 'The Mailer component does not support custom headers.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/mailer.html#reply-to-addresses'
+
+  - question: 'Which method of the Filesystem component is used to create a symbolic link?'
+    answers:
+      - { value: '`$fs->symlink(''target'', ''link'');`', correct: true }
+      - { value: '`$fs->link(''target'', ''link'');`', correct: false }
+      - { value: '`$fs->createLink(''target'', ''link'');`', correct: false }
+      - { value: '`$fs->makeSymlink(''target'', ''link'');`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/filesystem.html#symlink'
+
+  - question: 'How can you exclude specific directories from a Finder search?'
+    answers:
+      - { value: '`$finder->exclude([''var'', ''node_modules'']);`', correct: true }
+      - { value: '`$finder->notPath([''var'', ''node_modules'']);`', correct: false }
+      - { value: '`$finder->ignore([''var'', ''node_modules'']);`', correct: false }
+      - { value: 'Excluding directories is not supported.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/finder.html#excluding-directories'
+
+  - question: 'What is the purpose of the `Lock` component''s `acquire(true)` (blocking) vs `acquire(false)` (non-blocking) behavior?'
+    answers:
+      - { value: '`acquire(true)` attempts to acquire the lock and waits if it''s already held, while `acquire(false)` attempts to acquire it immediately and returns `false` if it''s already held.', correct: true }
+      - { value: '`acquire(true)` is for production, `acquire(false)` for development.', correct: false }
+      - { value: '`acquire(true)` throws an exception on failure, `acquire(false)` does not.', correct: false }
+      - { value: 'There is no difference; the argument is ignored.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html#blocking-locks'
+
+  - question: 'Which Web Profiler panel would be most useful for debugging issues related to form submission and validation?'
+    answers:
+      - { value: 'The "Request" panel', correct: false }
+      - { value: 'The "Form" panel', correct: true }
+      - { value: 'The "Validator" panel', correct: false }
+      - { value: 'The "Events" panel', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler/panels/form.html'
+
+  - question: 'What is the significance of the `X-Debug-Token` header in Symfony?'
+    answers:
+      - { value: 'It is used for CSRF protection.', correct: false }
+      - { value: 'It is a unique token generated for each request, allowing you to access the corresponding profiler data later via the profiler URL.', correct: true }
+      - { value: 'It indicates a security vulnerability.', correct: false }
+      - { value: 'It is used for API authentication.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler.html#accessing-the-profiler-for-a-specific-request'
+
+  - question: 'How can you force a specific locale for a single request in Symfony?'
+    answers:
+      - { value: 'By setting the `_locale` attribute in the route definition or by setting it on the `Request` object.', correct: true }
+      - { value: 'By modifying `framework.default_locale` at runtime.', correct: false }
+      - { value: 'By using a `setlocale()` PHP function.', correct: false }
+      - { value: 'Locales cannot be changed per request.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation/locale.html#forcing-the-locale'
+
+  - question: 'What is the purpose of the `IntlDateFormatter` class (part of PHP''s Intl extension, used by Symfony''s Intl component)?'
+    answers:
+      - { value: 'To parse and format dates and times according to specific locales and patterns.', correct: true }
+      - { value: 'To perform date calculations.', correct: false }
+      - { value: 'To convert timezones.', correct: false }
+      - { value: 'To validate date formats.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/intl.html#date-and-time-formatting'
+
+  - question: 'What is the primary goal of the Symfony Runtime component regarding application execution?'
+    answers:
+      - { value: 'To make Symfony applications faster by optimizing PHP code.', correct: false }
+      - { value: 'To decouple the application from the global state and environment, making it more portable and adaptable to various execution contexts.', correct: true }
+      - { value: 'To provide a graphical user interface for Symfony applications.', correct: false }
+      - { value: 'To manage application updates automatically.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/runtime.html#why-use-it'
+
+  - question: 'How does the `Clock` component help with testing asynchronous operations?'
+    answers:
+      - { value: 'It automatically waits for asynchronous operations to complete.', correct: false }
+      - { value: 'By allowing you to advance time programmatically (`$clock->sleep()`, `$clock->sleepUntil()`), you can test time-dependent logic in asynchronous scenarios without actual delays.', correct: true }
+      - { value: 'It provides a mock for message queues.', correct: false }
+      - { value: 'It is not designed for asynchronous testing.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html#testing-asynchronous-operations'
+
+  - question: 'What is the purpose of the `#[When]` attribute in Symfony configuration?'
+    answers:
+      - { value: 'To define when a service should be loaded.', correct: false }
+      - { value: 'To conditionally load configuration files or services based on the current environment or other conditions.', correct: true }
+      - { value: 'To specify the execution order of bundles.', correct: false }
+      - { value: 'To mark a configuration as deprecated.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/configuration/environments.html#conditionally-loading-configuration'
+
+  - question: 'Which of the following is a valid way to define a parameter in `config/services.yaml`?'
+    answers:
+      - { value: '''
+        parameters:
+            app.my_param: ''value''
+        ''', correct: true }
+      - { value: '''
+        params:
+            my_param: ''value''
+        ''', correct: false }
+      - { value: '''
+        my_param: ''value''
+        ''', correct: false }
+      - { value: 'Parameters can only be defined in `.env` files.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/service_container/parameters.html'
+
+  - question: 'What is the purpose of the `debug:autowiring` command?'
+    answers:
+      - { value: 'To list all services that are configured for autowiring and their corresponding types.', correct: true }
+      - { value: 'To debug issues with autowiring by showing why a service cannot be autowired.', correct: false }
+      - { value: 'To enable or disable autowiring for specific services.', correct: false }
+      - { value: 'To generate autowiring configuration automatically.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/service_container/autowiring.html#debugging-autowiring'
+
+  - question: 'When should you use the `debug:router` command?'
+    answers:
+      - { value: 'To check the current route for a given URL and its associated controller.', correct: true }
+      - { value: 'To generate new routes automatically.', correct: false }
+      - { value: 'To debug issues with route parameters.', correct: false }
+      - { value: 'To clear the router cache.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/routing.html#debugging-routes'
+
+  - question: 'What is the purpose of the `cache:pool:prune` command?'
+    answers:
+      - { value: 'To clear all items from a cache pool.', correct: false }
+      - { value: 'To remove expired or stale items from a cache pool, especially useful for cache adapters that don''t automatically prune.', correct: true }
+      - { value: 'To warm up a cache pool.', correct: false }
+      - { value: 'To list all items in a cache pool.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache/usage.html#pruning-cache-pools'
+
+  - question: 'Which of the following is a valid way to store a complex PHP object in cache using the Cache component?'
+    answers:
+      - { value: 'The Cache component automatically handles serialization/deserialization of objects.', correct: true }
+      - { value: 'You must manually serialize the object to JSON or a string before storing it.', correct: false }
+      - { value: 'Only scalar values can be stored in the cache.', correct: false }
+      - { value: 'You need to use the Serializer component explicitly.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache/cache_items.html#storing-objects'
+
+  - question: 'What is the purpose of the `Process::mustRun()` method?'
+    answers:
+      - { value: 'It executes the process and throws a `ProcessFailedException` if the process exits with a non-zero status code.', correct: true }
+      - { value: 'It ensures the process runs in the background.', correct: false }
+      - { value: 'It forces the process to run even if it''s already running.', correct: false }
+      - { value: 'It is an alias for `Process::run()`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/process.html#throwing-exceptions-on-error'
+
+  - question: 'When using the Serializer component, what is the role of the `NormalizerInterface`?'
+    answers:
+      - { value: 'To convert data from one format (e.g., JSON) to another (e.g., XML).', correct: false }
+      - { value: 'To convert complex data (objects, arrays) into a flat array structure suitable for encoding, and vice versa.', correct: true }
+      - { value: 'To validate the data before serialization.', correct: false }
+      - { value: 'To encrypt and decrypt serialized data.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#encoders-and-normalizers'
+
+  - question: 'What is the purpose of the `#[Groups]` attribute in the Serializer component?'
+    answers:
+      - { value: 'To define the order of properties during serialization.', correct: false }
+      - { value: 'To control which properties are included in the serialized output based on a defined group (e.g., `read`, `write`, `admin`).', correct: true }
+      - { value: 'To specify the data type of a property.', correct: false }
+      - { value: 'To mark a property as mandatory for serialization.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#using-serialization-groups'
+
+  - question: 'In the Messenger component, what is a "stamp" and how is it used?'
+    answers:
+      - { value: 'A stamp is a unique identifier for a message.', correct: false }
+      - { value: 'A stamp is an immutable object added to a message to provide additional metadata or instructions to middleware and handlers, influencing how the message is processed or transported.', correct: true }
+      - { value: 'A stamp is a flag indicating a message''s priority.', correct: false }
+      - { value: 'A stamp is a mechanism for message encryption.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#stamps'
+
+  - question: 'How can you add a custom header to an email using the Mailer component?'
+    answers:
+      - { value: '`$email->getHeaders()->addTextHeader(''X-Custom-Header'', ''My Value'');`', correct: true }
+      - { value: '`$email->addHeader(''X-Custom-Header'', ''My Value'');`', correct: false }
+      - { value: '`$email->setHeader(''X-Custom-Header'', ''My Value'');`', correct: false }
+      - { value: 'Custom headers are not supported.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/mailer.html#adding-custom-headers'
+
+  - question: 'What is the purpose of the `Filesystem::mirror()` method?'
+    answers:
+      - { value: 'To create a copy of a single file.', correct: false }
+      - { value: 'To synchronize the contents of one directory to another, creating, updating, and deleting files as needed.', correct: true }
+      - { value: 'To create a hard link to a directory.', correct: false }
+      - { value: 'To backup a directory to a remote server.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/filesystem.html#mirror'
+
+  - question: 'Which Finder method would you use to filter files based on their content (e.g., containing a specific string)?'
+    answers:
+      - { value: '`$finder->contains(''search string'');`', correct: true }
+      - { value: '`$finder->text(''search string'');`', correct: false }
+      - { value: '`$finder->grep(''search string'');`', correct: false }
+      - { value: 'The Finder component cannot search file content.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/finder.html#content'
+
+  - question: 'What is the purpose of the `LockFactory` in the Lock component?'
+    answers:
+      - { value: 'To create and manage multiple lock instances, often configured with a specific store.', correct: true }
+      - { value: 'To acquire and release a single global lock.', correct: false }
+      - { value: 'To define the lock key.', correct: false }
+      - { value: 'It is a deprecated class.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html#using-the-lock-factory'
+
+  - question: 'Which Web Profiler panel provides details about the current user, roles, and security events?'
+    answers:
+      - { value: 'The "User" panel', correct: false }
+      - { value: 'The "Security" panel', correct: true }
+      - { value: 'The "Authentication" panel', correct: false }
+      - { value: 'The "Authorization" panel', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler/panels/security.html'
+
+  - question: 'How can you enable the Web Profiler for specific IP addresses only?'
+    answers:
+      - { value: 'By configuring `framework.profiler.collect_from_ip` in `config/packages/dev/framework.yaml`.', correct: false }
+      - { value: 'By using `framework.profiler.only_ips` configuration in `config/packages/dev/framework.yaml`.', correct: true }
+      - { value: 'By modifying the `.htaccess` file.', correct: false }
+      - { value: 'The profiler cannot be restricted by IP.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler.html#restricting-the-profiler-to-certain-ip-addresses'
+
+  - question: 'What is the purpose of the `Intl` component''s `Locale` class?'
+    answers:
+      - { value: 'To define the application''s default language.', correct: false }
+      - { value: 'To provide utility methods for working with locale identifiers (e.g., parsing, validating, getting display names).', correct: true }
+      - { value: 'To manage timezone settings.', correct: false }
+      - { value: 'To translate locale names.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/intl.html#locale'
+
+  - question: 'How can you format a number as currency using the `Intl` component?'
+    answers:
+      - { value: '`$formatter = new \NumberFormatter(''en_US'', \NumberFormatter::CURRENCY); echo $formatter->formatCurrency(123.45, ''USD'');`', correct: true }
+      - { value: '`{{ 123.45|currency(''USD'') }}`', correct: false }
+      - { value: '`$intl->formatCurrency(123.45, ''USD'');`', correct: false }
+      - { value: 'The Intl component only formats numbers, not currencies.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/intl.html#number-and-currency-formatting'
+
+  - question: 'What is the primary benefit of the `Runtime` component for Symfony applications?'
+    answers:
+      - { value: 'It reduces the overall memory footprint of the application.', correct: false }
+      - { value: 'It provides a standardized way to boot the application, making it more adaptable to different execution environments (e.g., PHP-FPM, RoadRunner, Swoole, serverless).', correct: true }
+      - { value: 'It automatically optimizes database queries.', correct: false }
+      - { value: 'It replaces the need for a web server.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/runtime.html#why-use-it'
+
+  - question: 'How can you get the current time as a `DateTimeImmutable` object using the Clock component?'
+    answers:
+      - { value: '`$clock->now();`', correct: true }
+      - { value: '`new \DateTimeImmutable();`', correct: false }
+      - { value: '`Clock::getCurrentTime();`', correct: false }
+      - { value: '`$clock->getDateTime();`', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html#usage'
+
+  - question: 'What is the purpose of the `ClockMock` class in the Clock component?'
+    answers:
+      - { value: 'It is used for production clock implementation.', correct: false }
+      - { value: 'It provides static methods to control the global time for testing purposes, allowing you to "freeze" or "travel" through time.', correct: true }
+      - { value: 'It is a deprecated class.', correct: false }
+      - { value: 'It automatically adjusts the system clock.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html#clockmock'
+
+  - question: 'Which of the following is a valid way to define a service in `config/services.yaml`?'
+    answers:
+      - { value: '''
+        services:
+            App\Service\MyService:
+                arguments: ['@parameter_bag']
+        ''', correct: true }
+      - { value: '''
+        service:
+            MyService:
+                class: App\Service\MyService
+        ''', correct: false }
+      - { value: '''
+        App\Service\MyService:
+            public: true
+        ''', correct: false }
+      - { value: 'Services are only defined via annotations.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/service_container.html#defining-services-in-yaml'
+
+  - question: 'What is the purpose of the `lint:container` command?'
+    answers:
+      - { value: 'To check the syntax of your `services.yaml` files and validate the service container configuration.', correct: true }
+      - { value: 'To clear the service container cache.', correct: false }
+      - { value: 'To list all services in the container.', correct: false }
+      - { value: 'To generate service definitions automatically.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/console/commands_overview.html#lint-container'
+
+  - question: 'When debugging a Symfony application, what does the "Events" panel in the Web Profiler show?'
+    answers:
+      - { value: 'All HTTP events triggered during the request, including their listeners and execution order.', correct: true }
+      - { value: 'User login and logout events.', correct: false }
+      - { value: 'Database transaction events.', correct: false }
+      - { value: 'Frontend JavaScript events.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler/panels/event_dispatcher.html'
+
+  - question: 'What is the purpose of the `debug:event-dispatcher` command?'
+    answers:
+      - { value: 'To dispatch a custom event for debugging.', correct: false }
+      - { value: 'To list all registered event listeners and subscribers for a given event or all events.', correct: true }
+      - { value: 'To measure the performance of event listeners.', correct: false }
+      - { value: 'To clear the event dispatcher cache.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/event_dispatcher/debug.html'
+
+  - question: 'What is the purpose of the `cache:clear --env=prod` command during deployment?'
+    answers:
+      - { value: 'It clears the development cache.', correct: false }
+      - { value: 'It clears the production cache, which is crucial after code changes to ensure the new code is used.', correct: true }
+      - { value: 'It warms up the production cache.', correct: false }
+      - { value: 'It only clears the HTTP cache.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/deployment.html#clear-and-warm-up-the-cache'
+
+  - question: 'How can you configure a cache pool to use a DSN (Data Source Name) for its connection?'
+    answers:
+      - { value: 'By setting the `dsn` option for the pool in `config/packages/cache.yaml`.', correct: true }
+      - { value: 'DSNs are only for database connections, not cache.', correct: false }
+      - { value: 'By manually passing the DSN to the cache adapter constructor.', correct: false }
+      - { value: 'Cache pools do not support DSNs.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache/cache_pools.html#dsn-support'
+
+  - question: 'What is the purpose of the `Process::fromShellCommandline()` method?'
+    answers:
+      - { value: 'To execute a command directly without shell interpretation.', correct: false }
+      - { value: 'To execute a command string through the shell, allowing for shell-specific features like pipes and redirects.', correct: true }
+      - { value: 'To run a command in the background.', correct: false }
+      - { value: 'It is a deprecated method.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/process.html#running-commands-from-the-shell'
+
+  - question: 'When deserializing JSON into an object, how does the Serializer component typically map JSON keys to object properties?'
+    answers:
+      - { value: 'It uses a strict 1:1 mapping, requiring exact key names.', correct: false }
+      - { value: 'It attempts to map JSON keys to object properties based on their names, using strategies like snake_case to camelCase conversion if configured.', correct: true }
+      - { value: 'It requires manual mapping for every property.', correct: false }
+      - { value: 'It only maps public properties.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#deserializing-objects'
+
+  - question: 'What is the purpose of the `#[Ignore]` attribute in the Serializer component?'
+    answers:
+      - { value: 'To mark a property as mandatory for serialization.', correct: false }
+      - { value: 'To exclude a property from serialization and deserialization.', correct: true }
+      - { value: 'To change the name of a property during serialization.', correct: false }
+      - { value: 'To define a custom serialization method for a property.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#ignoring-properties'
+
+  - question: 'In the Messenger component, what is a "receiver"?'
+    answers:
+      - { value: 'A service that dispatches messages.', correct: false }
+      - { value: 'A component that retrieves messages from a transport (e.g., a message queue) for processing by handlers.', correct: true }
+      - { value: 'A class that defines a message.', correct: false }
+      - { value: 'A service that handles messages.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#receivers'
+
+  - question: 'How can you prevent a specific email from being sent in a test environment without changing the code?'
+    answers:
+      - { value: 'By configuring the Mailer DSN to `null://null` or `smtp://null` in `config/packages/test/mailer.yaml`.', correct: true }
+      - { value: 'By commenting out the `mailer` service.', correct: false }
+      - { value: 'By setting a global flag to disable email sending.', correct: false }
+      - { value: 'Emails cannot be prevented from sending in tests.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/mailer.html#disabling-email-delivery'
+
+  - question: 'What is the purpose of the `MimeTypeGuesser` component?'
+    answers:
+      - { value: 'To guess the file extension from a filename.', correct: false }
+      - { value: 'To guess the MIME type of a file based on its content or extension.', correct: true }
+      - { value: 'To validate MIME types.', correct: false }
+      - { value: 'To convert between different MIME types.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/mime.html#guessing-the-mime-type'
+
+  - question: 'Which method of the Filesystem component is used to check if a file or directory exists?'
+    answers:
+      - { value: '`$fs->exists(''path/to/item'');`', correct: true }
+      - { value: '`$fs->isFile(''path/to/item'');`', correct: false }
+      - { value: '`$fs->isDirectory(''path/to/item'');`', correct: false }
+      - { value: '`file_exists(''path/to/item'');` (though `Filesystem` provides a wrapper)', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/filesystem.html#exists'
+
+  - question: 'How can you find files that are larger than a specific size using the Finder component?'
+    answers:
+      - { value: '`$finder->size(''> 10K'');`', correct: true }
+      - { value: '`$finder->largerThan(''10K'');`', correct: false }
+      - { value: '`$finder->minSize(''10K'');`', correct: false }
+      - { value: 'The Finder component cannot filter by size.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/finder.html#size'
+
+  - question: 'What is the purpose of the `StoreFactory` in the Lock component?'
+    answers:
+      - { value: 'To create new lock instances.', correct: false }
+      - { value: 'To create and retrieve different lock stores (e.g., `FlockStore`, `RedisStore`) based on configuration.', correct: true }
+      - { value: 'To manage lock expiration.', correct: false }
+      - { value: 'It is a deprecated class.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html#stores'
+
+  - question: 'Which Web Profiler panel provides information about the services loaded in the Dependency Injection Container?'
+    answers:
+      - { value: 'The "Services" panel', correct: false }
+      - { value: 'The "Container" panel', correct: true }
+      - { value: 'The "DI" panel', correct: false }
+      - { value: 'The "Config" panel', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler/panels/container.html'
+
+  - question: 'What is the purpose of the `debug:container --parameters` command?'
+    answers:
+      - { value: 'To list all services in the container.', correct: false }
+      - { value: 'To list all defined parameters in the service container.', correct: true }
+      - { value: 'To debug issues with service parameters.', correct: false }
+      - { value: 'To dump the entire container configuration.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/console/commands_overview.html#debug-container'
+
+  - question: 'How can you translate a message in a PHP service using the Translator component?'
+    answers:
+      - { value: '''
+        use Symfony\Contracts\Translation\TranslatorInterface;
+        // ...
+        public function __construct(private TranslatorInterface $translator) {}
+
+        public function greet(): string
+        {
+            return $this->translator->trans(''hello.world'');
+        }
+        ''', correct: true }
+      - { value: '''
+        // ...
+        public function greet(): string
+        {
+            return $this->get(''translator'')->trans(''hello.world'');
+        }
+        ''', correct: false }
+      - { value: '''
+        // ...
+        public function greet(): string
+        {
+            return translate(''hello.world'');
+        }
+        ''', correct: false }
+      - { value: 'Translations are only for Twig templates.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation.html#translating-messages-in-php'
+
+  - question: 'What is the purpose of the `Intl` component''s `Collator` class?'
+    answers:
+      - { value: 'To compare strings based on locale-specific rules (e.g., for sorting).', correct: true }
+      - { value: 'To convert character encodings.', correct: false }
+      - { value: 'To validate string formats.', correct: false }
+      - { value: 'To perform string manipulations.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/intl.html#collator'
+
+  - question: 'How can you configure the `Runtime` component to use a custom kernel class?'
+    answers:
+      - { value: 'By modifying `public/index.php` directly.', correct: false }
+      - { value: 'By setting the `APP_KERNEL_CLASS` environment variable or `kernel_class` in `APP_RUNTIME_OPTIONS`.', correct: true }
+      - { value: 'The Runtime component automatically detects the kernel class.', correct: false }
+      - { value: 'Custom kernels are not supported with Runtime.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/runtime.html#custom-kernel-class'
+
+  - question: 'What is the purpose of the `Clock::sleep()` method in the Clock component?'
+    answers:
+      - { value: 'To pause the execution of the script for a specified duration, respecting the mocked time if a `FrozenClock` is used.', correct: true }
+      - { value: 'To put the application into a low-power state.', correct: false }
+      - { value: 'To simulate a network delay.', correct: false }
+      - { value: 'It is an alias for PHP''s `sleep()` function.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html#sleeping'
+
+  - question: 'When using `ExpressionLanguage` in security, what does `is_granted(''ROLE_ADMIN'')` check?'
+    answers:
+      - { value: 'If the current user has the `ROLE_ADMIN` role.', correct: true }
+      - { value: 'If the application is running in an admin environment.', correct: false }
+      - { value: 'If the user is authenticated as an administrator.', correct: false }
+      - { value: 'If the `ROLE_ADMIN` role exists in the system.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/security/expressions.html#is-granted'
+
+  - question: 'What is the purpose of the `debug:config` command?'
+    answers:
+      - { value: 'To dump the current configuration for a specific bundle or configuration tree.', correct: true }
+      - { value: 'To validate the syntax of configuration files.', correct: false }
+      - { value: 'To generate default configuration files.', correct: false }
+      - { value: 'To clear the configuration cache.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/console/commands_overview.html#debug-config'
+
+  - question: 'Which of the following is a best practice for logging in production environments?'
+    answers:
+      - { value: 'Logging everything at `DEBUG` level to files.', correct: false }
+      - { value: 'Logging only critical errors and warnings to a persistent storage, and using a log management system for analysis.', correct: true }
+      - { value: 'Disabling all logging to improve performance.', correct: false }
+      - { value: 'Logging directly to the console.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/logging.html#production-logging'
+
+  - question: 'What is the purpose of the `MonologBundle` in Symfony?'
+    answers:
+      - { value: 'It provides a web interface for viewing logs.', correct: false }
+      - { value: 'It integrates the Monolog library into Symfony, providing services for logging, configuring handlers, and integrating with the profiler.', correct: true }
+      - { value: 'It is a standalone logging library.', correct: false }
+      - { value: 'It replaces PHP''s default error logging.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/logging.html#monologbundle'
+
+  - question: 'How can you send logs to an external service (e.g., Slack, Sentry) using Monolog in Symfony?'
+    answers:
+      - { value: 'By configuring a custom Monolog handler for that service in `config/packages/monolog.yaml`.', correct: true }
+      - { value: 'By writing a custom logger service.', correct: false }
+      - { value: 'Monolog only supports file logging.', correct: false }
+      - { value: 'By using a separate bundle for each external service.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/logging/handlers.html'
+
+  - question: 'What is the purpose of the `debug:router --url=/my-path` command?'
+    answers:
+      - { value: 'To generate a URL for a given route name.', correct: false }
+      - { value: 'To find the matching route for a specific URL and display its details (controller, parameters, requirements).', correct: true }
+      - { value: 'To test if a URL is accessible.', correct: false }
+      - { value: 'To list all routes that contain `/my-path`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/routing.html#debugging-routes'
+
+  - question: 'What is the purpose of the `cache:warmup` command during deployment?'
+    answers:
+      - { value: 'To clear the cache.', correct: false }
+      - { value: 'To pre-generate and store commonly used cache entries (e.g., routing, container, Twig templates) to improve the first request performance in production.', correct: true }
+      - { value: 'To validate cache configuration.', correct: false }
+      - { value: 'To monitor cache usage.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/deployment.html#cache-warm-up'
+
+  - question: 'When using the `Filesystem` component, what is the difference between `copy()` and `mirror()`?'
+    answers:
+      - { value: '`copy()` copies a single file, while `mirror()` synchronizes an entire directory tree.', correct: true }
+      - { value: '`copy()` is for local files, `mirror()` for remote files.', correct: false }
+      - { value: '`copy()` moves the file, `mirror()` copies it.', correct: false }
+      - { value: 'They are aliases and perform the same operation.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/filesystem.html#copy'
+
+  - question: 'How can you find files that do NOT match a specific pattern using the Finder component?'
+    answers:
+      - { value: '`$finder->notName(''*.txt'');`', correct: true }
+      - { value: '`$finder->excludeName(''*.txt'');`', correct: false }
+      - { value: '`$finder->name(''!*.txt'');`', correct: false }
+      - { value: 'The Finder component only supports positive matches.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/finder.html#name'
+
+  - question: 'What is the purpose of the `Lock` component''s `release()` method?'
+    answers:
+      - { value: 'To acquire the lock again.', correct: false }
+      - { value: 'To explicitly release a previously acquired lock, making it available for other processes.', correct: true }
+      - { value: 'To check if the lock is held.', correct: false }
+      - { value: 'It is automatically called when the script ends.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html#acquiring-and-releasing-a-lock'
+
+  - question: 'Which Web Profiler panel would be most useful for debugging issues related to HTTP requests and responses?'
+    answers:
+      - { value: 'The "Request / Response" panel', correct: true }
+      - { value: 'The "Http" panel', correct: false }
+      - { value: 'The "Network" panel', correct: false }
+      - { value: 'The "Headers" panel', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler/panels/request.html'
+
+  - question: 'What is the purpose of the `debug:translation` command?'
+    answers:
+      - { value: 'To check for missing translations and display translation messages for a given locale and domain.', correct: true }
+      - { value: 'To generate new translation files.', correct: false }
+      - { value: 'To clear the translation cache.', correct: false }
+      - { value: 'To translate text from the command line.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation/extracting_messages.html#debugging-translations'
+
+  - question: 'How can you change the locale dynamically based on the user''s browser preferences in Symfony?'
+    answers:
+      - { value: 'By configuring `framework.session.locale_from_browser` to `true`.', correct: false }
+      - { value: 'By using the `LocaleListener` and configuring `framework.session.locale_from_accept_language` to `true`.', correct: true }
+      - { value: 'By manually parsing the `Accept-Language` header.', correct: false }
+      - { value: 'Symfony automatically detects browser locale.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation/locale.html#locale-from-the-browser'
+
+  - question: 'What is the purpose of the `Clock` component''s `sleepUntil()` method?'
+    answers:
+      - { value: 'To pause execution until a specific future `DateTimeImmutable` instance, respecting mocked time.', correct: true }
+      - { value: 'To set the system clock to a future time.', correct: false }
+      - { value: 'To schedule a task to run at a specific time.', correct: false }
+      - { value: 'It is an alias for `sleep()`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html#sleeping'
+
+  - question: 'Which of the following is a valid way to define a service with a specific class and arguments in `config/services.yaml`?'
+    answers:
+      - { value: '''
+        services:
+            my_service:
+                class: App\Service\MyService
+                arguments: ['@another_service', '%app.param%']
+        ''', correct: true }
+      - { value: '''
+        my_service:
+            App\Service\MyService:
+                args: ['@another_service']
+        ''', correct: false }
+      - { value: '''
+        services:
+            my_service: App\Service\MyService('@another_service')
+        ''', correct: false }
+      - { value: 'Services are only defined by autowiring.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/service_container.html#defining-services-in-yaml'
+
+  - question: 'What is the purpose of the `lint:yaml` command?'
+    answers:
+      - { value: 'To validate the syntax of YAML files in your project.', correct: true }
+      - { value: 'To convert YAML files to JSON.', correct: false }
+      - { value: 'To merge multiple YAML files.', correct: false }
+      - { value: 'To generate YAML configuration.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/console/commands_overview.html#lint-yaml'
+
+  - question: 'What is the purpose of the `debug:validator` command?'
+    answers:
+      - { value: 'To validate data against a specific validation group.', correct: false }
+      - { value: 'To list all registered validation constraints and their associated targets (classes, properties, methods).', correct: true }
+      - { value: 'To debug issues with form validation.', correct: false }
+      - { value: 'To generate validation rules automatically.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/validation/debug.html'
+
+  - question: 'What is the purpose of the `cache:clear --no-warmup` command?'
+    answers:
+      - { value: 'It clears the cache and then immediately warms it up.', correct: false }
+      - { value: 'It clears the cache but skips the cache warming process, which can be useful in deployment scripts where warming is done separately.', correct: true }
+      - { value: 'It only clears the HTTP cache.', correct: false }
+      - { value: 'It is a deprecated command.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/console/commands_overview.html#cache-clear'
+
+  - question: 'When using the `Filesystem` component, what is the purpose of the `remove()` method?'
+    answers:
+      - { value: 'To move a file to the trash.', correct: false }
+      - { value: 'To delete files or directories recursively.', correct: true }
+      - { value: 'To rename a file.', correct: false }
+      - { value: 'To empty a directory without deleting it.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/filesystem.html#remove'
+
+  - question: 'How can you find files that are empty using the Finder component?'
+    answers:
+      - { value: '`$finder->size(''= 0'');`', correct: true }
+      - { value: '`$finder->empty();`', correct: false }
+      - { value: '`$finder->isEmpty();`', correct: false }
+      - { value: 'The Finder component cannot filter by empty files.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/finder.html#size'
+
+  - question: 'What is the purpose of the `Lock` component''s `isAcquired()` method?'
+    answers:
+      - { value: 'To attempt to acquire the lock.', correct: false }
+      - { value: 'To check if the current process holds the lock without attempting to acquire or release it.', correct: true }
+      - { value: 'To check if any process holds the lock.', correct: false }
+      - { value: 'It is used for debugging only.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html#checking-if-a-lock-is-acquired'
+
+  - question: 'Which Web Profiler panel would be most useful for debugging issues related to Twig template rendering and variables?'
+    answers:
+      - { value: 'The "Template" panel', correct: false }
+      - { value: 'The "Twig" panel', correct: true }
+      - { value: 'The "Render" panel', correct: false }
+      - { value: 'The "View" panel', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler/panels/twig.html'
+
+  - question: 'What is the purpose of the `debug:translation --all` command?'
+    answers:
+      - { value: 'To list all translation messages across all domains and locales, indicating missing or unused translations.', correct: true }
+      - { value: 'To export all translations to a single file.', correct: false }
+      - { value: 'To import all translations from a file.', correct: false }
+      - { value: 'To clear all translation caches.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation/extracting_messages.html#debugging-translations'
+
+  - question: 'How can you define a custom translation domain for a specific message in Twig?'
+    answers:
+      - { value: '`{{ ''my.message''|trans({}, ''custom_domain'') }}`', correct: true }
+      - { value: '`{{ ''my.message''|trans_domain(''custom_domain'') }}`', correct: false }
+      - { value: '`{{ ''my.message''|trans_in(''custom_domain'') }}`', correct: false }
+      - { value: 'All messages use the default domain.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation/templates.html#translation-domains'
+
+  - question: 'What is the purpose of the `Clock` component''s `withTimeZone()` method?'
+    answers:
+      - { value: 'To change the system''s default timezone.', correct: false }
+      - { value: 'To return a new `ClockInterface` instance that always returns `DateTimeImmutable` objects in the specified timezone, without affecting the original clock.', correct: true }
+      - { value: 'To convert a `DateTimeImmutable` object to a different timezone.', correct: false }
+      - { value: 'It is used for timezone validation.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html#timezones'
+
+  - question: 'Which of the following is a valid way to get a service from the container in a controller (though direct container access is generally discouraged)?'
+    answers:
+      - { value: '`$this->container->get(''my_service'');`', correct: true }
+      - { value: '`$this->get(''my_service'');` (deprecated in newer Symfony versions)', correct: false }
+      - { value: '`$this->container->myService;`', correct: false }
+      - { value: 'Services can only be injected via constructor.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/service_container/accessing_services.html'
+
+  - question: 'What is the purpose of the `lint:twig` command?'
+    answers:
+      - { value: 'To validate the syntax of Twig templates and check for common errors.', correct: true }
+      - { value: 'To compile Twig templates to PHP.', correct: false }
+      - { value: 'To clear the Twig cache.', correct: false }
+      - { value: 'To generate Twig templates.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/console/commands_overview.html#lint-twig'
+
+  - question: 'What is the purpose of the `debug:form` command?'
+    answers:
+      - { value: 'To generate a form from an entity.', correct: false }
+      - { value: 'To inspect the configuration and options of a specific form type.', correct: true }
+      - { value: 'To debug form submission issues.', correct: false }
+      - { value: 'To validate form data.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/forms/debug.html'
+
+  - question: 'What is the purpose of the `cache:pool:list` command?'
+    answers:
+      - { value: 'To list all configured cache pools in the application.', correct: true }
+      - { value: 'To list all items in a specific cache pool.', correct: false }
+      - { value: 'To check the status of cache servers.', correct: false }
+      - { value: 'To clear all cache pools.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache/usage.html#listing-cache-pools'
+
+  - question: 'What is the purpose of the `Process::getExitCode()` method?'
+    answers:
+      - { value: 'To get the process ID.', correct: false }
+      - { value: 'To retrieve the exit code of the terminated process, where `0` typically indicates success and non-zero indicates an error.', correct: true }
+      - { value: 'To get the current status of the process.', correct: false }
+      - { value: 'To get the output of the process.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/process.html#getting-the-exit-code'
+
+  - question: 'When using the Serializer component, what is the role of the `EncoderInterface`?'
+    answers:
+      - { value: 'To convert a normalized array into a specific format (e.g., JSON string, XML string).', correct: true }
+      - { value: 'To convert an object into a normalized array.', correct: false }
+      - { value: 'To validate the data before encoding.', correct: false }
+      - { value: 'To handle circular references.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#encoders-and-normalizers'
+
+  - question: 'What is the purpose of the `#[MaxDepth]` attribute in the Serializer component?'
+    answers:
+      - { value: 'To limit the number of items in a collection during serialization.', correct: false }
+      - { value: 'To prevent infinite loops when serializing objects with deep nested or circular references by stopping serialization at a specified depth.', correct: true }
+      - { value: 'To define the maximum length of a serialized string.', correct: false }
+      - { value: 'To specify the maximum number of properties to serialize.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#handling-circular-references'
+
+  - question: 'In the Messenger component, what is the purpose of the `AuditStamp`?'
+    answers:
+      - { value: 'To mark a message as processed.', correct: false }
+      - { value: 'To add auditing information to a message, such as the user who dispatched it or the time it was dispatched.', correct: true }
+      - { value: 'To track message delivery status.', correct: false }
+      - { value: 'To encrypt message content.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#stamps'
+
+  - question: 'How can you configure the Mailer component to use a specific SMTP server and port?'
+    answers:
+      - { value: 'By setting the `MAILER_DSN` environment variable (e.g., `smtp://user:pass@smtp.example.com:587`).', correct: true }
+      - { value: 'In `config/packages/mailer.yaml` with `host` and `port` parameters.', correct: false }
+      - { value: 'By modifying the `php.ini` file.', correct: false }
+      - { value: 'The Mailer component automatically detects SMTP settings.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/mailer.html#configuration'
+
+  - question: 'What is the purpose of the `Filesystem::touch()` method?'
+    answers:
+      - { value: 'To create a new empty file or update the access and modification times of an existing file.', correct: true }
+      - { value: 'To change the ownership of a file.', correct: false }
+      - { value: 'To copy a file.', correct: false }
+      - { value: 'To read the content of a file.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/filesystem.html#touch'
+
+  - question: 'How can you find files that are executable using the Finder component?'
+    answers:
+      - { value: '`$finder->executable();`', correct: true }
+      - { value: '`$finder->isExecutable();`', correct: false }
+      - { value: '`$finder->perms(''+x'');`', correct: false }
+      - { value: 'The Finder component cannot filter by executability.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/finder.html#permissions'
+
+  - question: 'What is the purpose of the `Lock` component''s `refresh()` method?'
+    answers:
+      - { value: 'To re-acquire a released lock.', correct: false }
+      - { value: 'To extend the lifetime of an acquired lock, preventing it from expiring prematurely.', correct: true }
+      - { value: 'To check if the lock is still valid.', correct: false }
+      - { value: 'It is used to force a lock to be released.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html#refreshing-a-lock'
+
+  - question: 'Which Web Profiler panel would be most useful for debugging issues related to the Dependency Injection Container and service definitions?'
+    answers:
+      - { value: 'The "Container" panel', correct: true }
+      - { value: 'The "Services" panel', correct: false }
+      - { value: 'The "DI" panel', correct: false }
+      - { value: 'The "Config" panel', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler/panels/container.html'
+
+  - question: 'What is the purpose of the `debug:translation --messages` command?'
+    answers:
+      - { value: 'To list all translation messages and their current translations for a specific locale.', correct: true }
+      - { value: 'To check for missing translation files.', correct: false }
+      - { value: 'To update translation messages from source code.', correct: false }
+      - { value: 'To generate a report of translation quality.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation/extracting_messages.html#debugging-translations'
+
+  - question: 'How can you format a date and time according to a specific locale in Twig using the `Intl` component''s capabilities?'
+    answers:
+      - { value: '`{{ my_date|format_datetime(''medium'', ''short'', locale=''fr'') }}`', correct: true }
+      - { value: '`{{ my_date|date(''medium'', ''short'', locale=''fr'') }}`', correct: false }
+      - { value: '`{{ my_date|intl_datetime(''fr'') }}`', correct: false }
+      - { value: 'Twig automatically formats dates based on the current locale.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/intl.html#twig-integration'
+
+  - question: 'What is the purpose of the `Clock` component''s `withMockedTime()` method?'
+    answers:
+      - { value: 'To set the system clock to a specific time.', correct: false }
+      - { value: 'To execute a callable with a temporary mocked time, ensuring that any time-related operations within the callable use the mocked time, and then restoring the original clock.', correct: true }
+      - { value: 'To create a new `FrozenClock` instance.', correct: false }
+      - { value: 'It is used for performance testing.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html#testing'
+
+  - question: 'Which of the following is a valid way to define a service as `public` in `config/services.yaml`?'
+    answers:
+      - { value: '''
+        services:
+            App\Service\MyPublicService:
+                public: true
+        ''', correct: true }
+      - { value: '''
+        services:
+            App\Service\MyPublicService:
+                visibility: public
+        ''', correct: false }
+      - { value: '''
+        public services:
+            App\Service\MyPublicService: ~
+        ''', correct: false }
+      - { value: 'All services are public by default.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/service_container/public_private_services.html'
+
+  - question: 'What is the purpose of the `debug:autowiring --all` command?'
+    answers:
+      - { value: 'To list all services that can be autowired, including their interfaces and abstract classes.', correct: true }
+      - { value: 'To enable autowiring for all services.', correct: false }
+      - { value: 'To check for autowiring conflicts.', correct: false }
+      - { value: 'To generate autowiring configuration for all services.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/service_container/autowiring.html#debugging-autowiring'
+
+  - question: 'What is the purpose of the `debug:router --name=<route_name>` command?'
+    answers:
+      - { value: 'To list all routes with a specific name.', correct: false }
+      - { value: 'To display the details of a specific route by its name, including its path, methods, and controller.', correct: true }
+      - { value: 'To generate a URL for a given route name.', correct: false }
+      - { value: 'To test if a route is accessible.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/routing.html#debugging-routes'
+
+  - question: 'What is the purpose of the `cache:pool:delete` command?'
+    answers:
+      - { value: 'To delete a specific cache item from a pool.', correct: false }
+      - { value: 'To delete an entire cache pool and its associated configuration.', correct: false }
+      - { value: 'To clear all items from a specific cache pool.', correct: true }
+      - { value: 'To remove expired cache items.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/cache/usage.html#clearing-cache-pools'
+
+  - question: 'When using the `Process` component, how can you check if a process is still running?'
+    answers:
+      - { value: '`$process->isRunning();`', correct: true }
+      - { value: '`$process->isStarted();`', correct: false }
+      - { value: '`$process->getStatus();`', correct: false }
+      - { value: 'You cannot check the status of a running process.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/process.html#checking-the-process-status'
+
+  - question: 'What is the purpose of the `Serializer` component''s `supportsNormalization()` method in a custom normalizer?'
+    answers:
+      - { value: 'To check if the normalizer can handle a specific format.', correct: false }
+      - { value: 'To determine if the normalizer can normalize a given data type (e.g., an object of a specific class).', correct: true }
+      - { value: 'To check if the normalizer is enabled.', correct: false }
+      - { value: 'To validate the data before normalization.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/serializer.html#custom-normalizers-and-encoders'
+
+  - question: 'In the Messenger component, what is the purpose of the `DispatchAfterCurrentBusStamp`?'
+    answers:
+      - { value: 'To dispatch a message immediately.', correct: false }
+      - { value: 'To ensure a message is dispatched only after the current message bus transaction (e.g., database transaction) has successfully completed.', correct: true }
+      - { value: 'To delay message dispatch until a specific time.', correct: false }
+      - { value: 'To dispatch a message to multiple buses.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/messenger.html#dispatch-after-current-bus'
+
+  - question: 'How can you configure the Mailer component to use a "spool" (e.g., send emails in the background via Messenger)?'
+    answers:
+      - { value: 'By setting the `MAILER_DSN` to a Messenger transport (e.g., `dsn: ''smtp://localhost?transport=messenger''`).', correct: true }
+      - { value: 'By enabling a `spool` option in `config/packages/mailer.yaml`.', correct: false }
+      - { value: 'Spooling is handled by a separate bundle.', correct: false }
+      - { value: 'The Mailer component does not support spooling.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/mailer.html#sending-emails-asynchronously'
+
+  - question: 'What is the purpose of the `Filesystem::makePathRelative()` method?'
+    answers:
+      - { value: 'To convert an absolute path to a relative path based on a given base path.', correct: true }
+      - { value: 'To create a relative symbolic link.', correct: false }
+      - { value: 'To check if a path is relative.', correct: false }
+      - { value: 'To resolve a relative path to an absolute path.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/filesystem.html#makepathrelative'
+
+  - question: 'How can you find files that are older than a specific date using the Finder component?'
+    answers:
+      - { value: '`$finder->date(''< '' . (new \DateTime(''-1 month''))->format(''Y-m-d H:i:s''));`', correct: true }
+      - { value: '`$finder->olderThan(''-1 month'');`', correct: false }
+      - { value: '`$finder->mtime(''< -1 month'');`', correct: false }
+      - { value: 'The Finder component cannot filter by age.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/finder.html#date'
+
+  - question: 'What is the purpose of the `Lock` component''s `getRemainingLifetime()` method?'
+    answers:
+      - { value: 'To get the total lifetime of the lock.', correct: false }
+      - { value: 'To retrieve the approximate remaining time (in seconds) before an acquired lock expires.', correct: true }
+      - { value: 'To set the lock''s lifetime.', correct: false }
+      - { value: 'It is used for debugging only.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/lock.html#checking-the-remaining-lifetime'
+
+  - question: 'Which Web Profiler panel would be most useful for debugging issues related to logging and messages written to the logger?'
+    answers:
+      - { value: 'The "Log" panel', correct: false }
+      - { value: 'The "Logger" panel', correct: true }
+      - { value: 'The "Messages" panel', correct: false }
+      - { value: 'The "Monolog" panel', correct: false }
+    help: |
+      'https://symfony.com/doc/current/profiler/panels/logger.html'
+
+  - question: 'What is the purpose of the `debug:container --tags` command?'
+    answers:
+      - { value: 'To list all services that have specific tags.', correct: true }
+      - { value: 'To add tags to services.', correct: false }
+      - { value: 'To remove tags from services.', correct: false }
+      - { value: 'To debug issues with service tags.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/console/commands_overview.html#debug-container'
+
+  - question: 'How can you set the locale for a specific translation message in PHP?'
+    answers:
+      - { value: '`$this->translator->trans(''my.message'', [], null, ''fr'');`', correct: true }
+      - { value: '`$this->translator->setLocale(''fr'')->trans(''my.message'');`', correct: false }
+      - { value: '`$this->translator->trans(''my.message'', [], ''fr'');`', correct: false }
+      - { value: 'The locale is always global.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/translation.html#translating-messages-in-php'
+
+  - question: 'What is the purpose of the `Intl` component''s `NumberFormatter` class?'
+    answers:
+      - { value: 'To parse and format numbers and currencies according to specific locales and patterns.', correct: true }
+      - { value: 'To perform mathematical operations.', correct: false }
+      - { value: 'To validate number formats.', correct: false }
+      - { value: 'To convert numbers between different bases.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/intl.html#number-and-currency-formatting'
+
+  - question: 'What is the primary benefit of the `Runtime` component for console commands?'
+    answers:
+      - { value: 'It makes console commands run faster.', correct: false }
+      - { value: 'It allows console commands to be executed in various environments (e.g., traditional CLI, RoadRunner, Swoole) without modifying the command itself, by abstracting the bootstrapping process.', correct: true }
+      - { value: 'It provides a graphical interface for console commands.', correct: false }
+      - { value: 'It automatically handles command arguments.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/runtime.html#console-applications'
+
+  - question: 'What is the purpose of the `Clock` component''s `getMockedTime()` method?'
+    answers:
+      - { value: 'To get the current system time.', correct: false }
+      - { value: 'To retrieve the currently mocked time when using a `FrozenClock` or `ClockMock`.', correct: true }
+      - { value: 'To get the time when the clock was last updated.', correct: false }
+      - { value: 'It is used for internal debugging only.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/components/clock.html#frozenclock'
+
+  - question: 'Which of the following is a valid way to inject a parameter into a service in `config/services.yaml`?'
+    answers:
+      - { value: '''
+        services:
+            App\Service\MyService:
+                arguments: ['%app.my_param%']
+        ''', correct: true }
+      - { value: '''
+        services:
+            App\Service\MyService:
+                arguments: ['param:app.my_param']
+        ''', correct: false }
+      - { value: '''
+        services:
+            App\Service\MyService:
+                arguments: ['@app.my_param']
+        ''', correct: false }
+      - { value: 'Parameters can only be accessed via the `ParameterBagInterface`.', correct: false }
+    help: |
+      'https://symfony.com/doc/current/service_container/parameters.html#referencing-parameters'
+```
