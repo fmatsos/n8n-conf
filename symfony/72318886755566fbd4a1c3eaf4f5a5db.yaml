@@ -1,0 +1,2335 @@
+```yaml
+category: Security
+questions:
+  - question: 'Which command is used to install the Symfony SecurityBundle?'
+    answers:
+      - { value: 'composer install symfony/security', correct: false }
+      - { value: 'composer require symfony/security-bundle', correct: true }
+      - { value: 'php bin/console security:install', correct: false }
+      - { value: 'symfony install security', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of the `password_hashers` configuration in `security.yaml`?'
+    answers:
+      - { value: 'To define the encryption algorithm for user passwords.', correct: true }
+      - { value: 'To specify the maximum length of a password.', correct: false }
+      - { value: 'To configure password reset functionality.', correct: false }
+      - { value: 'To set up multi-factor authentication.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'In `security.yaml`, what does the `providers` section define?'
+    answers:
+      - { value: 'How user data is stored and retrieved.', correct: true }
+      - { value: 'The available authentication methods.', correct: false }
+      - { value: 'Roles and permissions for users.', correct: false }
+      - { value: 'Firewall configurations.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following is the correct YAML configuration for a `dev` firewall that bypasses security?'
+    answers:
+      - { value: |
+          dev:
+              pattern: ^/(_(profiler|wdt)|css|images|js)/
+              security: false
+        , correct: true }
+      - { value: |
+          dev:
+              path: ^/dev
+              enabled: false
+        , correct: false }
+      - { value: |
+          dev:
+              pattern: /dev/*
+              anonymous: true
+        , correct: false }
+      - { value: |
+          dev:
+              pattern: ^/(_(profiler|wdt)|css|images|js)/
+              access: public
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the significance of the order of firewalls in `security.yaml`?'
+    answers:
+      - { value: 'The request will be handled by the first firewall whose pattern matches.', correct: true }
+      - { value: 'The last firewall defined always takes precedence.', correct: false }
+      - { value: 'The order only affects performance, not behavior.', correct: false }
+      - { value: 'Firewalls are evaluated in alphabetical order of their names.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which `access_control` rule will require `ROLE_ADMIN` for any URL starting with `/admin`?'
+    answers:
+      - { value: '- { path: ^/admin, roles: ROLE_ADMIN }', correct: true }
+      - { value: '- { route: admin, roles: ROLE_ADMIN }', correct: false }
+      - { value: '- { path: /admin/*, role: ROLE_ADMIN }', correct: false }
+      - { value: '- { url: ^/admin, access: ROLE_ADMIN }', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/access_control
+  - question: 'Which special authentication attribute checks if a user is logged in (authenticated) by any means?'
+    answers:
+      - { value: 'IS_AUTHENTICATED_FULLY', correct: false }
+      - { value: 'IS_AUTHENTICATED_REMEMBERED', correct: false }
+      - { value: 'IS_AUTHENTICATED', correct: true }
+      - { value: 'IS_LOGGED_IN', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_AUTHENTICATED_FULLY`?'
+    answers:
+      - { value: 'It checks if a user is authenticated, including via "remember me".', correct: false }
+      - { value: 'It checks if a user is authenticated, but *not* via "remember me".', correct: true }
+      - { value: 'It checks if a user has all possible roles.', correct: false }
+      - { value: 'It checks if a user is currently impersonating another user.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'How can you configure a logout path in `security.yaml`?'
+    answers:
+      - { value: |
+          logout:
+              path: /logout
+        , correct: true }
+      - { value: |
+          logout_route: /logout
+        , correct: false }
+      - { value: |
+          path: /logout
+          type: logout
+        , correct: false }
+      - { value: |
+          route: logout
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which command generates a form-based login system (controller, template, security config) in Symfony?'
+    answers:
+      - { value: 'php bin/console make:auth', correct: false }
+      - { value: 'php bin/console make:security:form-login', correct: true }
+      - { value: 'php bin/console security:generate-login', correct: false }
+      - { value: 'php bin/console generate:login-form', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the default value for the `username_parameter` option in `form_login`?'
+    answers:
+      - { value: 'username', correct: false }
+      - { value: 'email', correct: false }
+      - { value: '_username', correct: true }
+      - { value: 'user', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the default value for the `password_parameter` option in `form_login`?'
+    answers:
+      - { value: 'password', correct: false }
+      - { value: '_password', correct: true }
+      - { value: 'pass', correct: false }
+      - { value: 'pwd', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'To enforce HTTPS for a specific path like `/cart/checkout`, which `access_control` option should be used?'
+    answers:
+      - { value: 'secure_channel: true', correct: false }
+      - { value: 'requires_channel: https', correct: true }
+      - { value: 'protocol: https', correct: false }
+      - { value: 'force_https: true', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/access_control
+  - question: 'How can you define a role hierarchy where `ROLE_ADMIN` inherits `ROLE_USER`?'
+    answers:
+      - { value: |
+          role_hierarchy:
+              ROLE_ADMIN: ROLE_USER
+        , correct: true }
+      - { value: |
+          roles:
+              ROLE_ADMIN: [ROLE_USER]
+        , correct: false }
+      - { value: |
+          hierarchy:
+              ROLE_USER: ROLE_ADMIN
+        , correct: false }
+      - { value: |
+          inherit_roles:
+              ROLE_ADMIN: ROLE_USER
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which event is dispatched after the authenticator creates the security passport and is used for actual authentication checks?'
+    answers:
+      - { value: 'AuthenticationSuccessEvent', correct: false }
+      - { value: 'LoginSuccessEvent', correct: false }
+      - { value: 'CheckPassportEvent', correct: true }
+      - { value: 'AuthenticationTokenCreatedEvent', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which event is dispatched after authentication was fully successful and allows modifying the response sent back to the user?'
+    answers:
+      - { value: 'AuthenticationSuccessEvent', correct: false }
+      - { value: 'LoginSuccessEvent', correct: true }
+      - { value: 'InteractiveLoginEvent', correct: false }
+      - { value: 'AuthenticationTokenCreatedEvent', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of the `security.expression_language_provider` tag?'
+    answers:
+      - { value: 'To register custom Twig functions for security checks.', correct: false }
+      - { value: 'To define custom voters for authorization.', correct: false }
+      - { value: 'To register custom expression language functions for the security component.', correct: true }
+      - { value: 'To configure the default security expression language.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/dic_tags
+  - question: 'How can you check if the current user has a specific role (e.g., `ROLE_SALES_ADMIN`) within a Symfony service?'
+    answers:
+      - { value: 'By injecting `Security` service and using `$this->security->isGranted(\'ROLE_SALES_ADMIN\')`.', correct: true }
+      - { value: 'By injecting `AuthorizationCheckerInterface` and using `$this->checker->isGranted(\'ROLE_SALES_ADMIN\')`.', correct: false }
+      - { value: 'By calling `getUser()->hasRole(\'ROLE_SALES_ADMIN\')`.', correct: false }
+      - { value: 'By using the `#[IsGranted]` attribute in the service method.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the default `target` URL for redirection after logout in Symfony?'
+    answers:
+      - { value: '/login', correct: false }
+      - { value: '/', correct: true }
+      - { value: '/home', correct: false }
+      - { value: 'The previous page', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'To always enable the "Remember Me" functionality, which option should be set to `true` in `remember_me` configuration?'
+    answers:
+      - { value: 'always_remember_me', correct: true }
+      - { value: 'remember_me_enabled', correct: false }
+      - { value: 'force_remember_me', correct: false }
+      - { value: 'auto_remember_me', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the default `lifetime` for the "Remember Me" cookie in seconds?'
+    answers:
+      - { value: '3600 (1 hour)', correct: false }
+      - { value: '86400 (1 day)', correct: false }
+      - { value: '604800 (1 week)', correct: true }
+      - { value: '31536000 (1 year)', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'Which `samesite` cookie attribute value prevents the cookie from being sent with cross-site requests, even when following a regular link?'
+    answers:
+      - { value: 'None', correct: false }
+      - { value: 'Lax', correct: false }
+      - { value: 'Strict', correct: true }
+      - { value: 'Secure', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `required_badges` in a firewall configuration?'
+    answers:
+      - { value: 'To specify a list of roles required for authentication.', correct: false }
+      - { value: 'To define the minimum security level for the firewall.', correct: false }
+      - { value: 'To specify a list of badges that must be present on the authenticated passport.', correct: true }
+      - { value: 'To configure the visual badges displayed to the user.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'Which console command displays the actual security configuration values used by your application?'
+    answers:
+      - { value: 'php bin/console config:dump-reference security', correct: false }
+      - { value: 'php bin/console debug:config security', correct: true }
+      - { value: 'php bin/console security:show', correct: false }
+      - { value: 'php bin/console security:config', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the primary purpose of the `firewalls` section in `security.yaml`?'
+    answers:
+      - { value: 'To define how user passwords are hashed.', correct: false }
+      - { value: 'To specify the authentication mechanism for different URL patterns.', correct: true }
+      - { value: 'To manage user roles and permissions.', correct: false }
+      - { value: 'To configure database connections for user providers.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'When using `#[IsGranted]` on a controller class, how can you override the class-level security for a specific method?'
+    answers:
+      - { value: 'By applying a different `#[IsGranted]` attribute directly to the method.', correct: true }
+      - { value: 'By setting `security: false` on the method route.', correct: false }
+      - { value: 'By using a `denyAccessUnlessGranted` call inside the method.', correct: false }
+      - { value: 'Class-level `#[IsGranted]` cannot be overridden by method-level attributes.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid way to define multiple firewall patterns in YAML for the `dev` firewall?'
+    answers:
+      - { value: |
+          dev:
+              pattern: '^/_profiler/|/_wdt/|/css/|/images/|/js/'
+        , correct: false }
+      - { value: |
+          dev:
+              pattern:
+                  - ^/_profiler/
+                  - ^/_wdt/
+                  - ^/css/
+                  - ^/images/
+                  - ^/js/
+        , correct: true }
+      - { value: |
+          dev:
+              patterns: ['^/_profiler/', '^/_wdt/', '^/css/', '^/images/', '^/js/']
+        , correct: false }
+      - { value: |
+          dev:
+              match: [/_profiler/, /_wdt/, /css/, /images/, /js/]
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `login_throttling` in Symfony security configuration?'
+    answers:
+      - { value: 'To limit the number of concurrent active user sessions.', correct: false }
+      - { value: 'To restrict the rate of successful logins from a single IP address.', correct: false }
+      - { value: 'To prevent brute-force attacks by limiting the number of failed login attempts.', correct: true }
+      - { value: 'To control the frequency of password reset requests.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which Composer package is required to enable login throttling in Symfony?'
+    answers:
+      - { value: 'symfony/security-csrf', correct: false }
+      - { value: 'symfony/rate-limiter', correct: true }
+      - { value: 'symfony/security-http', correct: false }
+      - { value: 'symfony/security-core', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the default `maxAttempts` for login throttling if not explicitly configured?'
+    answers:
+      - { value: '3', correct: false }
+      - { value: '5', correct: true }
+      - { value: '10', correct: false }
+      - { value: 'Unlimited', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid configuration for an entity user provider in YAML?'
+    answers:
+      - { value: |
+          app_user_provider:
+              entity:
+                  class: App\Entity\User
+                  property: email
+        , correct: true }
+      - { value: |
+          app_user_provider:
+              database:
+                  table: users
+                  username_field: email
+        , correct: false }
+      - { value: |
+          app_user_provider:
+              doctrine:
+                  model: App\Entity\User
+                  id_field: email
+        , correct: false }
+      - { value: |
+          app_user_provider:
+              service: App\Security\UserProvider
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `check_path` in `json_login` configuration?'
+    answers:
+      - { value: 'It defines the URL where the login form is displayed.', correct: false }
+      - { value: 'It specifies the route that intercepts JSON login requests for authentication processing.', correct: true }
+      - { value: 'It is the path to redirect to after a successful JSON login.', correct: false }
+      - { value: 'It is used to validate the JSON payload structure.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following `access_control` rules correctly restricts access to `/admin` based on multiple IP addresses?'
+    answers:
+      - { value: '- { path: ^/admin, roles: PUBLIC_ACCESS, ip: [127.0.0.1, ::1] }', correct: false }
+      - { value: '- { path: ^/admin, roles: PUBLIC_ACCESS, ips: [127.0.0.1, ::1, 192.168.0.1/24] }', correct: true }
+      - { value: '- { path: ^/admin, roles: PUBLIC_ACCESS, allowed_ips: "127.0.0.1, ::1" }', correct: false }
+      - { value: '- { path: ^/admin, roles: PUBLIC_ACCESS, ip_range: "127.0.0.1-192.168.0.255" }', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/access_control
+  - question: 'What does the `NotCompromisedPassword` constraint do?'
+    answers:
+      - { value: 'It encrypts the password before storing it in the database.', correct: false }
+      - { value: 'It checks if a given password has been compromised in a data breach using a public API.', correct: true }
+      - { value: 'It enforces strong password policies like minimum length and character requirements.', correct: false }
+      - { value: 'It prevents users from reusing old passwords.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/framework
+  - question: 'Which `access_control` rule would deny access to `/internal` for all IPs except `127.0.0.1` and `::1`?'
+    answers:
+      - { value: |
+          - { path: ^/internal, roles: PUBLIC_ACCESS, ips: [127.0.0.1, ::1] }
+          - { path: ^/internal, roles: ROLE_NO_ACCESS }
+        , correct: true }
+      - { value: |
+          - { path: ^/internal, roles: PUBLIC_ACCESS, ips: [127.0.0.1, ::1], deny_all: true }
+        , correct: false }
+      - { value: |
+          - { path: ^/internal, roles: ROLE_NO_ACCESS, except_ips: [127.0.0.1, ::1] }
+        , correct: false }
+      - { value: |
+          - { path: ^/internal, roles: PUBLIC_ACCESS, ip_whitelist: [127.0.0.1, ::1] }
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/security/access_control
+  - question: 'What is the purpose of `post_only: true` in `form_login` configuration?'
+    answers:
+      - { value: 'It forces the login form to be submitted via POST request only.', correct: true }
+      - { value: 'It prevents the login form from being cached.', correct: false }
+      - { value: 'It ensures that the login form is only accessible via HTTPS.', correct: false }
+      - { value: 'It disables GET requests for the login path entirely.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'Which of the following is a valid way to configure X.509 client certificate authentication in Symfony?'
+    answers:
+      - { value: |
+          x509:
+              provider: your_user_provider
+        , correct: true }
+      - { value: |
+          client_certificate:
+              enabled: true
+              provider: your_user_provider
+        , correct: false }
+      - { value: |
+          ssl_client_auth:
+              user_provider: your_user_provider
+        , correct: false }
+      - { value: |
+          certificate_auth:
+              provider: your_user_provider
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `remote_user` authentication in Symfony?'
+    answers:
+      - { value: 'To authenticate users via a remote API service.', correct: false }
+      - { value: 'To use authentication provided by the web server (e.g., Apache, Nginx) via `REMOTE_USER` environment variable.', correct: true }
+      - { value: 'To enable remote login via SSH.', correct: false }
+      - { value: 'To integrate with a third-party OAuth provider.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which event is dispatched just before a user logs out of your application?'
+    answers:
+      - { value: 'LogoutSuccessEvent', correct: false }
+      - { value: 'PreLogoutEvent', correct: false }
+      - { value: 'LogoutEvent', correct: true }
+      - { value: 'SecurityLogoutEvent', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `TokenDeauthenticatedEvent`?'
+    answers:
+      - { value: 'Dispatched when a user successfully logs in.', correct: false }
+      - { value: 'Dispatched when a user is deauthenticated, for instance because the password was changed.', correct: true }
+      - { value: 'Dispatched when an authentication token is created.', correct: false }
+      - { value: 'Dispatched when a user attempts to access a protected resource without a valid token.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which special authentication attribute matches when the current user is impersonating another user?'
+    answers:
+      - { value: 'IS_IMPERSONATED', correct: false }
+      - { value: 'IS_SWITCHED_USER', correct: false }
+      - { value: 'IS_IMPERSONATOR', correct: true }
+      - { value: 'IS_ACT_AS_USER', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the default value for `cookie_secure` in `framework.yaml`?'
+    answers:
+      - { value: 'true', correct: false }
+      - { value: 'false', correct: false }
+      - { value: 'auto', correct: true }
+      - { value: 'null', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/framework
+  - question: 'Which of the following is a valid way to configure a login link authenticator in Symfony?'
+    answers:
+      - { value: |
+          login_link:
+              check_route: login_check
+              signature_properties: ['id']
+        , correct: true }
+      - { value: |
+          login_link_auth:
+              route: login_check
+              properties: ['id']
+        , correct: false }
+      - { value: |
+          link_login:
+              check_path: /login_check
+              user_properties: ['id']
+        , correct: false }
+      - { value: |
+          magic_link:
+              verify_route: login_check
+              user_identifier: id
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/security/login_link
+  - question: 'What is the purpose of `CheckPassportEvent` in the Symfony security component?'
+    answers:
+      - { value: 'It is dispatched after successful authentication to create the security token.', correct: false }
+      - { value: 'It is dispatched after the authenticator created the security passport, and listeners perform actual authentication checks.', correct: true }
+      - { value: 'It is dispatched when an authentication failure occurs.', correct: false }
+      - { value: 'It is used to check the validity of a remember-me cookie.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following is a correct way to enable CSRF protection for form login in Symfony?'
+    answers:
+      - { value: |
+          form_login:
+              csrf_protection: true
+        , correct: false }
+      - { value: |
+          form_login:
+              enable_csrf: true
+        , correct: true }
+      - { value: |
+          form_login:
+              csrf_enabled: true
+        , correct: false }
+      - { value: |
+          form_login:
+              protect_csrf: true
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the role of `AuthenticationUtils` in a login controller?'
+    answers:
+      - { value: 'To handle user registration and password hashing.', correct: false }
+      - { value: 'To retrieve the last authentication error and the last entered username.', correct: true }
+      - { value: 'To manage user sessions and logout functionality.', correct: false }
+      - { value: 'To encrypt and decrypt user credentials.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid `access_control` rule using a custom request matcher service?'
+    answers:
+      - { value: '- { roles: ROLE_USER, request_matcher: App\Security\RequestMatcher\MyRequestMatcher }', correct: true }
+      - { value: '- { roles: ROLE_USER, matcher_service: App\Security\RequestMatcher\MyRequestMatcher }', correct: false }
+      - { value: '- { roles: ROLE_USER, service: App\Security\RequestMatcher\MyRequestMatcher }', correct: false }
+      - { value: '- { roles: ROLE_USER, custom_matcher: App\Security\RequestMatcher\MyRequestMatcher }', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/access_control
+  - question: 'What is the purpose of `form_only: true` in `form_login` configuration?'
+    answers:
+      - { value: 'To ensure login data is sent using a form (content-type `application/x-www-form-urlencoded` or `multipart/form-data`).', correct: true }
+      - { value: 'To disable JSON login for the same firewall.', correct: true }
+      - { value: 'To prevent direct access to the login check path via GET requests.', correct: false }
+      - { value: 'To force the use of a specific HTML form for login.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'Which event is dispatched after authentication was fully successful, but only when the authenticator implements `InteractiveAuthenticatorInterface`?'
+    answers:
+      - { value: 'LoginSuccessEvent', correct: false }
+      - { value: 'AuthenticationSuccessEvent', correct: false }
+      - { value: 'InteractiveLoginEvent', correct: true }
+      - { value: 'PostLoginEvent', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'How can you configure a custom API endpoint for the `NotCompromisedPassword` constraint?'
+    answers:
+      - { value: 'By setting the `not_compromised_password.api_url` parameter.', correct: false }
+      - { value: 'By configuring `not_compromised_password.endpoint` in `framework.yaml`.', correct: true }
+      - { value: 'By overriding the `NotCompromisedPasswordValidator` service.', correct: false }
+      - { value: 'By defining a custom `password_checker` service.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/framework
+  - question: 'What is the primary benefit of using `composer audit` for security checks in a CI environment compared to `symfony check:security`?'
+    answers:
+      - { value: 'It provides more detailed security reports.', correct: false }
+      - { value: 'It is faster for large projects.', correct: false }
+      - { value: 'It does not require installing the full Symfony CLI on CI workers.', correct: true }
+      - { value: 'It can automatically fix security vulnerabilities.', correct: false }
+    help: |
+      https://symfony.com/doc/current/setup
+  - question: 'Which of the following describes the `AuthenticationTokenCreatedEvent`?'
+    answers:
+      - { value: 'Dispatched before the authenticator creates the security passport.', correct: false }
+      - { value: 'Dispatched after the passport was validated and the authenticator created the security token (and user).', correct: true }
+      - { value: 'Dispatched when authentication fails.', correct: false }
+      - { value: 'Dispatched when a user logs out.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `AuthenticationSuccessEvent`?'
+    answers:
+      - { value: 'Dispatched when authentication is nearing success, and it is the last event that can make an authentication fail.', correct: true }
+      - { value: 'Dispatched after authentication was fully successful and allows modifying the response.', correct: false }
+      - { value: 'Dispatched when a new user is registered.', correct: false }
+      - { value: 'Dispatched when a user attempts to log in with incorrect credentials.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which event is dispatched after an `AuthenticationException` was thrown during authentication and allows modifying the error response?'
+    answers:
+      - { value: 'AuthenticationFailureEvent', correct: false }
+      - { value: 'LoginFailureEvent', correct: true }
+      - { value: 'AuthenticationErrorEvent', correct: false }
+      - { value: 'SecurityExceptionEvent', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the default `name` for the "Remember Me" cookie?'
+    answers:
+      - { value: 'REMEMBER_ME', correct: false }
+      - { value: 'SYMFONY_REMEMBER_ME', correct: false }
+      - { value: 'REMEMBERME', correct: true }
+      - { value: 'symfony_remember_me', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'Which `access_control` rule would require `ROLE_USER` for URLs matching `/api/post/123` or `/api/comment/456`?'
+    answers:
+      - { value: '- { path: ^/api/(post|comment)/\d+$, roles: ROLE_USER }', correct: true }
+      - { value: '- { path: ^/api/(post|comment)/[0-9]+$, roles: ROLE_USER }', correct: false }
+      - { value: '- { path: ^/api/(post|comment)/{id}$, roles: ROLE_USER }', correct: false }
+      - { value: '- { path: ^/api/(post|comment)/.*$, roles: ROLE_USER }', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of the `SwitchUserEvent`?'
+    answers:
+      - { value: 'Dispatched when a user switches between different roles.', correct: false }
+      - { value: 'Dispatched after impersonation is completed.', correct: true }
+      - { value: 'Dispatched when a user changes their password.', correct: false }
+      - { value: 'Dispatched when a user switches from one authenticator to another.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid way to configure a firewall to use a custom logout route named `app_logout`?'
+    answers:
+      - { value: |
+          logout:
+              path: app_logout
+        , correct: true }
+      - { value: |
+          logout_route: app_logout
+        , correct: false }
+      - { value: |
+          logout:
+              route: app_logout
+        , correct: false }
+      - { value: |
+          logout_handler: app_logout
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the default `domain` for the "Remember Me" cookie if not explicitly set?'
+    answers:
+      - { value: 'The current domain from `$_SERVER`.', correct: true }
+      - { value: 'localhost', correct: false }
+      - { value: 'null', correct: false }
+      - { value: 'The application root domain.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'Which of the following is a valid configuration for an OIDC access token handler in PHP?'
+    answers:
+      - { value: |
+          $security->firewall('main')
+              ->accessToken()
+                  ->tokenHandler()
+                      ->oidc()
+                          ->claim('email')
+                          ->algorithms(['ES256', 'RS256'])
+                          ->keyset('{"keys":[{"kty":"...","k":"..."}]}')
+                          ->audience('api-example')
+                          ->issuers(['https://oidc.example.com'])
+          ;
+        , correct: true }
+      - { value: |
+          $security->firewall('main')
+              ->accessTokenHandler('oidc')
+                  ->claim('email')
+                  ->algorithms(['ES256', 'RS256'])
+                  ->keyset('{"keys":[{"kty":"...","k":"..."}]}')
+                  ->audience('api-example')
+                  ->issuers(['https://oidc.example.com'])
+          ;
+        , correct: false }
+      - { value: |
+          $security->firewall('main')
+              ->oidcToken()
+                  ->claim('email')
+                  ->algorithms(['ES256', 'RS256'])
+                  ->keyset('{"keys":[{"kty":"...","k":"..."}]}')
+                  ->audience('api-example')
+                  ->issuers(['https://oidc.example.com'])
+          ;
+        , correct: false }
+      - { value: |
+          $security->firewall('main')
+              ->authentication()
+                  ->oidc()
+                      ->claim('email')
+                      ->algorithms(['ES256', 'RS256'])
+                      ->keyset('{"keys":[{"kty":"...","k":"..."}]}')
+                      ->audience('api-example')
+                      ->issuers(['https://oidc.example.com'])
+          ;
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/security/access_token
+  - question: 'What is the purpose of the `security: false` option in a firewall configuration?'
+    answers:
+      - { value: 'To disable the entire security component for the application.', correct: false }
+      - { value: 'To explicitly disable security for requests matching that firewall''s pattern.', correct: true }
+      - { value: 'To allow anonymous access to the resources matched by the firewall.', correct: false }
+      - { value: 'To mark the firewall as inactive.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is NOT a valid option for `access_control` rules?'
+    answers:
+      - { value: 'path', correct: false }
+      - { value: 'ip', correct: false }
+      - { value: 'user_agent', correct: true }
+      - { value: 'methods', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/access_control
+  - question: 'What is the purpose of `lazy: true` in a firewall configuration?'
+    answers:
+      - { value: 'To load the firewall configuration only when a request matches its pattern.', correct: true }
+      - { value: 'To defer the authentication process until explicitly requested.', correct: false }
+      - { value: 'To enable lazy loading of user data from the provider.', correct: false }
+      - { value: 'To make the firewall optional.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following is the correct way to configure a memory user provider in `security.yaml`?'
+    answers:
+      - { value: 'users_in_memory: { memory: null }', correct: true }
+      - { value: 'in_memory_users: { type: memory }', correct: false }
+      - { value: 'memory_provider: { users: [] }', correct: false }
+      - { value: 'static_users: { provider: memory }', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the primary function of `access_control` in Symfony security?'
+    answers:
+      - { value: 'To define user roles and their permissions.', correct: false }
+      - { value: 'To configure password hashing algorithms.', correct: false }
+      - { value: 'To define security protection rules for application URLs, triggering authentication and managing access.', correct: true }
+      - { value: 'To manage user sessions.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'Which of the following is a valid `access_control` rule that uses a route name instead of a path pattern?'
+    answers:
+      - { value: '- { route: admin, roles: ROLE_ADMIN }', correct: true }
+      - { value: '- { path: @admin_route, roles: ROLE_ADMIN }', correct: false }
+      - { value: '- { name: admin, roles: ROLE_ADMIN }', correct: false }
+      - { value: '- { route_name: admin, roles: ROLE_ADMIN }', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/access_control
+  - question: 'What is the purpose of the `httponly: true` option for the "Remember Me" cookie?'
+    answers:
+      - { value: 'To ensure the cookie is only sent over HTTPS connections.', correct: false }
+      - { value: 'To prevent client-side scripts (like JavaScript) from accessing the cookie.', correct: true }
+      - { value: 'To make the cookie expire after a single HTTP request.', correct: false }
+      - { value: 'To restrict the cookie to HTTP methods only (GET, POST, etc.).', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'Which of the following is a valid way to configure a firewall with `json_login` in YAML?'
+    answers:
+      - { value: |
+          json_login:
+              check_path: api_login
+        , correct: true }
+      - { value: |
+          api_login:
+              path: api_login
+        , correct: false }
+      - { value: |
+          login_json:
+              route: api_login
+        , correct: false }
+      - { value: |
+          json_auth:
+              login_url: api_login
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `target` option in `logout` configuration?'
+    answers:
+      - { value: 'To define the URL to redirect to after a successful logout.', correct: true }
+      - { value: 'To specify the controller action to handle logout.', correct: false }
+      - { value: 'To set the target audience for logout messages.', correct: false }
+      - { value: 'To configure the logout button element.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'When is `TokenDeauthenticatedEvent` dispatched?'
+    answers:
+      - { value: 'When a user logs in successfully.', correct: false }
+      - { value: 'When a user is deauthenticated, for instance because their password was changed.', correct: true }
+      - { value: 'When an authentication token is about to expire.', correct: false }
+      - { value: 'When a user attempts to access a protected resource without proper authentication.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid configuration for a firewall using `remote_user` authentication?'
+    answers:
+      - { value: |
+          remote_user:
+              provider: your_user_provider
+        , correct: true }
+      - { value: |
+          http_remote:
+              user_provider: your_user_provider
+        , correct: false }
+      - { value: |
+          server_auth:
+              provider: your_user_provider
+        , correct: false }
+      - { value: |
+          external_user:
+              provider: your_user_provider
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `LoginFailureEvent`?'
+    answers:
+      - { value: 'Dispatched after a successful login to log the event.', correct: false }
+      - { value: 'Dispatched after an `AuthenticationException` was thrown during authentication, allowing modification of the error response.', correct: true }
+      - { value: 'Dispatched when a user attempts to log in with an invalid username.', correct: false }
+      - { value: 'Dispatched when the login form is submitted with missing fields.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following is the correct way to configure a `form_login` authenticator with `login_path` and `check_path` in YAML?'
+    answers:
+      - { value: |
+          form_login:
+              login_path: app_login
+              check_path: app_login
+        , correct: true }
+      - { value: |
+          form_login:
+              path: app_login
+              check: app_login
+        , correct: false }
+      - { value: |
+          form_login:
+              route: app_login
+              auth_route: app_login
+        , correct: false }
+      - { value: |
+          form_login:
+              login_url: app_login
+              process_url: app_login
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `IS_REMEMBERED` special authentication attribute?'
+    answers:
+      - { value: 'Checks if a user is authenticated via a session cookie.', correct: false }
+      - { value: 'Checks if a user is authenticated using the "remember me" functionality.', correct: true }
+      - { value: 'Checks if a user has explicitly chosen to be remembered.', correct: false }
+      - { value: 'Checks if a user has a persistent login.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `password_hashers` in Symfony security configuration?'
+    answers:
+      - { value: 'To define how user passwords are encrypted and verified.', correct: true }
+      - { value: 'To store hashed passwords in the database.', correct: false }
+      - { value: 'To generate random passwords for new users.', correct: false }
+      - { value: 'To manage password reset tokens.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following describes the `providers` section in Symfony security configuration?'
+    answers:
+      - { value: 'It defines the authentication methods available to users.', correct: false }
+      - { value: 'It specifies where user data (e.g., username, password, roles) comes from.', correct: true }
+      - { value: 'It configures external identity providers like OAuth.', correct: false }
+      - { value: 'It manages the security roles and permissions.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `access_control` in Symfony security?'
+    answers:
+      - { value: 'To define which users can access specific services.', correct: false }
+      - { value: 'To control access to different parts of your application based on URL patterns and roles.', correct: true }
+      - { value: 'To manage database access permissions.', correct: false }
+      - { value: 'To configure network firewall rules.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'Which of the following is a valid `access_control` rule to restrict access to `/admin` based on HTTP methods POST and PUT?'
+    answers:
+      - { value: '- { path: ^/admin, roles: ROLE_USER_METHOD, methods: [POST, PUT] }', correct: true }
+      - { value: '- { path: ^/admin, roles: ROLE_USER_METHOD, http_methods: [POST, PUT] }', correct: false }
+      - { value: '- { path: ^/admin, roles: ROLE_USER_METHOD, method: [POST, PUT] }', correct: false }
+      - { value: '- { path: ^/admin, roles: ROLE_USER_METHOD, request_method: [POST, PUT] }', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/access_control
+  - question: 'What is the purpose of `role_hierarchy` in Symfony security?'
+    answers:
+      - { value: 'To define the order in which roles are checked for access.', correct: false }
+      - { value: 'To allow higher-level roles to inherit permissions from lower-level roles.', correct: true }
+      - { value: 'To group similar roles together for easier management.', correct: false }
+      - { value: 'To restrict the number of roles a user can have.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following is a valid configuration for `ROLE_SUPER_ADMIN` to inherit `ROLE_ADMIN` and `ROLE_ALLOWED_TO_SWITCH`?'
+    answers:
+      - { value: |
+          role_hierarchy:
+              ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        , correct: true }
+      - { value: |
+          role_hierarchy:
+              ROLE_SUPER_ADMIN: ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH
+        , correct: false }
+      - { value: |
+          role_hierarchy:
+              ROLE_SUPER_ADMIN:
+                  - ROLE_ADMIN
+                  - ROLE_ALLOWED_TO_SWITCH
+        , correct: false }
+      - { value: |
+          role_hierarchy:
+              ROLE_SUPER_ADMIN: { inherits: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH] }
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of the `security` service (`Symfony\Bundle\SecurityBundle\Security`)?'
+    answers:
+      - { value: 'To manage user registration and password encoding.', correct: false }
+      - { value: 'To interact with Symfony''s security component, especially for authorization checks and retrieving firewall information.', correct: true }
+      - { value: 'To configure security settings programmatically.', correct: false }
+      - { value: 'To handle all authentication and authorization logic directly.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'How can you retrieve the `FirewallConfig` object for the current request using the `Security` service?'
+    answers:
+      - { value: '$security->getFirewallConfig($request)', correct: true }
+      - { value: '$security->getFirewall($request)', correct: false }
+      - { value: '$security->getCurrentFirewallConfig()', correct: false }
+      - { value: '$security->getFirewallConfiguration($request)', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_AUTHENTICATED_REMEMBERED`?'
+    answers:
+      - { value: 'Checks if a user is authenticated via a session, but not "remember me".', correct: false }
+      - { value: 'Checks if a user is authenticated via "remember me" functionality.', correct: true }
+      - { value: 'Checks if a user is fully authenticated and has remembered their credentials.', correct: false }
+      - { value: 'Checks if a user has chosen to be remembered for future sessions.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid way to configure a firewall with an array of patterns in PHP?'
+    answers:
+      - { value: |
+          $security->firewall('dev')
+              ->pattern([
+                  '^/_profiler/',
+                  '^/_wdt/',
+                  '^/css/',
+                  '^/images/',
+                  '^/js/',
+              ])
+              ->security(false)
+          ;
+        , correct: true }
+      - { value: |
+          $security->firewall('dev')
+              ->patterns(['^/_profiler/', '^/_wdt/', '^/css/', '^/images/', '^/js/'])
+              ->security(false)
+          ;
+        , correct: false }
+      - { value: |
+          $security->firewall('dev')
+              ->setPattern(['^/_profiler/', '^/_wdt/', '^/css/', '^/images/', '^/js/'])
+              ->security(false)
+          ;
+        , correct: false }
+      - { value: |
+          $security->firewall('dev')
+              ->matchPatterns(['^/_profiler/', '^/_wdt/', '^/css/', '^/images/', '^/js/'])
+              ->security(false)
+          ;
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `LoginLinkAuthenticator`?'
+    answers:
+      - { value: 'To authenticate users by sending a one-time login link via email.', correct: true }
+      - { value: 'To allow users to log in using their social media accounts.', correct: false }
+      - { value: 'To enable passwordless authentication using biometric data.', correct: false }
+      - { value: 'To provide a secure way to reset forgotten passwords.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/login_link
+  - question: 'Which of the following is a correct way to import the Symfony security logout route loader in YAML?'
+    answers:
+      - { value: |
+          _symfony_logout:
+              resource: security.route_loader.logout
+              type: service
+        , correct: true }
+      - { value: |
+          logout_route:
+              path: /logout
+              controller: symfony.security.logout_controller
+        , correct: false }
+      - { value: |
+          imports:
+              - { resource: '@SecurityBundle/Resources/config/routing/logout.xml' }
+        , correct: false }
+      - { value: |
+          _logout:
+              path: /logout
+              methods: [GET, POST]
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the primary purpose of a `UserProvider` in Symfony security?'
+    answers:
+      - { value: 'To manage user roles and permissions.', correct: false }
+      - { value: 'To load user data (e.g., username, password, roles) from a persistent storage.', correct: true }
+      - { value: 'To hash user passwords securely.', correct: false }
+      - { value: 'To authenticate users against external services.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid way to configure an entity user provider in PHP?'
+    answers:
+      - { value: |
+          $security->provider('app_user_provider')
+              ->entity()
+                  ->class(User::class)
+                  ->property('email')
+          ;
+        , correct: true }
+      - { value: |
+          $security->provider('app_user_provider', [
+              'entity' => [
+                  'class' => User::class,
+                  'property' => 'email',
+              ],
+          ]);
+        , correct: false }
+      - { value: |
+          $security->addProvider('app_user_provider', new EntityUserProvider(User::class, 'email'));
+        , correct: false }
+      - { value: |
+          $security->userProvider('app_user_provider')
+              ->type('entity')
+              ->options(['class' => User::class, 'property' => 'email'])
+          ;
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of the `secure` option for the "Remember Me" cookie?'
+    answers:
+      - { value: 'If true, the cookie is sent only over HTTPS connections.', correct: true }
+      - { value: 'If true, the cookie is encrypted before being sent to the client.', correct: false }
+      - { value: 'If true, the cookie is signed to prevent tampering.', correct: false }
+      - { value: 'If true, the cookie is only accessible from the same origin.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'Which of the following is a valid configuration for enabling `login_throttling` in PHP?'
+    answers:
+      - { value: |
+          $security->enableAuthenticatorManager(true);
+          $mainFirewall = $security->firewall('main');
+          $mainFirewall->loginThrottling();
+        , correct: true }
+      - { value: |
+          $security->firewall('main')->throttleLogin(true);
+        , correct: false }
+      - { value: |
+          $security->firewall('main')->setLoginThrottling(true);
+        , correct: false }
+      - { value: |
+          $security->firewall('main')->addLoginThrottling();
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of the `path` option for the "Remember Me" cookie?'
+    answers:
+      - { value: 'The path where the cookie is applied, defaulting to the entire website.', correct: true }
+      - { value: 'The file path on the server where the cookie data is stored.', correct: false }
+      - { value: 'The URL path where the "Remember Me" checkbox is displayed.', correct: false }
+      - { value: 'The path to the user''s home directory.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'Which of the following is a valid `access_control` rule that restricts access based on a hostname?'
+    answers:
+      - { value: '- { path: ^/admin, roles: ROLE_USER_HOST, host: symfony\.com$ }', correct: true }
+      - { value: '- { path: ^/admin, roles: ROLE_USER_HOST, hostname: symfony.com }', correct: false }
+      - { value: '- { path: ^/admin, roles: ROLE_USER_HOST, domain: symfony.com }', correct: false }
+      - { value: '- { path: ^/admin, roles: ROLE_USER_HOST, url_host: symfony.com }', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/access_control
+  - question: 'What is the purpose of `AuthenticationTokenCreatedEvent`?'
+    answers:
+      - { value: 'Dispatched before the security token is created.', correct: false }
+      - { value: 'Dispatched after the passport was validated and the authenticator created the security token (and user).', correct: true }
+      - { value: 'Dispatched when an authentication token is refreshed.', correct: false }
+      - { value: 'Dispatched when a user requests a new authentication token.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of the `_symfony_logout` route loader in `config/routes/security.yaml`?'
+    answers:
+      - { value: 'To define a custom logout controller.', correct: false }
+      - { value: 'To automatically generate the logout URL and handle logout requests.', correct: true }
+      - { value: 'To configure the logout redirect target.', correct: false }
+      - { value: 'To enable CSRF protection for logout.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid `access_control` rule that restricts access based on a specific port?'
+    answers:
+      - { value: '- { path: ^/admin, roles: ROLE_USER_PORT, ip: 127.0.0.1, port: 8080 }', correct: true }
+      - { value: '- { path: ^/admin, roles: ROLE_USER_PORT, ip: 127.0.0.1, server_port: 8080 }', correct: false }
+      - { value: '- { path: ^/admin, roles: ROLE_USER_PORT, ip: 127.0.0.1, request_port: 8080 }', correct: false }
+      - { value: '- { path: ^/admin, roles: ROLE_USER_PORT, ip: 127.0.0.1, listen_port: 8080 }', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/access_control
+  - question: 'What is the purpose of `password_hashers` in `security.yaml`?'
+    answers:
+      - { value: 'To define the hashing algorithm used for user passwords.', correct: true }
+      - { value: 'To store user passwords in an encrypted format.', correct: false }
+      - { value: 'To validate the strength of user-provided passwords.', correct: false }
+      - { value: 'To manage password expiration policies.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following is a valid configuration for a `main` firewall using a custom user provider named `app_user_provider`?'
+    answers:
+      - { value: |
+          main:
+              lazy: true
+              provider: app_user_provider
+        , correct: true }
+      - { value: |
+          main:
+              user_provider: app_user_provider
+        , correct: false }
+      - { value: |
+          main:
+              auth_provider: app_user_provider
+        , correct: false }
+      - { value: |
+          main:
+              provider_name: app_user_provider
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of the `security.yaml` file in a Symfony application?'
+    answers:
+      - { value: 'To define database schema for security-related tables.', correct: false }
+      - { value: 'To configure core security settings, including password hashing, user providers, firewalls, and access control.', correct: true }
+      - { value: 'To store sensitive credentials like API keys and secrets.', correct: false }
+      - { value: 'To manage security vulnerabilities and patches.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following describes the `InteractiveLoginEvent`?'
+    answers:
+      - { value: 'Dispatched after a successful login, regardless of the authenticator type.', correct: false }
+      - { value: 'Dispatched after authentication was fully successful only when the authenticator implements `InteractiveAuthenticatorInterface`.', correct: true }
+      - { value: 'Dispatched when a user interacts with a login form.', correct: false }
+      - { value: 'Dispatched when a user attempts to log in using a non-interactive method.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of the `target` option in the `logout` configuration?'
+    answers:
+      - { value: 'To specify the URL to redirect to after a successful logout.', correct: true }
+      - { value: 'To define the route name for the logout action.', correct: false }
+      - { value: 'To set the HTTP method for the logout request.', correct: false }
+      - { value: 'To configure the logout button''s target attribute.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `SwitchUserEvent`?'
+    answers:
+      - { value: 'Dispatched when a user changes their password.', correct: false }
+      - { value: 'Dispatched after impersonation is completed.', correct: true }
+      - { value: 'Dispatched when a user switches from one role to another.', correct: false }
+      - { value: 'Dispatched when a user logs in with a different identity.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid configuration for enabling `remember_me` in YAML?'
+    answers:
+      - { value: |
+          remember_me:
+              secret: '%kernel.secret%'
+              lifetime: 604800
+        , correct: true }
+      - { value: |
+          remember_me_cookie:
+              secret: '%kernel.secret%'
+              expires: 1 week
+        , correct: false }
+      - { value: |
+          persistent_login:
+              key: '%kernel.secret%'
+              duration: 604800
+        , correct: false }
+      - { value: |
+          auto_login:
+              secret: '%kernel.secret%'
+              valid_for: 604800
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the default value for the `secret` option in `remember_me` configuration in Symfony 7.2 and later?'
+    answers:
+      - { value: 'A randomly generated string.', correct: false }
+      - { value: 'The `kernel.secret` parameter.', correct: false }
+      - { value: 'It is optional and defaults to `null`.', correct: true }
+      - { value: 'The application environment variable `APP_SECRET`.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of the `samesite` option for the "Remember Me" cookie?'
+    answers:
+      - { value: 'To prevent the cookie from being sent with cross-site requests, enhancing security against CSRF attacks.', correct: true }
+      - { value: 'To ensure the cookie is only accessible from the same domain.', correct: false }
+      - { value: 'To restrict the cookie to specific subdomains.', correct: false }
+      - { value: 'To enable cross-site cookie sharing for specific origins.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'Which of the following is a valid `access_control` rule to require `ROLE_ADMIN` or `IS_AUTHENTICATED_FULLY` for `/admin`?'
+    answers:
+      - { value: '- { path: ^/admin, roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }', correct: true }
+      - { value: '- { path: ^/admin, roles: ROLE_ADMIN || IS_AUTHENTICATED_FULLY }', correct: false }
+      - { value: '- { path: ^/admin, roles: ROLE_ADMIN, IS_AUTHENTICATED_FULLY }', correct: false }
+      - { value: '- { path: ^/admin, roles: any(ROLE_ADMIN, IS_AUTHENTICATED_FULLY) }', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `CheckPassportEvent`?'
+    answers:
+      - { value: 'To create the security token after authentication.', correct: false }
+      - { value: 'To perform actual authentication checks after the authenticator created the security passport.', correct: true }
+      - { value: 'To handle user logout requests.', correct: false }
+      - { value: 'To validate CSRF tokens during form submission.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid configuration for enabling `json_login` in XML?'
+    answers:
+      - { value: '<json-login check-path="api_login"/>', correct: true }
+      - { value: '<json_login check_path="api_login"/>', correct: false }
+      - { value: '<api-login path="api_login"/>', correct: false }
+      - { value: '<login-json check-route="api_login"/>', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `LoginSuccessEvent`?'
+    answers:
+      - { value: 'Dispatched before authentication is completed.', correct: false }
+      - { value: 'Dispatched after authentication was fully successful, allowing listeners to modify the response.', correct: true }
+      - { value: 'Dispatched when a user attempts to log in.', correct: false }
+      - { value: 'Dispatched when a user successfully logs out.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `TokenDeauthenticatedEvent`?'
+    answers:
+      - { value: 'Dispatched when a user is deauthenticated, for example, due to a password change.', correct: true }
+      - { value: 'Dispatched when an authentication token is generated.', correct: false }
+      - { value: 'Dispatched when a user''s session expires.', correct: false }
+      - { value: 'Dispatched when a user fails to authenticate.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid configuration for `required_badges` in XML?'
+    answers:
+      - { value: |
+          <required_badge>CsrfTokenBadge</required_badge>
+          <required_badge>My\Badge</required_badge>
+        , correct: true }
+      - { value: |
+          <required-badges>
+              <badge>CsrfTokenBadge</badge>
+              <badge>My\Badge</badge>
+          </required-badges>
+        , correct: false }
+      - { value: |
+          <badges>CsrfTokenBadge, My\Badge</badges>
+        , correct: false }
+      - { value: |
+          <required-badges value="CsrfTokenBadge, My\Badge"/>
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of the `security.expression_language_provider` tag?'
+    answers:
+      - { value: 'To register services that provide custom functions for the security expression language.', correct: true }
+      - { value: 'To define custom security voters.', correct: false }
+      - { value: 'To configure the default security expression language.', correct: false }
+      - { value: 'To enable or disable the security expression language.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/dic_tags
+  - question: 'Which of the following is a valid configuration for `login_throttling` in XML?'
+    answers:
+      - { value: '<login-throttling/>', correct: false }
+      - { value: '<throttling-login/>', correct: false }
+      - { value: 'Login throttling is not directly configurable in XML for Symfony 7.', correct: true }
+      - { value: '<rate-limit-login/>', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_IMPERSONATOR`?'
+    answers:
+      - { value: 'Checks if a user is authenticated using a proxy.', correct: false }
+      - { value: 'Matches when the current user is impersonating another user in the session.', correct: true }
+      - { value: 'Checks if a user has administrative privileges.', correct: false }
+      - { value: 'Checks if a user is logged in from a suspicious IP address.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid configuration for `remote_user` authentication in XML?'
+    answers:
+      - { value: '<remote-user provider="your_user_provider"/>', correct: true }
+      - { value: '<remote_user provider="your_user_provider"/>', correct: false }
+      - { value: '<http-user provider="your_user_provider"/>', correct: false }
+      - { value: '<server-user provider="your_user_provider"/>', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `x509` authentication in Symfony?'
+    answers:
+      - { value: 'To authenticate users using username and password stored in an X.509 certificate.', correct: false }
+      - { value: 'To authenticate users based on client-side X.509 certificates provided by the web server.', correct: true }
+      - { value: 'To encrypt communication using X.509 certificates.', correct: false }
+      - { value: 'To verify the authenticity of SSL/TLS certificates.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following is a valid configuration for `x509` authentication in XML?'
+    answers:
+      - { value: '<x509 provider="your_user_provider"/>', correct: true }
+      - { value: '<client-cert provider="your_user_provider"/>', correct: false }
+      - { value: '<certificate-auth provider="your_user_provider"/>', correct: false }
+      - { value: '<ssl-client-certificate provider="your_user_provider"/>', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `password_hashers` in Symfony security configuration?'
+    answers:
+      - { value: 'To define the algorithms used for hashing user passwords.', correct: true }
+      - { value: 'To store user passwords in a secure database.', correct: false }
+      - { value: 'To validate password strength during registration.', correct: false }
+      - { value: 'To manage password reset functionality.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following is a valid configuration for `password_hashers` in YAML for `PasswordAuthenticatedUserInterface`?'
+    answers:
+      - { value: 'Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: \'auto\'', correct: true }
+      - { value: 'App\Entity\User: auto', correct: false }
+      - { value: 'password_hashers: auto', correct: false }
+      - { value: 'default: auto', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `providers` in Symfony security configuration?'
+    answers:
+      - { value: 'To define how users are authenticated.', correct: false }
+      - { value: 'To specify the source of user data (e.g., database, in-memory).', correct: true }
+      - { value: 'To manage user roles and permissions.', correct: false }
+      - { value: 'To configure external authentication services.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following is a valid configuration for an in-memory user provider in YAML?'
+    answers:
+      - { value: 'users_in_memory: { memory: null }', correct: true }
+      - { value: 'in_memory: { users: [] }', correct: false }
+      - { value: 'memory_users: { type: in_memory }', correct: false }
+      - { value: 'static_users: { provider: memory }', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `firewalls` in Symfony security configuration?'
+    answers:
+      - { value: 'To define the authentication and authorization mechanisms for different parts of the application.', correct: true }
+      - { value: 'To manage network traffic and block malicious requests.', correct: false }
+      - { value: 'To configure database access for user data.', correct: false }
+      - { value: 'To define global security policies for the entire application.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the significance of the `pattern` option in a firewall configuration?'
+    answers:
+      - { value: 'It defines the regular expression that matches the URLs handled by the firewall.', correct: true }
+      - { value: 'It specifies the HTTP methods allowed for the firewall.', correct: false }
+      - { value: 'It sets the default route for the firewall.', correct: false }
+      - { value: 'It defines the name of the firewall.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following is a valid configuration for a `dev` firewall that disables security for specific paths in PHP?'
+    answers:
+      - { value: |
+          $security->firewall('dev')
+              ->pattern('^/(_(profiler|wdt)|css|images|js)/')
+              ->security(false)
+          ;
+        , correct: true }
+      - { value: |
+          $security->firewall('dev')
+              ->paths(['^/_profiler/', '^/_wdt/', '^/css/', '^/images/', '^/js/'])
+              ->security(false)
+          ;
+        , correct: false }
+      - { value: |
+          $security->firewall('dev')
+              ->match('^/(_(profiler|wdt)|css|images|js)/')
+              ->disableSecurity()
+          ;
+        , correct: false }
+      - { value: |
+          $security->firewall('dev')
+              ->routePatterns(['^/_profiler/', '^/_wdt/', '^/css/', '^/images/', '^/js/'])
+              ->security(false)
+          ;
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `access_control` in Symfony security?'
+    answers:
+      - { value: 'To define URL-based access rules and trigger authentication.', correct: true }
+      - { value: 'To configure global security settings for the application.', correct: false }
+      - { value: 'To manage user roles and permissions.', correct: false }
+      - { value: 'To control access to services and controllers.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'Which of the following is a valid `access_control` rule to require `ROLE_ADMIN` for the route named `admin`?'
+    answers:
+      - { value: '- { route: admin, roles: ROLE_ADMIN }', correct: true }
+      - { value: '- { path: @admin, roles: ROLE_ADMIN }', correct: false }
+      - { value: '- { name: admin_route, roles: ROLE_ADMIN }', correct: false }
+      - { value: '- { attributes: { _route: admin }, roles: ROLE_ADMIN }', correct: true }
+    help: |
+      https://symfony.com/doc/current/security/access_control
+  - question: 'What is the purpose of `role_hierarchy` in Symfony security?'
+    answers:
+      - { value: 'To define a hierarchy of roles, where higher roles inherit permissions from lower roles.', correct: true }
+      - { value: 'To restrict the number of roles a user can have.', correct: false }
+      - { value: 'To group roles into categories.', correct: false }
+      - { value: 'To assign default roles to new users.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following is a valid configuration for `role_hierarchy` in PHP?'
+    answers:
+      - { value: |
+          $security->roleHierarchy('ROLE_ADMIN', ['ROLE_USER']);
+          $security->roleHierarchy('ROLE_SUPER_ADMIN', ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH']);
+        , correct: true }
+      - { value: |
+          $security->setRoleHierarchy([
+              'ROLE_ADMIN' => ['ROLE_USER'],
+              'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'],
+          ]);
+        , correct: false }
+      - { value: |
+          $security->addRoleHierarchy('ROLE_ADMIN', 'ROLE_USER');
+          $security->addRoleHierarchy('ROLE_SUPER_ADMIN', ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH']);
+        , correct: false }
+      - { value: |
+          $security->roles([
+              'ROLE_ADMIN' => 'ROLE_USER',
+              'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'],
+          ]);
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of the `Security` service (`Symfony\Bundle\SecurityBundle\Security`)?'
+    answers:
+      - { value: 'To provide access to the current authenticated user and perform authorization checks.', correct: true }
+      - { value: 'To manage user registration and password encoding.', correct: false }
+      - { value: 'To configure security settings in `security.yaml`.', correct: false }
+      - { value: 'To handle all HTTP security headers.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which method of the `Security` service is used to check if the current user has a specific role or attribute?'
+    answers:
+      - { value: 'hasRole()', correct: false }
+      - { value: 'isGranted()', correct: true }
+      - { value: 'checkAccess()', correct: false }
+      - { value: 'authorize()', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `IS_AUTHENTICATED` special authentication attribute?'
+    answers:
+      - { value: 'Checks if a user is logged in, regardless of how they authenticated.', correct: true }
+      - { value: 'Checks if a user is fully authenticated (not via "remember me").', correct: false }
+      - { value: 'Checks if a user has a valid session.', correct: false }
+      - { value: 'Checks if a user has any role assigned.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_AUTHENTICATED_FULLY`?'
+    answers:
+      - { value: 'Checks if a user is authenticated, including via "remember me".', correct: false }
+      - { value: 'Checks if a user is authenticated, but *not* via "remember me".', correct: true }
+      - { value: 'Checks if a user has all required permissions.', correct: false }
+      - { value: 'Checks if a user has completed multi-factor authentication.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_REMEMBERED`?'
+    answers:
+      - { value: 'Checks if a user is authenticated via a session.', correct: false }
+      - { value: 'Checks if a user is authenticated using the "remember me" functionality.', correct: true }
+      - { value: 'Checks if a user has a persistent login token.', correct: false }
+      - { value: 'Checks if a user has opted to stay logged in.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_IMPERSONATOR`?'
+    answers:
+      - { value: 'Checks if the current user is acting on behalf of another user.', correct: true }
+      - { value: 'Checks if a user has administrative privileges.', correct: false }
+      - { value: 'Checks if a user is logged in from a different device.', correct: false }
+      - { value: 'Checks if a user is using a proxy server.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `cookie_secure: auto` in `framework.yaml`?'
+    answers:
+      - { value: 'To automatically set the `Secure` flag for cookies based on the request protocol (HTTPS for secure, HTTP for insecure).', correct: true }
+      - { value: 'To automatically encrypt cookie data.', correct: false }
+      - { value: 'To automatically set the `HttpOnly` flag for cookies.', correct: false }
+      - { value: 'To automatically generate a secure cookie name.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/framework
+  - question: 'What is the purpose of `required_badges` in a firewall configuration?'
+    answers:
+      - { value: 'To specify a list of badges that must be present on the authenticated passport for access.', correct: true }
+      - { value: 'To define the minimum number of authentication attempts allowed.', correct: false }
+      - { value: 'To configure the visual badges displayed in the user interface.', correct: false }
+      - { value: 'To enforce a specific authentication method for the firewall.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'Which of the following describes the `CheckPassportEvent`?'
+    answers:
+      - { value: 'Dispatched after the authenticator created the security passport; listeners perform authentication checks.', correct: true }
+      - { value: 'Dispatched before the security passport is created.', correct: false }
+      - { value: 'Dispatched when a passport is successfully validated.', correct: false }
+      - { value: 'Dispatched when a passport is rejected.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `AuthenticationTokenCreatedEvent`?'
+    answers:
+      - { value: 'Dispatched after the passport was validated and the authenticator created the security token.', correct: true }
+      - { value: 'Dispatched when a new authentication token is requested.', correct: false }
+      - { value: 'Dispatched when an authentication token is revoked.', correct: false }
+      - { value: 'Dispatched when a user attempts to use an invalid token.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `AuthenticationSuccessEvent`?'
+    answers:
+      - { value: 'Dispatched when authentication is nearing success; it''s the last event that can cause authentication to fail.', correct: true }
+      - { value: 'Dispatched after authentication is fully successful.', correct: false }
+      - { value: 'Dispatched when a user successfully logs in.', correct: false }
+      - { value: 'Dispatched when a user attempts to authenticate.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `LoginSuccessEvent`?'
+    answers:
+      - { value: 'Dispatched after authentication was fully successful; listeners can modify the response.', correct: true }
+      - { value: 'Dispatched when a user successfully logs in to the application.', correct: false }
+      - { value: 'Dispatched when a user is redirected after login.', correct: false }
+      - { value: 'Dispatched when a user''s session starts.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `LoginFailureEvent`?'
+    answers:
+      - { value: 'Dispatched after an `AuthenticationException` was thrown during authentication; listeners can modify the error response.', correct: true }
+      - { value: 'Dispatched when a user enters incorrect credentials.', correct: false }
+      - { value: 'Dispatched when a login attempt is blocked by throttling.', correct: false }
+      - { value: 'Dispatched when a user is denied access to a resource.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `InteractiveLoginEvent`?'
+    answers:
+      - { value: 'Dispatched after a successful interactive login, allowing modification of the response.', correct: true }
+      - { value: 'Dispatched when a user submits a login form.', correct: false }
+      - { value: 'Dispatched when a user interacts with the security system.', correct: false }
+      - { value: 'Dispatched when a user logs in via an API.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `LogoutEvent`?'
+    answers:
+      - { value: 'Dispatched just before a user logs out of your application.', correct: true }
+      - { value: 'Dispatched after a user has successfully logged out.', correct: false }
+      - { value: 'Dispatched when a user attempts to log out.', correct: false }
+      - { value: 'Dispatched when a user''s session is destroyed.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `TokenDeauthenticatedEvent`?'
+    answers:
+      - { value: 'Dispatched when a user is deauthenticated, for instance because the password was changed.', correct: true }
+      - { value: 'Dispatched when an authentication token is created.', correct: false }
+      - { value: 'Dispatched when a user''s session expires.', correct: false }
+      - { value: 'Dispatched when a user attempts to use an invalid token.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `SwitchUserEvent`?'
+    answers:
+      - { value: 'Dispatched after impersonation is completed.', correct: true }
+      - { value: 'Dispatched when a user changes their roles.', correct: false }
+      - { value: 'Dispatched when a user logs in with a different account.', correct: false }
+      - { value: 'Dispatched when a user switches between different firewalls.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid configuration for `login_throttling` in YAML?'
+    answers:
+      - { value: |
+          login_throttling:
+              max_attempts: 5
+              interval: '1 minute'
+        , correct: true }
+      - { value: |
+          throttle_login:
+              attempts: 5
+              time: 60
+        , correct: false }
+      - { value: |
+          login_rate_limit:
+              limit: 5
+              period: 60
+        , correct: false }
+      - { value: |
+          throttling:
+              login:
+                  max: 5
+                  duration: 1m
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `username_parameter` in `form_login`?'
+    answers:
+      - { value: 'The name of the username field in the login form.', correct: true }
+      - { value: 'The parameter used to identify the user in the database.', correct: false }
+      - { value: 'The query parameter for the username in the login URL.', correct: false }
+      - { value: 'The name of the user entity property for the username.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `password_parameter` in `form_login`?'
+    answers:
+      - { value: 'The name of the password field in the login form.', correct: true }
+      - { value: 'The parameter used to hash the password.', correct: false }
+      - { value: 'The query parameter for the password in the login URL.', correct: false }
+      - { value: 'The name of the user entity property for the password.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `post_only` in `form_login`?'
+    answers:
+      - { value: 'To require that the login form is submitted via a POST request only.', correct: true }
+      - { value: 'To prevent the login form from being submitted via GET requests.', correct: true }
+      - { value: 'To ensure that the login form is only accessible via POST.', correct: false }
+      - { value: 'To disable caching for POST requests to the login path.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `form_only` in `form_login`?'
+    answers:
+      - { value: 'To require that the login data is sent using a form (content-type `application/x-www-form-urlencoded` or `multipart/form-data`).', correct: true }
+      - { value: 'To prevent the form login authenticator from responding to requests meant for JSON login.', correct: true }
+      - { value: 'To ensure that only HTML forms can be used for login.', correct: false }
+      - { value: 'To disable API-based login for the firewall.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `target` in `logout` configuration?'
+    answers:
+      - { value: 'The URL (relative or absolute) or route name to redirect to after logout.', correct: true }
+      - { value: 'The controller action to handle the logout process.', correct: false }
+      - { value: 'The HTTP method for the logout request.', correct: false }
+      - { value: 'The name of the logout route.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `lifetime` in `remember_me` configuration?'
+    answers:
+      - { value: 'The number of seconds after which the "remember me" cookie will expire.', correct: true }
+      - { value: 'The duration for which the user session remains active.', correct: false }
+      - { value: 'The time until the user is automatically logged out.', correct: false }
+      - { value: 'The maximum age of the "remember me" token.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `path` in `remember_me` configuration?'
+    answers:
+      - { value: 'The path where the "remember me" cookie is applied, defaulting to the entire website.', correct: true }
+      - { value: 'The URL path to the "remember me" checkbox.', correct: false }
+      - { value: 'The file system path for storing remember me tokens.', correct: false }
+      - { value: 'The route path for remember me authentication.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `domain` in `remember_me` configuration?'
+    answers:
+      - { value: 'The domain where the "remember me" cookie is used, defaulting to the current domain.', correct: true }
+      - { value: 'The domain of the authentication server.', correct: false }
+      - { value: 'The subdomain for the remember me functionality.', correct: false }
+      - { value: 'The domain from which the remember me cookie is issued.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `secure` in `remember_me` configuration?'
+    answers:
+      - { value: 'If true, the "remember me" cookie is sent only over HTTPS connections.', correct: true }
+      - { value: 'If true, the "remember me" cookie is encrypted.', correct: false }
+      - { value: 'If true, the "remember me" cookie is signed.', correct: false }
+      - { value: 'If true, the "remember me" cookie is only accessible from the same origin.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `httponly` in `remember_me` configuration?'
+    answers:
+      - { value: 'If true, the "remember me" cookie is accessible only via HTTP protocol, preventing JavaScript access.', correct: true }
+      - { value: 'If true, the "remember me" cookie is only sent with HTTP requests.', correct: false }
+      - { value: 'If true, the "remember me" cookie is only valid for HTTP methods.', correct: false }
+      - { value: 'If true, the "remember me" cookie is only stored in HTTP headers.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `samesite` in `remember_me` configuration?'
+    answers:
+      - { value: 'If set to ''strict'', the cookie will not be sent with cross-site requests, even when following a regular link.', correct: true }
+      - { value: 'To specify whether the cookie should be sent with same-site requests only.', correct: false }
+      - { value: 'To define the same-site policy for the "remember me" cookie.', correct: false }
+      - { value: 'To enable or disable cross-site scripting protection for the cookie.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'Which of the following is a valid configuration for `always_remember_me` in `remember_me`?'
+    answers:
+      - { value: 'always_remember_me: true', correct: true }
+      - { value: 'force_remember_me: true', correct: false }
+      - { value: 'remember_me_always: true', correct: false }
+      - { value: 'auto_remember_me: true', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `NotCompromisedPassword` constraint?'
+    answers:
+      - { value: 'It checks if a given password has been compromised in a data breach by making HTTP requests to a public API.', correct: true }
+      - { value: 'It enforces strong password policies like minimum length and character requirements.', correct: false }
+      - { value: 'It encrypts the password before storing it in the database.', correct: false }
+      - { value: 'It prevents users from reusing old passwords.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/framework
+  - question: 'What is the purpose of `not_compromised_password.endpoint` configuration?'
+    answers:
+      - { value: 'To define a custom API endpoint for checking compromised passwords, overriding `haveibeenpwned.com`.', correct: true }
+      - { value: 'To specify the default API endpoint for password hashing.', correct: false }
+      - { value: 'To configure the maximum number of requests to the compromised password API.', correct: false }
+      - { value: 'To enable or disable the compromised password check.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/framework
+  - question: 'Which of the following is a valid configuration for `not_compromised_password.endpoint`?'
+    answers:
+      - { value: 'not_compromised_password.endpoint: https://my-custom-api.com/pwned', correct: true }
+      - { value: 'not_compromised_password.api_url: https://my-custom-api.com/pwned', correct: false }
+      - { value: 'compromised_password_check.endpoint: https://my-custom-api.com/pwned', correct: false }
+      - { value: 'password_breach_api: https://my-custom-api.com/pwned', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/framework
+  - question: 'What is the purpose of `access_control` in Symfony security?'
+    answers:
+      - { value: 'To define security rules for specific URL patterns, controlling authentication and authorization.', correct: true }
+      - { value: 'To manage user roles and permissions globally.', correct: false }
+      - { value: 'To configure the authentication providers.', correct: false }
+      - { value: 'To define the password hashing algorithm.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'Which of the following is a valid `access_control` rule to require `ROLE_USER` for all paths starting with `/api/`?'
+    answers:
+      - { value: '- { path: ^/api/, roles: ROLE_USER }', correct: true }
+      - { value: '- { path: /api/*, roles: ROLE_USER }', correct: false }
+      - { value: '- { path: ^/api.*, roles: ROLE_USER }', correct: false }
+      - { value: '- { path: /api/, access: ROLE_USER }', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `firewalls` in Symfony security configuration?'
+    answers:
+      - { value: 'To define independent security areas within your application, each with its own authentication and authorization mechanisms.', correct: true }
+      - { value: 'To configure network firewalls for the server.', correct: false }
+      - { value: 'To manage database connections for user data.', correct: false }
+      - { value: 'To define global security policies for the entire application.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `lazy: true` in a firewall configuration?'
+    answers:
+      - { value: 'The firewall will only be activated and process requests if its pattern matches the incoming request.', correct: true }
+      - { value: 'The user provider associated with the firewall will be loaded lazily.', correct: false }
+      - { value: 'Authentication will be deferred until a protected resource is accessed.', correct: false }
+      - { value: 'The firewall will not be loaded until explicitly enabled.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following describes the `providers` section in Symfony security configuration?'
+    answers:
+      - { value: 'It defines how user data is loaded and managed (e.g., from a database, in-memory).', correct: true }
+      - { value: 'It specifies the authentication methods available to users.', correct: false }
+      - { value: 'It configures external identity providers.', correct: false }
+      - { value: 'It manages user roles and permissions.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `role_hierarchy` in Symfony security?'
+    answers:
+      - { value: 'To establish a hierarchical relationship between roles, allowing higher roles to implicitly grant lower roles.', correct: true }
+      - { value: 'To define the order in which roles are checked for access.', correct: false }
+      - { value: 'To group roles into logical categories.', correct: false }
+      - { value: 'To restrict the number of roles a user can have.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of the `Security` service (`Symfony\Bundle\SecurityBundle\Security`)?'
+    answers:
+      - { value: 'To provide a central point of access for security-related functionalities, such as checking user roles and retrieving firewall information.', correct: true }
+      - { value: 'To manage user registration and password encoding.', correct: false }
+      - { value: 'To configure security settings in `security.yaml`.', correct: false }
+      - { value: 'To handle all authentication and authorization logic directly.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid way to check if the current user is granted `ROLE_ADMIN` in a Twig template?'
+    answers:
+      - { value: '{% if is_granted("ROLE_ADMIN") %}', correct: true }
+      - { value: '{% if app.user.hasRole("ROLE_ADMIN") %}', correct: false }
+      - { value: '{% if security.isGranted("ROLE_ADMIN") %}', correct: false }
+      - { value: '{% if has_role("ROLE_ADMIN") %}', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_AUTHENTICATED_FULLY`?'
+    answers:
+      - { value: 'Checks if a user is authenticated, but not via "remember me" functionality.', correct: true }
+      - { value: 'Checks if a user is authenticated by any means.', correct: false }
+      - { value: 'Checks if a user has completed multi-factor authentication.', correct: false }
+      - { value: 'Checks if a user has all required roles.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_REMEMBERED`?'
+    answers:
+      - { value: 'Checks if a user is authenticated solely through the "remember me" cookie.', correct: true }
+      - { value: 'Checks if a user has a persistent session.', correct: false }
+      - { value: 'Checks if a user has opted to stay logged in.', correct: false }
+      - { value: 'Checks if a user has a valid session and remember me cookie.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_IMPERSONATOR`?'
+    answers:
+      - { value: 'Indicates that the current user is impersonating another user.', correct: true }
+      - { value: 'Checks if a user has the ability to impersonate others.', correct: false }
+      - { value: 'Checks if a user is logged in as an administrator.', correct: false }
+      - { value: 'Checks if a user is logged in from a different location.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid configuration for `cookie_secure: auto` in `framework.yaml`?'
+    answers:
+      - { value: 'cookie_secure: auto', correct: true }
+      - { value: 'session_cookie_secure: auto', correct: false }
+      - { value: 'secure_cookies: auto', correct: false }
+      - { value: 'framework.session.cookie_secure: auto', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/framework
+  - question: 'What is the purpose of `required_badges` in a firewall configuration?'
+    answers:
+      - { value: 'To ensure that specific authentication badges are present on the authenticated passport.', correct: true }
+      - { value: 'To define the minimum number of authentication attempts allowed.', correct: false }
+      - { value: 'To configure the visual badges displayed in the user interface.', correct: false }
+      - { value: 'To enforce a specific authentication method for the firewall.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'Which of the following is a valid configuration for `required_badges` in PHP?'
+    answers:
+      - { value: '$mainFirewall->requiredBadges([''CsrfTokenBadge'', ''My\\Badge'']);', correct: true }
+      - { value: '$mainFirewall->setRequiredBadges([''CsrfTokenBadge'', ''My\\Badge'']);', correct: false }
+      - { value: '$mainFirewall->addRequiredBadge(''CsrfTokenBadge'')->addRequiredBadge(''My\\Badge'');', correct: false }
+      - { value: '$mainFirewall->badges([''CsrfTokenBadge'', ''My\\Badge'']);', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of the `security.expression_language_provider` tag?'
+    answers:
+      - { value: 'To register services that extend the security expression language with custom functions.', correct: true }
+      - { value: 'To define custom security voters.', correct: false }
+      - { value: 'To configure the default security expression language.', correct: false }
+      - { value: 'To enable or disable the security expression language.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/dic_tags
+  - question: 'Which of the following is a valid configuration for `login_throttling` in PHP, setting `maxAttempts` to 3 and `interval` to 15 minutes?'
+    answers:
+      - { value: |
+          $mainFirewall->loginThrottling()
+              ->maxAttempts(3)
+              ->interval('15 minutes')
+          ;
+        , correct: true }
+      - { value: |
+          $mainFirewall->loginThrottling(3, '15 minutes');
+        , correct: false }
+      - { value: |
+          $mainFirewall->setLoginThrottling(3, '15 minutes');
+        , correct: false }
+      - { value: |
+          $mainFirewall->throttleLogin(3, '15 minutes');
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `username_parameter` in `form_login`?'
+    answers:
+      - { value: 'The name of the POST parameter that contains the username in the login form submission.', correct: true }
+      - { value: 'The name of the user entity property used for authentication.', correct: false }
+      - { value: 'The query parameter for the username in the login URL.', correct: false }
+      - { value: 'The default username for testing purposes.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `password_parameter` in `form_login`?'
+    answers:
+      - { value: 'The name of the POST parameter that contains the password in the login form submission.', correct: true }
+      - { value: 'The name of the user entity property used for password hashing.', correct: false }
+      - { value: 'The query parameter for the password in the login URL.', correct: false }
+      - { value: 'The default password for testing purposes.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `post_only` in `form_login`?'
+    answers:
+      - { value: 'To enforce that login requests to `check_path` must be POST requests.', correct: true }
+      - { value: 'To prevent GET requests from being processed by the form login authenticator.', correct: true }
+      - { value: 'To ensure that the login form is only displayed via POST.', correct: false }
+      - { value: 'To disable caching for login forms.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `form_only` in `form_login`?'
+    answers:
+      - { value: 'To restrict the login authenticator to process only requests with `application/x-www-form-urlencoded` or `multipart/form-data` content types.', correct: true }
+      - { value: 'To prevent the form login authenticator from handling JSON login requests.', correct: true }
+      - { value: 'To ensure that only HTML forms can be used for login.', correct: false }
+      - { value: 'To disable API-based login for the firewall.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `target` in `logout` configuration?'
+    answers:
+      - { value: 'The URL or route name to redirect to after a successful logout.', correct: true }
+      - { value: 'The controller action that handles the logout process.', correct: false }
+      - { value: 'The HTTP method for the logout request.', correct: false }
+      - { value: 'The name of the logout route.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `lifetime` in `remember_me` configuration?'
+    answers:
+      - { value: 'The duration in seconds for which the "remember me" cookie remains valid.', correct: true }
+      - { value: 'The maximum duration of a user session.', correct: false }
+      - { value: 'The time until the user is automatically logged out.', correct: false }
+      - { value: 'The expiration time of the remember me token.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `path` in `remember_me` configuration?'
+    answers:
+      - { value: 'The URL path for which the "remember me" cookie is valid.', correct: true }
+      - { value: 'The file system path where remember me tokens are stored.', correct: false }
+      - { value: 'The route path for remember me authentication.', correct: false }
+      - { value: 'The path to the user''s home directory.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `domain` in `remember_me` configuration?'
+    answers:
+      - { value: 'The domain for which the "remember me" cookie is valid.', correct: true }
+      - { value: 'The domain of the authentication server.', correct: false }
+      - { value: 'The subdomain for the remember me functionality.', correct: false }
+      - { value: 'The domain from which the remember me cookie is issued.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `secure` in `remember_me` configuration?'
+    answers:
+      - { value: 'If true, the "remember me" cookie will only be sent over HTTPS connections.', correct: true }
+      - { value: 'If true, the "remember me" cookie will be encrypted.', correct: false }
+      - { value: 'If true, the "remember me" cookie will be signed.', correct: false }
+      - { value: 'If true, the "remember me" cookie will only be accessible from the same origin.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `httponly` in `remember_me` configuration?'
+    answers:
+      - { value: 'If true, the "remember me" cookie will not be accessible via client-side scripts (e.g., JavaScript).', correct: true }
+      - { value: 'If true, the "remember me" cookie will only be sent with HTTP requests.', correct: false }
+      - { value: 'If true, the "remember me" cookie will only be valid for HTTP methods.', correct: false }
+      - { value: 'If true, the "remember me" cookie will only be stored in HTTP headers.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `samesite` in `remember_me` configuration?'
+    answers:
+      - { value: 'To control whether the "remember me" cookie is sent with cross-site requests, enhancing CSRF protection.', correct: true }
+      - { value: 'To specify whether the cookie should be sent with same-site requests only.', correct: false }
+      - { value: 'To define the same-site policy for the "remember me" cookie.', correct: false }
+      - { value: 'To enable or disable cross-site scripting protection for the cookie.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `always_remember_me` in `remember_me` configuration?'
+    answers:
+      - { value: 'To force the "remember me" functionality to be enabled for all successful logins, regardless of user input.', correct: true }
+      - { value: 'To automatically remember the user''s login credentials.', correct: false }
+      - { value: 'To set the default state of the "remember me" checkbox.', correct: false }
+      - { value: 'To enable persistent login for all users.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'Which of the following is a valid configuration for `NotCompromisedPassword` constraint endpoint in YAML?'
+    answers:
+      - { value: 'not_compromised_password.endpoint: https://my-custom-endpoint.com/api', correct: true }
+      - { value: 'not_compromised_password.url: https://my-custom-endpoint.com/api', correct: false }
+      - { value: 'compromised_password_api: https://my-custom-endpoint.com/api', correct: false }
+      - { value: 'password_breach_check.endpoint: https://my-custom-endpoint.com/api', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/framework
+  - question: 'What is the purpose of `access_control` in Symfony security?'
+    answers:
+      - { value: 'To define rules that determine whether a user can access a specific URL or resource based on roles, IP addresses, etc.', correct: true }
+      - { value: 'To configure the authentication methods for users.', correct: false }
+      - { value: 'To manage user accounts and their properties.', correct: false }
+      - { value: 'To define global security policies for the application.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'Which of the following is a valid `access_control` rule to require `ROLE_ADMIN` for any request from `192.168.1.0/24` subnet?'
+    answers:
+      - { value: '- { path: ^/, roles: ROLE_ADMIN, ips: 192.168.1.0/24 }', correct: true }
+      - { value: '- { path: ^/, roles: ROLE_ADMIN, ip_range: 192.168.1.0/24 }', correct: false }
+      - { value: '- { path: ^/, roles: ROLE_ADMIN, subnet: 192.168.1.0/24 }', correct: false }
+      - { value: '- { path: ^/, roles: ROLE_ADMIN, network: 192.168.1.0/24 }', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/access_control
+  - question: 'What is the purpose of `firewalls` in Symfony security configuration?'
+    answers:
+      - { value: 'To define distinct security areas within your application, each with its own authentication methods and access rules.', correct: true }
+      - { value: 'To configure the application''s network security.', correct: false }
+      - { value: 'To manage user sessions and cookies.', correct: false }
+      - { value: 'To define global security settings for the entire application.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `lazy: true` in a firewall configuration?'
+    answers:
+      - { value: 'The firewall''s authentication listeners will only be initialized and executed if the request matches the firewall''s pattern.', correct: true }
+      - { value: 'The user provider will only load user data when it''s explicitly requested.', correct: false }
+      - { value: 'The firewall will only be enabled in a production environment.', correct: false }
+      - { value: 'The authentication process will be delayed until the last possible moment.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following describes the `providers` section in Symfony security configuration?'
+    answers:
+      - { value: 'It defines how users are loaded into the security system, typically from a database, LDAP, or in-memory array.', correct: true }
+      - { value: 'It specifies the authentication methods available to users.', correct: false }
+      - { value: 'It configures external authentication services like OAuth.', correct: false }
+      - { value: 'It manages user roles and permissions.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `role_hierarchy` in Symfony security?'
+    answers:
+      - { value: 'To define a chain of inheritance for roles, where a role can implicitly grant all permissions of its child roles.', correct: true }
+      - { value: 'To group roles into categories for easier management.', correct: false }
+      - { value: 'To restrict the number of roles a user can have.', correct: false }
+      - { value: 'To define the order in which roles are checked for access.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of the `Security` service (`Symfony\Bundle\SecurityBundle\Security`)?'
+    answers:
+      - { value: 'To provide a convenient way to interact with the security component, including checking authorization and accessing the current user.', correct: true }
+      - { value: 'To manage user registration and password encoding.', correct: false }
+      - { value: 'To configure security settings in `security.yaml`.', correct: false }
+      - { value: 'To handle all HTTP security headers.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid way to check if the current user is authenticated in a controller?'
+    answers:
+      - { value: '$this->isGranted(''IS_AUTHENTICATED_FULLY'')', correct: true }
+      - { value: '$this->getUser() !== null', correct: false }
+      - { value: '$this->get(''security.authorization_checker'')->isGranted(''IS_AUTHENTICATED_FULLY'')', correct: false }
+      - { value: '$this->security->isAuthenticated()', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `IS_AUTHENTICATED`?'
+    answers:
+      - { value: 'Checks if the user is authenticated in any way (e.g., fully, remembered).', correct: true }
+      - { value: 'Checks if the user is logged in via a form.', correct: false }
+      - { value: 'Checks if the user has a valid session.', correct: false }
+      - { value: 'Checks if the user has any assigned roles.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_AUTHENTICATED_FULLY`?'
+    answers:
+      - { value: 'Checks if the user is authenticated and not via "remember me".', correct: true }
+      - { value: 'Checks if the user is authenticated by any means.', correct: false }
+      - { value: 'Checks if the user has completed multi-factor authentication.', correct: false }
+      - { value: 'Checks if the user has all required roles.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_REMEMBERED`?'
+    answers:
+      - { value: 'Checks if the user is authenticated via the "remember me" cookie.', correct: true }
+      - { value: 'Checks if the user has a persistent session.', correct: false }
+      - { value: 'Checks if the user has opted to stay logged in.', correct: false }
+      - { value: 'Checks if the user has a valid session and remember me cookie.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_IMPERSONATOR`?'
+    answers:
+      - { value: 'Indicates that the current user is impersonating another user.', correct: true }
+      - { value: 'Checks if a user has the ability to impersonate others.', correct: false }
+      - { value: 'Checks if a user is logged in as an administrator.', correct: false }
+      - { value: 'Checks if a user is logged in from a different location.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `cookie_secure: auto` in `framework.yaml`?'
+    answers:
+      - { value: 'To automatically set the `Secure` flag for session cookies based on the request protocol (HTTPS for secure, HTTP for insecure).', correct: true }
+      - { value: 'To automatically encrypt session cookie data.', correct: false }
+      - { value: 'To automatically set the `HttpOnly` flag for session cookies.', correct: false }
+      - { value: 'To automatically generate a secure session cookie name.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/framework
+  - question: 'What is the purpose of `required_badges` in a firewall configuration?'
+    answers:
+      - { value: 'To specify a list of badges that must be present on the authenticated passport for the firewall to grant access.', correct: true }
+      - { value: 'To define the minimum number of authentication attempts allowed.', correct: false }
+      - { value: 'To configure the visual badges displayed in the user interface.', correct: false }
+      - { value: 'To enforce a specific authentication method for the firewall.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'Which of the following describes the `CheckPassportEvent`?'
+    answers:
+      - { value: 'Dispatched after the authenticator created the security passport; listeners perform authentication checks.', correct: true }
+      - { value: 'Dispatched before the security passport is created.', correct: false }
+      - { value: 'Dispatched when a passport is successfully validated.', correct: false }
+      - { value: 'Dispatched when a passport is rejected.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `AuthenticationTokenCreatedEvent`?'
+    answers:
+      - { value: 'Dispatched after the passport was validated and the authenticator created the security token (and user).', correct: true }
+      - { value: 'Dispatched when a new authentication token is requested.', correct: false }
+      - { value: 'Dispatched when an authentication token is revoked.', correct: false }
+      - { value: 'Dispatched when a user attempts to use an invalid token.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `AuthenticationSuccessEvent`?'
+    answers:
+      - { value: 'Dispatched when authentication is nearing success; it''s the last event that can cause authentication to fail.', correct: true }
+      - { value: 'Dispatched after authentication is fully successful.', correct: false }
+      - { value: 'Dispatched when a user successfully logs in.', correct: false }
+      - { value: 'Dispatched when a user attempts to authenticate.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `LoginSuccessEvent`?'
+    answers:
+      - { value: 'Dispatched after authentication was fully successful; listeners can modify the response.', correct: true }
+      - { value: 'Dispatched when a user successfully logs in to the application.', correct: false }
+      - { value: 'Dispatched when a user is redirected after login.', correct: false }
+      - { value: 'Dispatched when a user''s session starts.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `LoginFailureEvent`?'
+    answers:
+      - { value: 'Dispatched after an `AuthenticationException` was thrown during authentication; listeners can modify the error response.', correct: true }
+      - { value: 'Dispatched when a user enters incorrect credentials.', correct: false }
+      - { value: 'Dispatched when a login attempt is blocked by throttling.', correct: false }
+      - { value: 'Dispatched when a user is denied access to a resource.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `InteractiveLoginEvent`?'
+    answers:
+      - { value: 'Dispatched after a successful interactive login, allowing modification of the response.', correct: true }
+      - { value: 'Dispatched when a user submits a login form.', correct: false }
+      - { value: 'Dispatched when a user interacts with the security system.', correct: false }
+      - { value: 'Dispatched when a user logs in via an API.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `LogoutEvent`?'
+    answers:
+      - { value: 'Dispatched just before a user logs out of your application.', correct: true }
+      - { value: 'Dispatched after a user has successfully logged out.', correct: false }
+      - { value: 'Dispatched when a user attempts to log out.', correct: false }
+      - { value: 'Dispatched when a user''s session is destroyed.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `TokenDeauthenticatedEvent`?'
+    answers:
+      - { value: 'Dispatched when a user is deauthenticated, for instance because the password was changed.', correct: true }
+      - { value: 'Dispatched when an authentication token is created.', correct: false }
+      - { value: 'Dispatched when a user''s session expires.', correct: false }
+      - { value: 'Dispatched when a user attempts to use an invalid token.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `SwitchUserEvent`?'
+    answers:
+      - { value: 'Dispatched after impersonation is completed.', correct: true }
+      - { value: 'Dispatched when a user changes their roles.', correct: false }
+      - { value: 'Dispatched when a user logs in with a different account.', correct: false }
+      - { value: 'Dispatched when a user switches between different firewalls.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid configuration for `login_throttling` in YAML?'
+    answers:
+      - { value: |
+          login_throttling:
+              max_attempts: 5
+              interval: '1 minute'
+        , correct: true }
+      - { value: |
+          throttle_login:
+              attempts: 5
+              time: 60
+        , correct: false }
+      - { value: |
+          login_rate_limit:
+              limit: 5
+              period: 60
+        , correct: false }
+      - { value: |
+          throttling:
+              login:
+                  max: 5
+                  duration: 1m
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `username_parameter` in `form_login`?'
+    answers:
+      - { value: 'The name of the POST parameter that contains the username in the login form submission.', correct: true }
+      - { value: 'The name of the user entity property used for authentication.', correct: false }
+      - { value: 'The query parameter for the username in the login URL.', correct: false }
+      - { value: 'The default username for testing purposes.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `password_parameter` in `form_login`?'
+    answers:
+      - { value: 'The name of the POST parameter that contains the password in the login form submission.', correct: true }
+      - { value: 'The name of the user entity property used for password hashing.', correct: false }
+      - { value: 'The query parameter for the password in the login URL.', correct: false }
+      - { value: 'The default password for testing purposes.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `post_only` in `form_login`?'
+    answers:
+      - { value: 'To enforce that login requests to `check_path` must be POST requests.', correct: true }
+      - { value: 'To prevent GET requests from being processed by the form login authenticator.', correct: true }
+      - { value: 'To ensure that the login form is only displayed via POST.', correct: false }
+      - { value: 'To disable caching for POST requests to the login path.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `form_only` in `form_login`?'
+    answers:
+      - { value: 'To restrict the login authenticator to process only requests with `application/x-www-form-urlencoded` or `multipart/form-data` content types.', correct: true }
+      - { value: 'To prevent the form login authenticator from handling JSON login requests.', correct: true }
+      - { value: 'To ensure that only HTML forms can be used for login.', correct: false }
+      - { value: 'To disable API-based login for the firewall.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `target` in `logout` configuration?'
+    answers:
+      - { value: 'The URL or route name to redirect to after a successful logout.', correct: true }
+      - { value: 'The controller action that handles the logout process.', correct: false }
+      - { value: 'The HTTP method for the logout request.', correct: false }
+      - { value: 'The name of the logout route.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `lifetime` in `remember_me` configuration?'
+    answers:
+      - { value: 'The duration in seconds for which the "remember me" cookie remains valid.', correct: true }
+      - { value: 'The maximum duration of a user session.', correct: false }
+      - { value: 'The time until the user is automatically logged out.', correct: false }
+      - { value: 'The expiration time of the remember me token.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `path` in `remember_me` configuration?'
+    answers:
+      - { value: 'The URL path for which the "remember me" cookie is valid.', correct: true }
+      - { value: 'The file system path where remember me tokens are stored.', correct: false }
+      - { value: 'The route path for remember me authentication.', correct: false }
+      - { value: 'The path to the user''s home directory.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `domain` in `remember_me` configuration?'
+    answers:
+      - { value: 'The domain for which the "remember me" cookie is valid.', correct: true }
+      - { value: 'The domain of the authentication server.', correct: false }
+      - { value: 'The subdomain for the remember me functionality.', correct: false }
+      - { value: 'The domain from which the remember me cookie is issued.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `secure` in `remember_me` configuration?'
+    answers:
+      - { value: 'If true, the "remember me" cookie will only be sent over HTTPS connections.', correct: true }
+      - { value: 'If true, the "remember me" cookie will be encrypted.', correct: false }
+      - { value: 'If true, the "remember me" cookie will be signed.', correct: false }
+      - { value: 'If true, the "remember me" cookie will only be accessible from the same origin.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `httponly` in `remember_me` configuration?'
+    answers:
+      - { value: 'If true, the "remember me" cookie will not be accessible via client-side scripts (e.g., JavaScript).', correct: true }
+      - { value: 'If true, the "remember me" cookie will only be sent with HTTP requests.', correct: false }
+      - { value: 'If true, the "remember me" cookie will only be valid for HTTP methods.', correct: false }
+      - { value: 'If true, the "remember me" cookie will only be stored in HTTP headers.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `samesite` in `remember_me` configuration?'
+    answers:
+      - { value: 'To control whether the "remember me" cookie is sent with cross-site requests, enhancing CSRF protection.', correct: true }
+      - { value: 'To specify whether the cookie should be sent with same-site requests only.', correct: false }
+      - { value: 'To define the same-site policy for the "remember me" cookie.', correct: false }
+      - { value: 'To enable or disable cross-site scripting protection for the cookie.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'What is the purpose of `always_remember_me` in `remember_me` configuration?'
+    answers:
+      - { value: 'To force the "remember me" functionality to be enabled for all successful logins, regardless of user input.', correct: true }
+      - { value: 'To automatically remember the user''s login credentials.', correct: false }
+      - { value: 'To set the default state of the "remember me" checkbox.', correct: false }
+      - { value: 'To enable persistent login for all users.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/remember_me
+  - question: 'Which of the following is a valid configuration for `NotCompromisedPassword` constraint endpoint in YAML?'
+    answers:
+      - { value: 'not_compromised_password.endpoint: https://my-custom-endpoint.com/api', correct: true }
+      - { value: 'not_compromised_password.url: https://my-custom-endpoint.com/api', correct: false }
+      - { value: 'compromised_password_api: https://my-custom-endpoint.com/api', correct: false }
+      - { value: 'password_breach_check.endpoint: https://my-custom-endpoint.com/api', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/framework
+  - question: 'What is the purpose of `access_control` in Symfony security?'
+    answers:
+      - { value: 'To define rules that determine whether a user can access a specific URL or resource based on roles, IP addresses, etc.', correct: true }
+      - { value: 'To configure the authentication methods for users.', correct: false }
+      - { value: 'To manage user accounts and their properties.', correct: false }
+      - { value: 'To define global security policies for the application.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'Which of the following is a valid `access_control` rule to require `ROLE_ADMIN` for any request from `192.168.1.0/24` subnet?'
+    answers:
+      - { value: '- { path: ^/, roles: ROLE_ADMIN, ips: 192.168.1.0/24 }', correct: true }
+      - { value: '- { path: ^/, roles: ROLE_ADMIN, ip_range: 192.168.1.0/24 }', correct: false }
+      - { value: '- { path: ^/, roles: ROLE_ADMIN, subnet: 192.168.1.0/24 }', correct: false }
+      - { value: '- { path: ^/, roles: ROLE_ADMIN, network: 192.168.1.0/24 }', correct: false }
+    help: |
+      https://symfony.com/doc/current/security/access_control
+  - question: 'What is the purpose of `firewalls` in Symfony security configuration?'
+    answers:
+      - { value: 'To define distinct security areas within your application, each with its own authentication methods and access rules.', correct: true }
+      - { value: 'To configure the application''s network security.', correct: false }
+      - { value: 'To manage user sessions and cookies.', correct: false }
+      - { value: 'To define global security settings for the entire application.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+  - question: 'What is the purpose of `lazy: true` in a firewall configuration?'
+    answers:
+      - { value: 'The firewall''s authentication listeners will only be initialized and executed if the request matches the firewall''s pattern.', correct: true }
+      - { value: 'The user provider will only load user data when it''s explicitly requested.', correct: false }
+      - { value: 'The firewall will only be enabled in a production environment.', correct: false }
+      - { value: 'The authentication process will be delayed until the last possible moment.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'Which of the following describes the `providers` section in Symfony security configuration?'
+    answers:
+      - { value: 'It defines how users are loaded into the security system, typically from a database, LDAP, or in-memory array.', correct: true }
+      - { value: 'It specifies the authentication methods available to users.', correct: false }
+      - { value: 'It configures external authentication services like OAuth.', correct: false }
+      - { value: 'It manages user roles and permissions.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of `role_hierarchy` in Symfony security?'
+    answers:
+      - { value: 'To establish a hierarchical relationship between roles, allowing higher roles to implicitly grant lower roles.', correct: true }
+      - { value: 'To group roles into logical categories.', correct: false }
+      - { value: 'To restrict the number of roles a user can have.', correct: false }
+      - { value: 'To define the order in which roles are checked for access.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/security
+  - question: 'What is the purpose of the `Security` service (`Symfony\Bundle\SecurityBundle\Security`)?'
+    answers:
+      - { value: 'To provide a convenient way to interact with the security component, including checking authorization and accessing the current user.', correct: true }
+      - { value: 'To manage user registration and password encoding.', correct: false }
+      - { value: 'To configure security settings in `security.yaml`.', correct: false }
+      - { value: 'To handle all HTTP security headers.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'Which of the following is a valid way to check if the current user is granted `ROLE_ADMIN` in a Twig template?'
+    answers:
+      - { value: '{% if is_granted("ROLE_ADMIN") %}', correct: true }
+      - { value: '{% if app.user.hasRole("ROLE_ADMIN") %}', correct: false }
+      - { value: '{% if security.isGranted("ROLE_ADMIN") %}', correct: false }
+      - { value: '{% if has_role("ROLE_ADMIN") %}', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_AUTHENTICATED_FULLY`?'
+    answers:
+      - { value: 'Checks if a user is authenticated, but not via "remember me" functionality.', correct: true }
+      - { value: 'Checks if a user is authenticated by any means.', correct: false }
+      - { value: 'Checks if a user has completed multi-factor authentication.', correct: false }
+      - { value: 'Checks if a user has all required roles.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_REMEMBERED`?'
+    answers:
+      - { value: 'Checks if a user is authenticated solely through the "remember me" cookie.', correct: true }
+      - { value: 'Checks if a user has a persistent session.', correct: false }
+      - { value: 'Checks if a user has opted to stay logged in.', correct: false }
+      - { value: 'Checks if a user has a valid session and remember me cookie.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `IS_IMPERSONATOR`?'
+    answers:
+      - { value: 'Indicates that the current user is impersonating another user.', correct: true }
+      - { value: 'Checks if a user has the ability to impersonate others.', correct: false }
+      - { value: 'Checks if a user is logged in as an administrator.', correct: false }
+      - { value: 'Checks if a user is logged in from a different location.', correct: false }
+    help: |
+      https://symfony.com/doc/current/security
+  - question: 'What is the purpose of `cookie_secure: auto` in `framework.yaml`?'
+    answers:
+      - { value: 'To automatically set the `Secure` flag for session cookies based on the request protocol (HTTPS for secure, HTTP for insecure).', correct: true }
+      - { value: 'To automatically encrypt session cookie data.', correct: false }
+      - { value: 'To automatically set the `HttpOnly` flag for session cookies.', correct: false }
+      - { value: 'To automatically generate a secure session cookie name.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/framework
+  - question: 'What is the purpose of `required_badges` in a firewall configuration?'
+    answers:
+      - { value: 'To specify a list of badges that must be present on the authenticated passport for the firewall to grant access.', correct: true }
+      - { value: 'To define the minimum number of authentication attempts allowed.', correct: false }
+      - { value: 'To configure the visual badges displayed in the user interface.', correct: false }
+      - { value: 'To enforce a specific authentication method for the firewall.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/configuration/security
+```
