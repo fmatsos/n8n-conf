@@ -1,0 +1,2011 @@
+```yaml
+category: Data Validation
+questions:
+  - question: 'Which of the following methods is used to validate an object in a Symfony controller?'
+    answers:
+      - { value: '$validator->validate($object);', correct: true }
+      - { value: '$validator->isValid($object);', correct: false }
+      - { value: '$object->validate();', correct: false }
+      - { value: '$this->validate($object);', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'How do you inject the Validator service into a Symfony controller?'
+    answers:
+      - { value: 'By type-hinting `ValidatorInterface $validator` in the controller method arguments.', correct: true }
+      - { value: 'By calling `$this->get(''validator'')` in the controller method.', correct: false }
+      - { value: 'By using the `@validator` annotation on a property.', correct: false }
+      - { value: 'The validator is automatically available as `$this->validator`.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'Which Symfony component is required to use the validation features?'
+    answers:
+      - { value: 'symfony/validator', correct: true }
+      - { value: 'symfony/form', correct: false }
+      - { value: 'symfony/security', correct: false }
+      - { value: 'symfony/doctrine', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation
+  - question: 'What is the purpose of the `#[Assert\Valid]` attribute in Symfony validation?'
+    answers:
+      - { value: 'It marks a property as valid if it passes all its own constraints.', correct: false }
+      - { value: 'It ensures that nested objects are also validated when the parent object is validated.', correct: true }
+      - { value: 'It validates that the property value is a valid object instance.', correct: false }
+      - { value: 'It makes the property optional during validation.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Valid
+  - question: 'Which of the following is a correct way to apply a `NotBlank` constraint to a property using PHP attributes?'
+    answers:
+      - { value: '`#[Assert\NotBlank]`', correct: true }
+      - { value: '`@NotBlank`', correct: false }
+      - { value: '`#[NotBlank]`', correct: false }
+      - { value: '`#[Constraint\NotBlank]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/resources
+  - question: 'How can you define validation constraints for an entity property using YAML?'
+    answers:
+      - { value: |
+          ```yaml
+          App\Entity\Author:
+              properties:
+                  firstName:
+                      - NotBlank: ~
+          ```
+        , correct: true }
+      - { value: |
+          ```yaml
+          App\Entity\Author:
+              firstName:
+                  NotBlank: true
+          ```
+        , correct: false }
+      - { value: |
+          ```yaml
+          App\Entity\Author:
+              constraints:
+                  firstName: NotBlank
+          ```
+        , correct: false }
+      - { value: |
+          ```yaml
+          Author:
+              properties:
+                  firstName:
+                      - NotBlank: ~
+          ```
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'Which method is used to load validation metadata programmatically within an entity class?'
+    answers:
+      - { value: '`public static function loadValidatorMetadata(ClassMetadata $metadata): void`', correct: true }
+      - { value: '`public function getValidationConstraints(): array`', correct: false }
+      - { value: '`public static function defineValidation(ValidatorBuilder $builder): void`', correct: false }
+      - { value: '`public function configureValidation(ConstraintMapping $mapping): void`', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/resources
+  - question: 'What is the purpose of validation groups in Symfony?'
+    answers:
+      - { value: 'To apply different sets of constraints based on the context (e.g., registration, profile update).', correct: true }
+      - { value: 'To group related constraints for better organization.', correct: false }
+      - { value: 'To define the order in which constraints are evaluated.', correct: false }
+      - { value: 'To enable or disable validation for specific properties.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/groups
+  - question: 'How do you validate an object against a specific validation group in Symfony?'
+    answers:
+      - { value: '`$validator->validate($object, null, [''groupName'']);`', correct: true }
+      - { value: '`$validator->validate($object, ''groupName'');`', correct: false }
+      - { value: '`$validator->validateGroup($object, ''groupName'');`', correct: false }
+      - { value: '`$object->validate([''groupName'']);`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/groups
+  - question: 'Which interface allows an entity to define a dynamic validation group sequence?'
+    answers:
+      - { value: '`Symfony\Component\Validator\GroupSequenceProviderInterface`', correct: true }
+      - { value: '`Symfony\Component\Validator\ConstraintGroupInterface`', correct: false }
+      - { value: '`Symfony\Component\Validator\ValidationGroupInterface`', correct: false }
+      - { value: '`Symfony\Component\Validator\SequenceProviderInterface`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/sequence_provider
+  - question: 'What happens if a validation fails in an earlier group when using a group sequence (simple array)?'
+    answers:
+      - { value: 'The validation stops, and subsequent groups are not validated.', correct: true }
+      - { value: 'All groups are validated, and all violations are returned.', correct: false }
+      - { value: 'Only the failed group''s violations are returned.', correct: false }
+      - { value: 'The validation continues, but a warning is issued.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/sequence_provider
+  - question: 'Which of the following is a built-in Symfony validation constraint for checking if a value is a valid email address?'
+    answers:
+      - { value: '`#[Assert\Email]`', correct: true }
+      - { value: '`#[Assert\Mail]`', correct: false }
+      - { value: '`#[Assert\IsEmail]`', correct: false }
+      - { value: '`#[Assert\EmailAddress]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Email
+  - question: 'Which constraint is used to validate that a string matches a regular expression?'
+    answers:
+      - { value: '`#[Assert\Regex]`', correct: true }
+      - { value: '`#[Assert\Pattern]`', correct: false }
+      - { value: '`#[Assert\Match]`', correct: false }
+      - { value: '`#[Assert\RegExp]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Regex
+  - question: 'What is the default behavior of the `match` option in the `Regex` constraint?'
+    answers:
+      - { value: '`true` (validation passes if the input string matches the pattern)', correct: true }
+      - { value: '`false` (validation passes if the input string does NOT match the pattern)', correct: false }
+      - { value: '`null` (no matching is performed)', correct: false }
+      - { value: 'It depends on the pattern itself.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Regex
+  - question: 'How can you define a custom error message for a `NotBlank` constraint?'
+    answers:
+      - { value: '`#[Assert\NotBlank(message: ''This field cannot be empty.'')]`', correct: true }
+      - { value: '`#[Assert\NotBlank(error: ''This field cannot be empty.'')]`', correct: false }
+      - { value: '`#[Assert\NotBlank(text: ''This field cannot be empty.'')]`', correct: false }
+      - { value: '`#[Assert\NotBlank(msg: ''This field cannot be empty.'')]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NotBlank
+  - question: 'Which built-in constraint is used to validate that a value is `true`?'
+    answers:
+      - { value: '`#[Assert\IsTrue]`', correct: true }
+      - { value: '`#[Assert\True]`', correct: false }
+      - { value: '`#[Assert\IsBooleanTrue]`', correct: false }
+      - { value: '`#[Assert\BooleanTrue]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/IsTrue
+  - question: 'Which built-in constraint is used to validate that a value is `false`?'
+    answers:
+      - { value: '`#[Assert\IsFalse]`', correct: true }
+      - { value: '`#[Assert\False]`', correct: false }
+      - { value: '`#[Assert\IsBooleanFalse]`', correct: false }
+      - { value: '`#[Assert\BooleanFalse]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/IsFalse
+  - question: 'What is the purpose of the `Type` constraint?'
+    answers:
+      - { value: 'To validate that a value is of a specific PHP type (e.g., string, int, array).', correct: true }
+      - { value: 'To check the data type of a variable at runtime.', correct: false }
+      - { value: 'To cast a value to a specific type.', correct: false }
+      - { value: 'To ensure a value is an object of a certain class.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Type
+  - question: 'How can you validate a raw scalar value (e.g., a string) using the Validator component?'
+    answers:
+      - { value: |
+          ```php
+          $emailConstraint = new Assert\Email();
+          $errors = $validator->validate($email, $emailConstraint);
+          ```
+        , correct: true }
+      - { value: |
+          ```php
+          $errors = $validator->validateScalar($email, new Assert\Email());
+          ```
+        , correct: false }
+      - { value: |
+          ```php
+          $errors = $validator->validateValue($email, Assert\Email::class);
+          ```
+        , correct: false }
+      - { value: |
+          ```php
+          $errors = $validator->validate($email, 'Email');
+          ```
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/raw_values
+  - question: 'Which constraint is suitable for validating an array where each element must conform to a set of constraints?'
+    answers:
+      - { value: '`#[Assert\All]`', correct: true }
+      - { value: '`#[Assert\Collection]`', correct: false }
+      - { value: '`#[Assert\Each]`', correct: false }
+      - { value: '`#[Assert\ArrayOf]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/raw_values
+  - question: 'Which constraint is used to validate the structure and content of an array, including nested arrays and specific keys?'
+    answers:
+      - { value: '`#[Assert\Collection]`', correct: true }
+      - { value: '`#[Assert\Array]`', correct: false }
+      - { value: '`#[Assert\Map]`', correct: false }
+      - { value: '`#[Assert\Structure]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/raw_values
+  - question: 'What is the purpose of the `payload` option in a validation constraint?'
+    answers:
+      - { value: 'To attach custom, non-validation-related data to a violation.', correct: true }
+      - { value: 'To define the data that will be validated by the constraint.', correct: false }
+      - { value: 'To specify the HTTP payload for API validation.', correct: false }
+      - { value: 'To pass arguments to a custom validator.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/severity
+  - question: 'How can you access the `payload` data from a `ConstraintViolation` object?'
+    answers:
+      - { value: '`$violation->getConstraint()->getPayload()`', correct: true }
+      - { value: '`$violation->getPayload()`', correct: false }
+      - { value: '`$violation->getMetadata()->getPayload()`', correct: false }
+      - { value: '`$violation->getOption(''payload'')`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/severity
+  - question: 'When creating a custom validation constraint, what interface must the constraint class implement?'
+    answers:
+      - { value: '`Symfony\Component\Validator\Constraint` (by extending `Constraint` class)', correct: true }
+      - { value: '`Symfony\Component\Validator\ConstraintInterface`', correct: false }
+      - { value: '`Symfony\Component\Validator\ValidationConstraint`', correct: false }
+      - { value: '`Symfony\Component\Validator\CustomConstraint`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/custom_constraint
+  - question: 'When creating a custom constraint validator, what class must the validator extend?'
+    answers:
+      - { value: '`Symfony\Component\Validator\ConstraintValidator`', correct: true }
+      - { value: '`Symfony\Component\Validator\AbstractValidator`', correct: false }
+      - { value: '`Symfony\Component\Validator\BaseValidator`', correct: false }
+      - { value: '`Symfony\Component\Validator\Validator`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/custom_constraint
+  - question: 'Which method in a custom constraint validator contains the actual validation logic?'
+    answers:
+      - { value: '`public function validate(mixed $value, Constraint $constraint): void`', correct: true }
+      - { value: '`public function isValid(mixed $value, Constraint $constraint): bool`', correct: false }
+      - { value: '`public function check(mixed $value, Constraint $constraint): array`', correct: false }
+      - { value: '`public function apply(mixed $value, Constraint $constraint): void`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/custom_constraint
+  - question: 'How do you add a validation violation within a custom constraint validator?'
+    answers:
+      - { value: '`$this->context->buildViolation($constraint->message)->addViolation();`', correct: true }
+      - { value: '`$this->addViolation($constraint->message);`', correct: false }
+      - { value: '`$this->context->addError($constraint->message);`', correct: false }
+      - { value: '`$this->context->getViolations()->add($constraint->message);`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/custom_constraint
+  - question: 'What is the purpose of `setParameter()` when building a violation in a custom validator?'
+    answers:
+      - { value: 'To replace placeholders in the error message with dynamic values.', correct: true }
+      - { value: 'To define parameters for the constraint itself.', correct: false }
+      - { value: 'To set the path of the violation.', correct: false }
+      - { value: 'To configure the validation context.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/custom_constraint
+  - question: 'How can you specify the property path for a violation in a custom validator?'
+    answers:
+      - { value: '`$this->context->buildViolation(...)->atPath(''propertyPath'')->addViolation();`', correct: true }
+      - { value: '`$this->context->buildViolation(...)->setPath(''propertyPath'')->addViolation();`', correct: false }
+      - { value: '`$this->context->addViolation(''propertyPath'', ...);`', correct: false }
+      - { value: '`$this->context->violationPath(''propertyPath'');`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/custom_constraint
+  - question: 'What is the recommended way to get a `ValidatorInterface` instance in a standalone PHP script (outside a Symfony application)?'
+    answers:
+      - { value: '`Symfony\Component\Validator\Validation::createValidator();`', correct: true }
+      - { value: '`new Symfony\Component\Validator\Validator\Validator();`', correct: false }
+      - { value: '`Symfony\Component\Validator\ValidatorFactory::create();`', correct: false }
+      - { value: '`$container->get(''validator'');`', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator
+  - question: 'Which command can you use to debug validation constraints for a specific class in Symfony?'
+    answers:
+      - { value: '`php bin/console debug:validator App\\Entity\\SomeClass`', correct: true }
+      - { value: '`php bin/console validator:debug App\\Entity\\SomeClass`', correct: false }
+      - { value: '`php bin/console show:validation App\\Entity\\SomeClass`', correct: false }
+      - { value: '`php bin/console validator:list App\\Entity\\SomeClass`', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'Which command can you use to debug validation constraints for all classes within a directory?'
+    answers:
+      - { value: '`php bin/console debug:validator src/Entity`', correct: true }
+      - { value: '`php bin/console validator:debug src/Entity`', correct: false }
+      - { value: '`php bin/console show:validation src/Entity`', correct: false }
+      - { value: '`php bin/console validator:list src/Entity`', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'When validating a getter method, what constraint is typically used to ensure a custom logic returns `true`?'
+    answers:
+      - { value: '`#[Assert\IsTrue]`', correct: true }
+      - { value: '`#[Assert\Callback]`', correct: false }
+      - { value: '`#[Assert\Expression]`', correct: false }
+      - { value: '`#[Assert\ValidMethod]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'What is the purpose of `Symfony\Component\Validator\Validation::createCallable()`?'
+    answers:
+      - { value: 'It returns a closure that throws a `ValidationFailedException` if validation rules are not met.', correct: true }
+      - { value: 'It creates a callable validator that returns `true` or `false`.', correct: false }
+      - { value: 'It generates a callable for a specific constraint.', correct: false }
+      - { value: 'It creates a callable that can be used to build custom constraints.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'What is the purpose of `Symfony\Component\Validator\Validation::createIsValidCallable()`?'
+    answers:
+      - { value: 'It returns a closure that returns `false` if validation rules are not met.', correct: true }
+      - { value: 'It creates a callable validator that throws an exception on failure.', correct: false }
+      - { value: 'It generates a callable for a specific constraint and returns violations.', correct: false }
+      - { value: 'It creates a callable that can be used to check if a value is valid without throwing an exception.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'Which constraint allows you to validate a value against a custom PHP callback function or method?'
+    answers:
+      - { value: '`#[Assert\Callback]`', correct: true }
+      - { value: '`#[Assert\Custom]`', correct: false }
+      - { value: '`#[Assert\Function]`', correct: false }
+      - { value: '`#[Assert\Callable]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/custom_constraint
+  - question: 'When using `#[Assert\Callback]`, what arguments does the callback function receive?'
+    answers:
+      - { value: 'The validated value and an `ExecutionContextInterface` instance.', correct: true }
+      - { value: 'The validated value and the constraint instance.', correct: false }
+      - { value: 'The validated object and the property path.', correct: false }
+      - { value: 'The validated value, the constraint, and the validator instance.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/custom_constraint
+  - question: 'How do you add a violation using the `ExecutionContextInterface` within a callback validator?'
+    answers:
+      - { value: '`$context->buildViolation(''message'')->addViolation();`', correct: true }
+      - { value: '`$context->addViolation(''message'');`', correct: false }
+      - { value: '`$context->getViolations()->add(''message'');`', correct: false }
+      - { value: '`$context->createViolation(''message'');`', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/metadata
+  - question: 'What is the primary benefit of using PHP attributes for validation metadata?'
+    answers:
+      - { value: 'They keep validation rules close to the code they validate, improving readability and maintainability.', correct: true }
+      - { value: 'They offer better performance compared to YAML or XML files.', correct: false }
+      - { value: 'They allow for more complex validation logic than other methods.', correct: false }
+      - { value: 'They are automatically loaded without any configuration.', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/resources
+  - question: 'Which of the following is NOT a built-in basic constraint in Symfony?'
+    answers:
+      - { value: '`#[Assert\Empty]`', correct: true }
+      - { value: '`#[Assert\NotBlank]`', correct: false }
+      - { value: '`#[Assert\IsNull]`', correct: false }
+      - { value: '`#[Assert\IsTrue]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints
+  - question: 'Which constraint is used to ensure a string has a specific minimum and/or maximum length?'
+    answers:
+      - { value: '`#[Assert\Length]`', correct: true }
+      - { value: '`#[Assert\Size]`', correct: false }
+      - { value: '`#[Assert\StringLength]`', correct: false }
+      - { value: '`#[Assert\Count]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Length
+  - question: 'What is the purpose of the `Range` constraint?'
+    answers:
+      - { value: 'To validate that a numeric value falls within a specified minimum and maximum range.', correct: true }
+      - { value: 'To check if a date falls within a specific period.', correct: false }
+      - { value: 'To ensure a string''s length is within a given range.', correct: false }
+      - { value: 'To validate that an array''s count is within a range.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Range
+  - question: 'Which constraint is used to validate that a value is greater than or equal to a specific value?'
+    answers:
+      - { value: '`#[Assert\GreaterThanOrEqual]`', correct: true }
+      - { value: '`#[Assert\Min]`', correct: false }
+      - { value: '`#[Assert\AtLeast]`', correct: false }
+      - { value: '`#[Assert\Gte]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/GreaterThanOrEqual
+  - question: 'Which constraint is used to validate that a value is less than or equal to a specific value?'
+    answers:
+      - { value: '`#[Assert\LessThanOrEqual]`', correct: true }
+      - { value: '`#[Assert\Max]`', correct: false }
+      - { value: '`#[Assert\AtMost]`', correct: false }
+      - { value: '`#[Assert\Lte]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/LessThanOrEqual
+  - question: 'What is the purpose of the `EqualTo` constraint?'
+    answers:
+      - { value: 'To validate that a value is strictly equal to another value.', correct: true }
+      - { value: 'To check if two values are of the same type.', correct: false }
+      - { value: 'To compare two values for similarity.', correct: false }
+      - { value: 'To ensure a value is present in a list of allowed values.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/EqualTo
+  - question: 'Which constraint is used to validate that a value is not equal to another value?'
+    answers:
+      - { value: '`#[Assert\NotEqualTo]`', correct: true }
+      - { value: '`#[Assert\NotEqual]`', correct: false }
+      - { value: '`#[Assert\DifferentFrom]`', correct: false }
+      - { value: '`#[Assert\UnequalTo]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NotEqualTo
+  - question: 'What is the difference between `EqualTo` and `IdenticalTo` constraints?'
+    answers:
+      - { value: '`EqualTo` uses `==` for comparison, while `IdenticalTo` uses `===`.', correct: true }
+      - { value: '`EqualTo` compares values, `IdenticalTo` compares objects.', correct: false }
+      - { value: '`EqualTo` is for numbers, `IdenticalTo` is for strings.', correct: false }
+      - { value: 'There is no functional difference; they are aliases.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/IdenticalTo
+  - question: 'Which constraint is used to validate that a value is a valid URL?'
+    answers:
+      - { value: '`#[Assert\Url]`', correct: true }
+      - { value: '`#[Assert\Uri]`', correct: false }
+      - { value: '`#[Assert\Link]`', correct: false }
+      - { value: '`#[Assert\WebAddress]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Url
+  - question: 'Which constraint is used to validate that a value is a valid IP address?'
+    answers:
+      - { value: '`#[Assert\Ip]`', correct: true }
+      - { value: '`#[Assert\IPv4]`', correct: false }
+      - { value: '`#[Assert\NetworkAddress]`', correct: false }
+      - { value: '`#[Assert\Address]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Ip
+  - question: 'Which constraint is used to validate that a value is a valid UUID?'
+    answers:
+      - { value: '`#[Assert\Uuid]`', correct: true }
+      - { value: '`#[Assert\Guid]`', correct: false }
+      - { value: '`#[Assert\UniqueId]`', correct: false }
+      - { value: '`#[Assert\Identifier]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Uuid
+  - question: 'Which constraint is used to validate that a value is a valid ULID?'
+    answers:
+      - { value: '`#[Assert\Ulid]`', correct: true }
+      - { value: '`#[Assert\UniqueId]`', correct: false }
+      - { value: '`#[Assert\UniversalId]`', correct: false }
+      - { value: '`#[Assert\Lid]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Ulid
+  - question: 'What is the purpose of the `Choice` constraint?'
+    answers:
+      - { value: 'To validate that a value is one of a predefined set of options.', correct: true }
+      - { value: 'To allow the user to select multiple options from a list.', correct: false }
+      - { value: 'To provide a dropdown list in a form.', correct: false }
+      - { value: 'To validate that a value is a boolean choice.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Choice
+  - question: 'Which constraint is used to validate that a value is a valid date?'
+    answers:
+      - { value: '`#[Assert\Date]`', correct: true }
+      - { value: '`#[Assert\ValidDate]`', correct: false }
+      - { value: '`#[Assert\IsDate]`', correct: false }
+      - { value: '`#[Assert\DateString]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Date
+  - question: 'Which constraint is used to validate that a value is a valid time?'
+    answers:
+      - { value: '`#[Assert\Time]`', correct: true }
+      - { value: '`#[Assert\ValidTime]`', correct: false }
+      - { value: '`#[Assert\IsTime]`', correct: false }
+      - { value: '`#[Assert\TimeString]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Time
+  - question: 'Which constraint is used to validate that a value is a valid `DateTime`?'
+    answers:
+      - { value: '`#[Assert\DateTime]`', correct: true }
+      - { value: '`#[Assert\ValidDateTime]`', correct: false }
+      - { value: '`#[Assert\IsDateTime]`', correct: false }
+      - { value: '`#[Assert\DateTimeString]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/DateTime
+  - question: 'What is the purpose of the `Count` constraint?'
+    answers:
+      - { value: 'To validate that a collection (e.g., array, `Countable` object) has a specific number of elements.', correct: true }
+      - { value: 'To count the number of characters in a string.', correct: false }
+      - { value: 'To limit the number of items displayed in a list.', correct: false }
+      - { value: 'To validate the number of properties in an object.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Count
+  - question: 'Which constraint is used to validate that a file meets certain criteria (e.g., size, mime type)?'
+    answers:
+      - { value: '`#[Assert\File]`', correct: true }
+      - { value: '`#[Assert\UploadedFile]`', correct: false }
+      - { value: '`#[Assert\Image]`', correct: false }
+      - { value: '`#[Assert\Media]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/File
+  - question: 'What is the purpose of the `Image` constraint?'
+    answers:
+      - { value: 'To validate that an uploaded file is a valid image and optionally check its dimensions.', correct: true }
+      - { value: 'To resize an image after upload.', correct: false }
+      - { value: 'To convert an image to a different format.', correct: false }
+      - { value: 'To display an image in a Twig template.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Image
+  - question: 'Which constraint is used to validate that a string is a valid JSON?'
+    answers:
+      - { value: '`#[Assert\Json]`', correct: true }
+      - { value: '`#[Assert\IsJson]`', correct: false }
+      - { value: '`#[Assert\JsonString]`', correct: false }
+      - { value: '`#[Assert\ValidJson]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Json
+  - question: 'Which constraint is used to validate that a string is a valid YAML?'
+    answers:
+      - { value: '`#[Assert\Yaml]`', correct: true }
+      - { value: '`#[Assert\IsYaml]`', correct: false }
+      - { value: '`#[Assert\YamlString]`', correct: false }
+      - { value: '`#[Assert\ValidYaml]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Yaml
+  - question: 'What is the purpose of the `Expression` constraint?'
+    answers:
+      - { value: 'To validate a value based on a custom Symfony Expression Language expression.', correct: true }
+      - { value: 'To evaluate a mathematical expression.', correct: false }
+      - { value: 'To define a regular expression for validation.', correct: false }
+      - { value: 'To execute a PHP function as a validation rule.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Expression
+  - question: 'Which constraint is used to validate that a password has not been compromised in a data breach?'
+    answers:
+      - { value: '`#[Assert\NotCompromisedPassword]`', correct: true }
+      - { value: '`#[Assert\BreachedPassword]`', correct: false }
+      - { value: '`#[Assert\SafePassword]`', correct: false }
+      - { value: '`#[Assert\PwnedPassword]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NotCompromisedPassword
+  - question: 'Which constraint is used to validate the strength of a password?'
+    answers:
+      - { value: '`#[Assert\PasswordStrength]`', correct: true }
+      - { value: '`#[Assert\StrongPassword]`', correct: false }
+      - { value: '`#[Assert\PasswordPolicy]`', correct: false }
+      - { value: '`#[Assert\MinStrength]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/PasswordStrength
+  - question: 'What is the purpose of the `UserPassword` constraint?'
+    answers:
+      - { value: 'To validate that a given password matches the currently logged-in user''s password.', correct: true }
+      - { value: 'To check if a password meets general security requirements.', correct: false }
+      - { value: 'To hash a user''s password before storing it.', correct: false }
+      - { value: 'To validate a password against a list of common passwords.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/UserPassword
+  - question: 'Which constraint is used to validate that a value is a valid credit card number?'
+    answers:
+      - { value: '`#[Assert\CardScheme]`', correct: true }
+      - { value: '`#[Assert\CreditCard]`', correct: false }
+      - { value: '`#[Assert\Luhn]`', correct: false }
+      - { value: '`#[Assert\PaymentCard]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/CardScheme
+  - question: 'What is the purpose of the `DivisibleBy` constraint?'
+    answers:
+      - { value: 'To validate that a numeric value is divisible by a given number.', correct: true }
+      - { value: 'To check if a number can be divided without a remainder.', correct: false }
+      - { value: 'To perform division operations in validation.', correct: false }
+      - { value: 'To ensure a number is an integer.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/DivisibleBy
+  - question: 'Which constraint is used to validate that a value is a valid ISBN (International Standard Book Number)?'
+    answers:
+      - { value: '`#[Assert\Isbn]`', correct: true }
+      - { value: '`#[Assert\BookId]`', correct: false }
+      - { value: '`#[Assert\BookNumber]`', correct: false }
+      - { value: '`#[Assert\StandardBookNumber]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Isbn
+  - question: 'Which constraint is used to validate that a value is a valid ISSN (International Standard Serial Number)?'
+    answers:
+      - { value: '`#[Assert\Issn]`', correct: true }
+      - { value: '`#[Assert\SerialId]`', correct: false }
+      - { value: '`#[Assert\MagazineNumber]`', correct: false }
+      - { value: '`#[Assert\StandardSerialNumber]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Issn
+  - question: 'Which constraint is used to validate that a value is a valid IBAN (International Bank Account Number)?'
+    answers:
+      - { value: '`#[Assert\Iban]`', correct: true }
+      - { value: '`#[Assert\BankAccount]`', correct: false }
+      - { value: '`#[Assert\BankNumber]`', correct: false }
+      - { value: '`#[Assert\InternationalBank]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Iban
+  - question: 'Which constraint is used to validate that a value is a valid BIC (Bank Identifier Code) / SWIFT code?'
+    answers:
+      - { value: '`#[Assert\Bic]`', correct: true }
+      - { value: '`#[Assert\Swift]`', correct: false }
+      - { value: '`#[Assert\BankCode]`', correct: false }
+      - { value: '`#[Assert\FinancialCode]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Bic
+  - question: 'What is the purpose of the `Timezone` constraint?'
+    answers:
+      - { value: 'To validate that a value is a valid timezone identifier.', correct: true }
+      - { value: 'To convert a time to a different timezone.', correct: false }
+      - { value: 'To set the default timezone for an application.', correct: false }
+      - { value: 'To validate a date and time against a specific timezone.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Timezone
+  - question: 'Which constraint is used to validate that a value is a valid language code (e.g., "en", "fr")?'
+    answers:
+      - { value: '`#[Assert\Language]`', correct: true }
+      - { value: '`#[Assert\Locale]`', correct: false }
+      - { value: '`#[Assert\Lang]`', correct: false }
+      - { value: '`#[Assert\IsoLanguage]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Language
+  - question: 'Which constraint is used to validate that a value is a valid locale code (e.g., "en_US", "fr_FR")?'
+    answers:
+      - { value: '`#[Assert\Locale]`', correct: true }
+      - { value: '`#[Assert\LanguageLocale]`', correct: false }
+      - { value: '`#[Assert\RegionLocale]`', correct: false }
+      - { value: '`#[Assert\IsoLocale]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Locale
+  - question: 'Which constraint is used to validate that a value is a valid country code (e.g., "US", "FR")?'
+    answers:
+      - { value: '`#[Assert\Country]`', correct: true }
+      - { value: '`#[Assert\Region]`', correct: false }
+      - { value: '`#[Assert\IsoCountry]`', correct: false }
+      - { value: '`#[Assert\Nation]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Country
+  - question: 'What is the purpose of the `Unique` constraint?'
+    answers:
+      - { value: 'To validate that a property''s value is unique within a collection or database table.', correct: true }
+      - { value: 'To ensure that all elements in an array are unique.', correct: false }
+      - { value: 'To generate a unique identifier for an entity.', correct: false }
+      - { value: 'To prevent duplicate form submissions.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Unique
+  - question: 'Which constraint is used to validate that a value is a valid currency code (e.g., "USD", "EUR")?'
+    answers:
+      - { value: '`#[Assert\Currency]`', correct: true }
+      - { value: '`#[Assert\Money]`', correct: false }
+      - { value: '`#[Assert\IsoCurrency]`', correct: false }
+      - { value: '`#[Assert\FinancialCurrency]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Currency
+  - question: 'What is the purpose of the `AtLeastOneOf` constraint?'
+    answers:
+      - { value: 'To validate that at least one of the specified nested constraints passes.', correct: true }
+      - { value: 'To ensure that only one of the specified constraints passes.', correct: false }
+      - { value: 'To apply a set of constraints to at least one property.', correct: false }
+      - { value: 'To check if a value is present in at least one of several lists.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/AtLeastOneOf
+  - question: 'What is the purpose of the `Sequentially` constraint?'
+    answers:
+      - { value: 'To validate a value against a list of constraints, stopping at the first failure.', correct: true }
+      - { value: 'To apply constraints in a specific order, regardless of failure.', correct: false }
+      - { value: 'To define a sequence of validation groups.', correct: false }
+      - { value: 'To validate an array of values sequentially.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Sequentially
+  - question: 'Which constraint is used to validate that a value is a valid `Cidr` (Classless Inter-Domain Routing) notation?'
+    answers:
+      - { value: '`#[Assert\Cidr]`', correct: true }
+      - { value: '`#[Assert\IpRange]`', correct: false }
+      - { value: '`#[Assert\NetworkCidr]`', correct: false }
+      - { value: '`#[Assert\Subnet]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Cidr
+  - question: 'What is the purpose of the `Hostname` constraint?'
+    answers:
+      - { value: 'To validate that a value is a valid hostname.', correct: true }
+      - { value: 'To check if a hostname is reachable.', correct: false }
+      - { value: 'To resolve a hostname to an IP address.', correct: false }
+      - { value: 'To validate a URL''s hostname part.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Hostname
+  - question: 'Which constraint is used to validate that a value is a valid MAC address?'
+    answers:
+      - { value: '`#[Assert\MacAddress]`', correct: true }
+      - { value: '`#[Assert\HardwareAddress]`', correct: false }
+      - { value: '`#[Assert\EthernetAddress]`', correct: false }
+      - { value: '`#[Assert\PhysicalAddress]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/MacAddress
+  - question: 'What is the purpose of the `NoSuspiciousCharacters` constraint?'
+    answers:
+      - { value: 'To validate that a string does not contain characters commonly used in phishing or spoofing attacks.', correct: true }
+      - { value: 'To remove suspicious characters from a string.', correct: false }
+      - { value: 'To encode suspicious characters in a string.', correct: false }
+      - { value: 'To detect and prevent SQL injection attempts.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NoSuspiciousCharacters
+  - question: 'Which constraint is used to validate that a string contains a specific number of words?'
+    answers:
+      - { value: '`#[Assert\WordCount]`', correct: true }
+      - { value: '`#[Assert\Words]`', correct: false }
+      - { value: '`#[Assert\TextLength]`', correct: false }
+      - { value: '`#[Assert\SentenceCount]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/WordCount
+  - question: 'What is the purpose of the `Charset` constraint?'
+    answers:
+      - { value: 'To validate that a string contains only characters from a specified character set.', correct: true }
+      - { value: 'To convert a string to a different character set.', correct: false }
+      - { value: 'To detect the character set of a string.', correct: false }
+      - { value: 'To enforce UTF-8 encoding.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Charset
+  - question: 'Which constraint is used to validate that a value is a valid CSS color string?'
+    answers:
+      - { value: '`#[Assert\CssColor]`', correct: true }
+      - { value: '`#[Assert\Color]`', correct: false }
+      - { value: '`#[Assert\HexColor]`', correct: false }
+      - { value: '`#[Assert\RgbColor]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/CssColor
+  - question: 'What is the purpose of the `ExpressionSyntax` constraint?'
+    answers:
+      - { value: 'To validate that a string contains valid Symfony Expression Language syntax.', correct: true }
+      - { value: 'To execute a Symfony Expression Language expression.', correct: false }
+      - { value: 'To highlight syntax errors in an expression.', correct: false }
+      - { value: 'To parse a Symfony Expression Language expression.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/ExpressionSyntax
+  - question: 'Which constraint is used to validate that a value is a valid Twig template syntax?'
+    answers:
+      - { value: '`#[Assert\Twig]`', correct: true }
+      - { value: '`#[Assert\Template]`', correct: false }
+      - { value: '`#[Assert\TwigSyntax]`', correct: false }
+      - { value: '`#[Assert\ValidTwig]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Twig
+  - question: 'What is the purpose of the `Positive` constraint?'
+    answers:
+      - { value: 'To validate that a numeric value is strictly greater than zero.', correct: true }
+      - { value: 'To ensure a number is not negative.', correct: false }
+      - { value: 'To check if a number is positive or zero.', correct: false }
+      - { value: 'To convert a negative number to positive.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Positive
+  - question: 'What is the purpose of the `PositiveOrZero` constraint?'
+    answers:
+      - { value: 'To validate that a numeric value is greater than or equal to zero.', correct: true }
+      - { value: 'To ensure a number is strictly positive.', correct: false }
+      - { value: 'To check if a number is zero.', correct: false }
+      - { value: 'To convert a negative number to zero.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/PositiveOrZero
+  - question: 'What is the purpose of the `Negative` constraint?'
+    answers:
+      - { value: 'To validate that a numeric value is strictly less than zero.', correct: true }
+      - { value: 'To ensure a number is not positive.', correct: false }
+      - { value: 'To check if a number is negative or zero.', correct: false }
+      - { value: 'To convert a positive number to negative.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Negative
+  - question: 'What is the purpose of the `NegativeOrZero` constraint?'
+    answers:
+      - { value: 'To validate that a numeric value is less than or equal to zero.', correct: true }
+      - { value: 'To ensure a number is strictly negative.', correct: false }
+      - { value: 'To check if a number is zero.', correct: false }
+      - { value: 'To convert a positive number to zero.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NegativeOrZero
+  - question: 'How can you apply validation constraints to embedded objects using PHP attributes?'
+    answers:
+      - { value: 'By using `#[Assert\Valid]` on the property holding the embedded object.', correct: true }
+      - { value: 'By using `#[Assert\Embed]` on the property holding the embedded object.', correct: false }
+      - { value: 'By explicitly listing all embedded object constraints on the parent.', correct: false }
+      - { value: 'Embedded objects are automatically validated without special attributes.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Valid
+  - question: 'What is the purpose of the `Optional` constraint within a `Collection` constraint?'
+    answers:
+      - { value: 'It makes a field optional within the collection, meaning it will be validated only if present.', correct: true }
+      - { value: 'It makes all fields within the collection optional.', correct: false }
+      - { value: 'It allows the collection itself to be optional.', correct: false }
+      - { value: 'It marks a field as deprecated.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/raw_values
+  - question: 'What is the purpose of the `Required` constraint within a `Collection` constraint?'
+    answers:
+      - { value: 'It ensures that a field must be present in the collection and will always be validated.', correct: true }
+      - { value: 'It makes all fields within the collection required.', correct: false }
+      - { value: 'It makes the collection itself required.', correct: false }
+      - { value: 'It marks a field as mandatory for specific validation groups.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/raw_values
+  - question: 'How can you define a custom validation message in a `validators.en.yaml` file?'
+    answers:
+      - { value: |
+          ```yaml
+          author.name.not_blank: Please enter an author name.
+          ```
+        , correct: true }
+      - { value: |
+          ```yaml
+          messages:
+              author.name.not_blank: Please enter an author name.
+          ```
+        , correct: false }
+      - { value: |
+          ```yaml
+          validation_messages:
+              author.name.not_blank: Please enter an author name.
+          ```
+        , correct: false }
+      - { value: |
+          ```yaml
+          en:
+              author.name.not_blank: Please enter an author name.
+          ```
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/translations
+  - question: 'How can you define a custom validation message in a `validators.en.php` file?'
+    answers:
+      - { value: |
+          ```php
+          return [
+              'author.name.not_blank' => 'Please enter an author name.',
+          ];
+          ```
+        , correct: true }
+      - { value: |
+          ```php
+          $messages = [
+              'author.name.not_blank' => 'Please enter an author name.',
+          ];
+          ```
+        , correct: false }
+      - { value: |
+          ```php
+          <?php
+          return [
+              'author.name.not_blank' => 'Please enter an author name.',
+          ];
+          ```
+        , correct: false }
+      - { value: |
+          ```php
+          return array(
+              'author.name.not_blank' => 'Please enter an author name.',
+          );
+          ```
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/translations
+  - question: 'What is the purpose of the `ValidationFailedException`?'
+    answers:
+      - { value: 'It is thrown by `Validation::createCallable()` when validation constraints are not met.', correct: true }
+      - { value: 'It is a generic exception for all validation errors in Symfony.', correct: false }
+      - { value: 'It indicates that the validator service could not be found.', correct: false }
+      - { value: 'It is thrown when a custom validator encounters an unexpected type.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'When implementing `GroupSequenceProviderInterface`, what is the return type of `getGroupSequence()`?'
+    answers:
+      - { value: '`array|GroupSequence`', correct: true }
+      - { value: '`array`', correct: false }
+      - { value: '`GroupSequence`', correct: false }
+      - { value: '`string[]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/sequence_provider
+  - question: 'How do you configure the Symfony Validator to load metadata from a YAML file?'
+    answers:
+      - { value: '`Validation::createValidatorBuilder()->addYamlMapping(''path/to/validation.yaml'')`', correct: true }
+      - { value: '`Validation::createValidatorBuilder()->addMapping(''yaml'', ''path/to/validation.yaml'')`', correct: false }
+      - { value: '`Validation::createValidatorBuilder()->addResource(''yaml'', ''path/to/validation.yaml'')`', correct: false }
+      - { value: '`Validation::createValidatorBuilder()->setYamlMapping(''path/to/validation.yaml'')`', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/resources
+  - question: 'How do you configure the Symfony Validator to load metadata from PHP attributes?'
+    answers:
+      - { value: 'By default, if `symfony/validator` is installed, attributes are automatically loaded.', correct: true }
+      - { value: '`Validation::createValidatorBuilder()->enableAttributeMapping()`', correct: false }
+      - { value: '`Validation::createValidatorBuilder()->addLoader(new AttributeLoader())`', correct: false }
+      - { value: '`Validation::createValidatorBuilder()->setAttributeMapping()`', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/resources
+  - question: 'How do you configure the Symfony Validator to load metadata from a static method (e.g., `loadValidatorMetadata`)?'
+    answers:
+      - { value: '`Validation::createValidatorBuilder()->addMethodMapping(''loadValidatorMetadata'')`', correct: true }
+      - { value: '`Validation::createValidatorBuilder()->addStaticMethodMapping(''loadValidatorMetadata'')`', correct: false }
+      - { value: '`Validation::createValidatorBuilder()->addLoader(new StaticMethodLoader(''loadValidatorMetadata''))`', correct: false }
+      - { value: '`Validation::createValidatorBuilder()->setMethodMapping(''loadValidatorMetadata'')`', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/resources
+  - question: 'What is the purpose of `ConstraintViolationList`?'
+    answers:
+      - { value: 'It is a collection of `ConstraintViolation` objects, representing all validation errors found.', correct: true }
+      - { value: 'It is a list of all defined validation constraints.', correct: false }
+      - { value: 'It is an object that defines a sequence of validation groups.', correct: false }
+      - { value: 'It is a service that manages validation errors.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'How do you check if there are any validation errors after calling `$validator->validate()`?'
+    answers:
+      - { value: '`if (count($errors) > 0)` or `if (!$errors->count())`', correct: true }
+      - { value: '`if ($errors->hasErrors())`', correct: false }
+      - { value: '`if ($errors->isValid())`', correct: false }
+      - { value: '`if ($errors)`', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'How can you display validation error messages in a Twig template?'
+    answers:
+      - { value: |
+          ```twig
+          {% for error in errors %}
+              <li>{{ error.message }}</li>
+          {% endfor %}
+          ```
+        , correct: true }
+      - { value: |
+          ```twig
+          {{ errors.join(', ') }}
+          ```
+        , correct: false }
+      - { value: |
+          ```twig
+          {% for message in errors.messages %}
+              <li>{{ message }}</li>
+          {% endfor %}
+          ```
+        , correct: false }
+      - { value: |
+          ```twig
+          {{ errors.toString() }}
+          ```
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'What is the purpose of the `message` option in most built-in constraints?'
+    answers:
+      - { value: 'To define the error message displayed when the constraint fails.', correct: true }
+      - { value: 'To provide a description of the constraint''s purpose.', correct: false }
+      - { value: 'To specify a translation key for the error message.', correct: false }
+      - { value: 'To set a default value for the validated property.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NotBlank
+  - question: 'Which placeholder is commonly available in validation error messages to represent the invalid value?'
+    answers:
+      - { value: '`{{ value }}`', correct: true }
+      - { value: '`{{ invalidValue }}`', correct: false }
+      - { value: '`{{ data }}`', correct: false }
+      - { value: '`{{ input }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NotBlank
+  - question: 'Which placeholder is commonly available in validation error messages to represent the corresponding form field label?'
+    answers:
+      - { value: '`{{ label }}`', correct: true }
+      - { value: '`{{ field }}`', correct: false }
+      - { value: '`{{ name }}`', correct: false }
+      - { value: '`{{ formLabel }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NotBlank
+  - question: 'What is the purpose of `#[MapQueryString]` in a controller method signature?'
+    answers:
+      - { value: 'To automatically map query string parameters to a DTO and validate it.', correct: true }
+      - { value: 'To map query string parameters to individual method arguments.', correct: false }
+      - { value: 'To define validation rules for query string parameters directly.', correct: false }
+      - { value: 'To serialize a DTO into a query string.', correct: false }
+    help: |
+      https://symfony.com/doc/current/controller
+  - question: 'How can you specify validation groups for a DTO mapped with `#[MapQueryString]`?'
+    answers:
+      - { value: '`#[MapQueryString(validationGroups: [''group1'', ''group2''])]`', correct: true }
+      - { value: '`#[MapQueryString(groups: [''group1'', ''group2''])]`', correct: false }
+      - { value: '`#[MapQueryString(validate: [''group1'', ''group2''])]`', correct: false }
+      - { value: '`#[MapQueryString(validation: [''group1'', ''group2''])]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/controller
+  - question: 'How can you customize the HTTP status code returned on validation failure for a `#[MapQueryString]` DTO?'
+    answers:
+      - { value: '`#[MapQueryString(validationFailedStatusCode: Response::HTTP_UNPROCESSABLE_ENTITY)]`', correct: true }
+      - { value: '`#[MapQueryString(statusCode: 422)]`', correct: false }
+      - { value: '`#[MapQueryString(onFail: 422)]`', correct: false }
+      - { value: '`#[MapQueryString(errorStatusCode: Response::HTTP_BAD_REQUEST)]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/controller
+  - question: 'What is the purpose of the `Week` constraint?'
+    answers:
+      - { value: 'To validate that a value is a valid week number (e.g., "2023-W01").', correct: true }
+      - { value: 'To check if a date falls within a specific week.', correct: false }
+      - { value: 'To convert a date to a week number.', correct: false }
+      - { value: 'To validate a date based on its week of the year.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Week
+  - question: 'Which constraint is used to validate that a value is a valid `Json` string?'
+    answers:
+      - { value: '`#[Assert\Json]`', correct: true }
+      - { value: '`#[Assert\IsJson]`', correct: false }
+      - { value: '`#[Assert\JsonString]`', correct: false }
+      - { value: '`#[Assert\ValidJson]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Json
+  - question: 'What is the purpose of the `UniqueEntity` constraint (commonly used with Doctrine entities)?'
+    answers:
+      - { value: 'To ensure that a specific field or combination of fields is unique in the database.', correct: false }
+      - { value: 'To validate that an entity is unique within a collection.', correct: false }
+      - { value: 'To prevent duplicate entity submissions.', correct: false }
+      - { value: 'This constraint is part of Doctrine, not the core Symfony Validator component.', correct: true }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/UniqueEntity
+  - question: 'Which constraint is used to validate that a collection contains only unique elements?'
+    answers:
+      - { value: '`#[Assert\Unique]`', correct: true }
+      - { value: '`#[Assert\NoDuplicates]`', correct: false }
+      - { value: '`#[Assert\Distinct]`', correct: false }
+      - { value: '`#[Assert\CollectionUnique]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Unique
+  - question: 'What is the purpose of the `Callback` constraint when applied to a class (not a property or getter)?'
+    answers:
+      - { value: 'To perform class-level validation logic that depends on multiple properties or complex business rules.', correct: true }
+      - { value: 'To define a global validation function for all objects of that class.', correct: false }
+      - { value: 'To execute a method on the validated object after all property validations.', correct: false }
+      - { value: 'To register a custom validator service for the class.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/custom_constraint
+  - question: 'When defining a class-level `Callback` constraint, what is the signature of the method that performs the validation?'
+    answers:
+      - { value: '`public function validate(ExecutionContextInterface $context): void`', correct: true }
+      - { value: '`public function validateClass(object $object, ExecutionContextInterface $context): void`', correct: false }
+      - { value: '`public static function validate(object $object, ExecutionContextInterface $context): void`', correct: false }
+      - { value: '`public function __invoke(ExecutionContextInterface $context): void`', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/metadata
+  - question: 'What is the purpose of `ExecutionContextInterface` in a custom validator or callback?'
+    answers:
+      - { value: 'It provides access to the validation context, allowing you to add violations, get the root object, or access the validator.', correct: true }
+      - { value: 'It defines the execution order of validation constraints.', correct: false }
+      - { value: 'It is an interface for executing external validation services.', correct: false }
+      - { value: 'It manages the lifecycle of the validation process.', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/metadata
+  - question: 'How do you get the root object being validated from `ExecutionContextInterface`?'
+    answers:
+      - { value: '`$context->getRoot()`', correct: true }
+      - { value: '`$context->getObject()`', correct: false }
+      - { value: '`$context->getValue()`', correct: false }
+      - { value: '`$context->getValidatedObject()`', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/metadata
+  - question: 'How do you get the current validated value from `ExecutionContextInterface`?'
+    answers:
+      - { value: '`$context->getValue()`', correct: true }
+      - { value: '`$context->getSubject()`', correct: false }
+      - { value: '`$context->getCurrentValue()`', correct: false }
+      - { value: '`$context->getData()`', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/metadata
+  - question: 'What is the purpose of `atPath()` when building a violation?'
+    answers:
+      - { value: 'To specify the property path relative to the current validated element where the violation occurred.', correct: true }
+      - { value: 'To set the absolute path of the violation.', correct: false }
+      - { value: 'To define the file path of the validation error.', correct: false }
+      - { value: 'To indicate the path to the constraint that failed.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/custom_constraint
+  - question: 'When should you throw an `UnexpectedTypeException` in a custom constraint validator?'
+    answers:
+      - { value: 'If the `Constraint` object passed to `validate()` is not an instance of your custom constraint class.', correct: true }
+      - { value: 'If the `$value` being validated is not of the expected type.', correct: false }
+      - { value: 'If an unexpected error occurs during validation.', correct: false }
+      - { value: 'If the validator is called with invalid arguments.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/custom_constraint
+  - question: 'When should you throw an `UnexpectedValueException` in a custom constraint validator?'
+    answers:
+      - { value: 'If the `$value` being validated is not of the expected type that your validator can handle.', correct: true }
+      - { value: 'If the `Constraint` object passed to `validate()` is not an instance of your custom constraint class.', correct: false }
+      - { value: 'If the validated value is `null` or empty.', correct: false }
+      - { value: 'If the validation logic itself encounters an error.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/custom_constraint
+  - question: 'What is the recommended way to handle `null` or empty values in a custom constraint validator?'
+    answers:
+      - { value: 'Ignore them and let other constraints (e.g., `NotBlank`, `NotNull`) handle them.', correct: true }
+      - { value: 'Always add a violation if the value is `null` or empty.', correct: false }
+      - { value: 'Throw an `UnexpectedValueException`.', correct: false }
+      - { value: 'Return `false` from the `validate()` method.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/custom_constraint
+  - question: 'Which of the following is a valid way to define a validation group for a property using PHP attributes?'
+    answers:
+      - { value: '`#[Assert\NotBlank(groups: [''registration''])]`', correct: true }
+      - { value: '`#[Assert\NotBlank(group: ''registration'')]`', correct: false }
+      - { value: '`#[Assert\NotBlank(validationGroup: ''registration'')]`', correct: false }
+      - { value: '`#[Assert\NotBlank(for: ''registration'')]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/groups
+  - question: 'How do you define a validation group for a property using YAML?'
+    answers:
+      - { value: |
+          ```yaml
+          App\Entity\User:
+              properties:
+                  email:
+                      - Email: { groups: [registration] }
+          ```
+        , correct: true }
+      - { value: |
+          ```yaml
+          App\Entity\User:
+              properties:
+                  email:
+                      - Email:
+                          group: registration
+          ```
+        , correct: false }
+      - { value: |
+          ```yaml
+          App\Entity\User:
+              properties:
+                  email:
+                      - Email: registration
+          ```
+        , correct: false }
+      - { value: |
+          ```yaml
+          App\Entity\User:
+              email:
+                  Email: { groups: [registration] }
+          ```
+        , correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/groups
+  - question: 'What is the "Default" validation group?'
+    answers:
+      - { value: 'The group that is always validated if no specific groups are provided.', correct: true }
+      - { value: 'A group that contains all constraints by default.', correct: false }
+      - { value: 'A group that is only validated if no other groups are defined.', correct: false }
+      - { value: 'A special group that cannot be overridden.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/groups
+  - question: 'When using a nested array for `GroupSequenceProviderInterface` (e.g., `[[''User'', ''Premium''], ''Api'']`), what does it imply?'
+    answers:
+      - { value: 'All groups within an inner array are validated, and if any fail, the next inner array (or single group) in the sequence is skipped.', correct: true }
+      - { value: 'Only one group from each inner array is validated.', correct: false }
+      - { value: 'It defines a hierarchy of validation groups.', correct: false }
+      - { value: 'It means all groups are validated, but violations are reported per inner array.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/sequence_provider
+  - question: 'What is the primary purpose of validation scopes in Symfony (though less commonly used directly)?'
+    answers:
+      - { value: 'To define different validation contexts for the same object, often related to different data representations.', correct: true }
+      - { value: 'To limit the scope of validation to specific parts of an application.', correct: false }
+      - { value: 'To control the visibility of validation constraints.', correct: false }
+      - { value: 'To define global validation rules.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/validation_scopes
+  - question: 'How can you apply a constraint to a getter method using PHP attributes?'
+    answers:
+      - { value: '`#[Assert\IsTrue(message: ''The password cannot match your first name'')] public function isPasswordSafe(): bool`', correct: true }
+      - { value: '`#[Assert\Getter(method: ''isPasswordSafe'')]`', correct: false }
+      - { value: '`#[Assert\MethodConstraint(''isPasswordSafe'')]`', correct: false }
+      - { value: '`#[Assert\ValidateMethod(''isPasswordSafe'')]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'What is the role of `ClassMetadata` when defining validation constraints programmatically?'
+    answers:
+      - { value: 'It is used to add property, getter, and class-level constraints to a class.', correct: true }
+      - { value: 'It stores metadata about the class, but not validation rules.', correct: false }
+      - { value: 'It is a service that loads validation configurations.', correct: false }
+      - { value: 'It defines the structure of the validation YAML/XML files.', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/metadata
+  - question: 'How do you add a property constraint using `ClassMetadata`?'
+    answers:
+      - { value: '`$metadata->addPropertyConstraint(''propertyName'', new Assert\NotBlank());`', correct: true }
+      - { value: '`$metadata->addConstraint(''propertyName'', new Assert\NotBlank());`', correct: false }
+      - { value: '`$metadata->setPropertyConstraint(''propertyName'', new Assert\NotBlank());`', correct: false }
+      - { value: '`$metadata->setConstraint(''propertyName'', new Assert\NotBlank());`', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/metadata
+  - question: 'How do you add a getter constraint using `ClassMetadata`?'
+    answers:
+      - { value: '`$metadata->addGetterConstraint(''getterName'', new Assert\IsTrue());`', correct: true }
+      - { value: '`$metadata->addMethodConstraint(''getterName'', new Assert\IsTrue());`', correct: false }
+      - { value: '`$metadata->setGetterConstraint(''getterName'', new Assert\IsTrue());`', correct: false }
+      - { value: '`$metadata->addConstraintToGetter(''getterName'', new Assert\IsTrue());`', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/metadata
+  - question: 'How do you set a group sequence for a class using `ClassMetadata`?'
+    answers:
+      - { value: '`$metadata->setGroupSequence([''Group1'', ''Group2'']);`', correct: true }
+      - { value: '`$metadata->addGroupSequence([''Group1'', ''Group2'']);`', correct: false }
+      - { value: '`$metadata->setValidationGroups([''Group1'', ''Group2'']);`', correct: false }
+      - { value: '`$metadata->setGroups([''Group1'', ''Group2'']);`', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/sequence_provider
+  - question: 'What is the purpose of the `NotNull` constraint?'
+    answers:
+      - { value: 'To validate that a value is not `null`.', correct: true }
+      - { value: 'To validate that a value is not an empty string.', correct: false }
+      - { value: 'To validate that a value is not `false`.', correct: false }
+      - { value: 'To validate that a value is an object.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NotNull
+  - question: 'What is the purpose of the `IsNull` constraint?'
+    answers:
+      - { value: 'To validate that a value is `null`.', correct: true }
+      - { value: 'To validate that a value is an empty string.', correct: false }
+      - { value: 'To validate that a value is `false`.', correct: false }
+      - { value: 'To validate that a value is not an object.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/IsNull
+  - question: 'What is the purpose of the `Blank` constraint?'
+    answers:
+      - { value: 'To validate that a value is blank (empty string, `null`, or whitespace only).', correct: true }
+      - { value: 'To validate that a value is an empty array.', correct: false }
+      - { value: 'To validate that a value is `false`.', correct: false }
+      - { value: 'To validate that a value is not present.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Blank
+  - question: 'Which of the following is a comparison constraint?'
+    answers:
+      - { value: '`#[Assert\GreaterThan]`', correct: true }
+      - { value: '`#[Assert\Length]`', correct: false }
+      - { value: '`#[Assert\Email]`', correct: false }
+      - { value: '`#[Assert\Type]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints
+  - question: 'Which of the following is a string constraint?'
+    answers:
+      - { value: '`#[Assert\Length]`', correct: true }
+      - { value: '`#[Assert\Range]`', correct: false }
+      - { value: '`#[Assert\Count]`', correct: false }
+      - { value: '`#[Assert\Positive]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints
+  - question: 'Which of the following is a number constraint?'
+    answers:
+      - { value: '`#[Assert\Positive]`', correct: true }
+      - { value: '`#[Assert\Length]`', correct: false }
+      - { value: '`#[Assert\Email]`', correct: false }
+      - { value: '`#[Assert\Date]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints
+  - question: 'Which of the following is a date constraint?'
+    answers:
+      - { value: '`#[Assert\DateTime]`', correct: true }
+      - { value: '`#[Assert\Length]`', correct: false }
+      - { value: '`#[Assert\Regex]`', correct: false }
+      - { value: '`#[Assert\Count]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints
+  - question: 'What is the purpose of the `LazyValidator`?'
+    answers:
+      - { value: 'It allows for lazy loading of validation metadata, improving performance by only loading what''s needed.', correct: false }
+      - { value: 'It delays the execution of validation until absolutely necessary.', correct: false }
+      - { value: 'It is a deprecated validator implementation.', correct: false }
+      - { value: 'It is not a standard Symfony Validator component concept.', correct: true }
+    help: |
+      https://symfony.com/doc/current/components/validator
+  - question: 'What is the role of the `ValidatorBuilder`?'
+    answers:
+      - { value: 'It provides a fluent interface for creating and configuring a `Validator` instance.', correct: true }
+      - { value: 'It builds the validation cache.', correct: false }
+      - { value: 'It generates validation constraints dynamically.', correct: false }
+      - { value: 'It is responsible for compiling validation rules.', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator
+  - question: 'How can you add a custom constraint mapping (e.g., XML or YAML) to the `ValidatorBuilder`?'
+    answers:
+      - { value: '`$builder->addXmlMapping(''path/to/mapping.xml'')` or `$builder->addYamlMapping(''path/to/mapping.yaml'')`', correct: true }
+      - { value: '`$builder->addMapping(''path/to/mapping.xml'', ''xml'')`', correct: false }
+      - { value: '`$builder->loadMapping(''path/to/mapping.xml'')`', correct: false }
+      - { value: '`$builder->setMapping(''path/to/mapping.xml'')`', correct: false }
+    help: |
+      https://symfony.com/doc/current/components/validator/resources
+  - question: 'What is the purpose of the `metadata` option in a constraint?'
+    answers:
+      - { value: 'It is not a standard option for built-in constraints; it might be a custom option for specific constraints.', correct: true }
+      - { value: 'To provide additional metadata about the validated property.', correct: false }
+      - { value: 'To define the validation metadata source (e.g., annotations, YAML).', correct: false }
+      - { value: 'To store information about the constraint itself.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints
+  - question: 'Can you apply validation constraints to private properties in Symfony?'
+    answers:
+      - { value: 'Yes, Symfony can access private properties for validation using reflection.', correct: true }
+      - { value: 'No, only public or protected properties can be validated.', correct: false }
+      - { value: 'Only if getters and setters are provided for the private properties.', correct: false }
+      - { value: 'Only with specific configuration in YAML or XML.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'What is the purpose of the `allowNull` option in the `NotBlank` constraint?'
+    answers:
+      - { value: 'It determines whether `null` is considered a blank value. If `true`, `null` is valid; if `false` (default), `null` is invalid.', correct: true }
+      - { value: 'It allows the property to be `null` without triggering any validation.', correct: false }
+      - { value: 'It specifies that the property can accept `null` values.', correct: false }
+      - { value: 'It is used to explicitly set the value to `null` if it''s blank.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NotBlank
+  - question: 'What is the purpose of the `normalizer` option in some constraints (e.g., `NotBlank`, `Email`)?'
+    answers:
+      - { value: 'It allows you to apply a PHP callable to normalize the value before validation.', correct: true }
+      - { value: 'It normalizes the error message for display.', correct: false }
+      - { value: 'It converts the value to a standard format for validation.', correct: false }
+      - { value: 'It is used to normalize the property path.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NotBlank
+  - question: 'How can you validate an object that is not a Doctrine entity?'
+    answers:
+      - { value: 'By applying validation constraints using PHP attributes, YAML, XML, or programmatic metadata loading.', correct: true }
+      - { value: 'Only Doctrine entities can be validated by Symfony.', correct: false }
+      - { value: 'You must convert it to a Doctrine entity first.', correct: false }
+      - { value: 'By using a custom validator service for the object.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'What is the purpose of the `ConstraintViolation` object?'
+    answers:
+      - { value: 'It represents a single validation error, containing the error message, property path, and invalid value.', correct: true }
+      - { value: 'It defines a validation rule.', correct: false }
+      - { value: 'It is a list of all validation constraints.', correct: false }
+      - { value: 'It is an object that helps build custom constraints.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'How do you get the error message from a `ConstraintViolation` object?'
+    answers:
+      - { value: '`$violation->getMessage()`', correct: true }
+      - { value: '`$violation->getErrorMessage()`', correct: false }
+      - { value: '`$violation->error`', correct: false }
+      - { value: '`$violation->message`', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'How do you get the property path from a `ConstraintViolation` object?'
+    answers:
+      - { value: '`$violation->getPropertyPath()`', correct: true }
+      - { value: '`$violation->getPath()`', correct: false }
+      - { value: '`$violation->field`', correct: false }
+      - { value: '`$violation->propertyPath`', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'How do you get the invalid value from a `ConstraintViolation` object?'
+    answers:
+      - { value: '`$violation->getInvalidValue()`', correct: true }
+      - { value: '`$violation->getValue()`', correct: false }
+      - { value: '`$violation->invalid`', correct: false }
+      - { value: '`$violation->data`', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'What is the purpose of the `groups` option in a constraint definition?'
+    answers:
+      - { value: 'To assign the constraint to one or more validation groups.', correct: true }
+      - { value: 'To define the default validation group for the constraint.', correct: false }
+      - { value: 'To specify the order of validation groups.', correct: false }
+      - { value: 'To enable or disable the constraint based on a group.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/groups
+  - question: 'Can a single property have multiple validation constraints applied to it?'
+    answers:
+      - { value: 'Yes, a property can have multiple constraints, and all will be evaluated.', correct: true }
+      - { value: 'No, only one constraint can be applied per property.', correct: false }
+      - { value: 'Only if they belong to different validation groups.', correct: false }
+      - { value: 'Only if they are of the same constraint type.', correct: false }
+    help: |
+      https://symfony.com/doc/current/book/validation
+  - question: 'What is the purpose of the `allowEmptyString` option in some constraints (e.g., `Length`)?'
+    answers:
+      - { value: 'It determines whether an empty string is considered valid for the constraint. If `true`, an empty string is valid; if `false` (default), it is invalid.', correct: true }
+      - { value: 'It allows the property to be an empty string without triggering any validation.', correct: false }
+      - { value: 'It specifies that the property can accept empty string values.', correct: false }
+      - { value: 'It is used to explicitly set the value to an empty string if it''s blank.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Length
+  - question: 'What is the purpose of the `min` option in the `Length` constraint?'
+    answers:
+      - { value: 'To define the minimum allowed length of the string.', correct: true }
+      - { value: 'To set the minimum number of characters required.', correct: false }
+      - { value: 'To specify the minimum value for a numeric length.', correct: false }
+      - { value: 'To indicate the minimum number of words.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Length
+  - question: 'What is the purpose of the `max` option in the `Length` constraint?'
+    answers:
+      - { value: 'To define the maximum allowed length of the string.', correct: true }
+      - { value: 'To set the maximum number of characters allowed.', correct: false }
+      - { value: 'To specify the maximum value for a numeric length.', correct: false }
+      - { value: 'To indicate the maximum number of words.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Length
+  - question: 'Which constraint is used to validate that a value is a valid phone number?'
+    answers:
+      - { value: '`#[Assert\PhoneNumber]` (requires `symfony/validator` and `libphonenumber-for-php`)', correct: true }
+      - { value: '`#[Assert\Phone]`', correct: false }
+      - { value: '`#[Assert\MobileNumber]`', correct: false }
+      - { value: '`#[Assert\Telephone]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/PhoneNumber
+  - question: 'What is the purpose of the `Collection` constraint''s `fields` option?'
+    answers:
+      - { value: 'To define the validation constraints for specific keys within the array being validated.', correct: true }
+      - { value: 'To list all allowed keys in the array.', correct: false }
+      - { value: 'To specify which fields are required in the array.', correct: false }
+      - { value: 'To map array keys to object properties.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/raw_values
+  - question: 'What is the purpose of the `allowExtraFields` option in the `Collection` constraint?'
+    answers:
+      - { value: 'If `true`, extra fields not defined in `fields` are allowed; if `false` (default), they cause a violation.', correct: true }
+      - { value: 'It allows the collection to have more fields than specified.', correct: false }
+      - { value: 'It enables dynamic field validation.', correct: false }
+      - { value: 'It ignores fields that are not explicitly defined.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/raw_values
+  - question: 'What is the purpose of the `allowMissingFields` option in the `Collection` constraint?'
+    answers:
+      - { value: 'If `true`, missing fields not defined in `fields` are allowed; if `false` (default), they cause a violation.', correct: true }
+      - { value: 'It allows the collection to have fewer fields than specified.', correct: false }
+      - { value: 'It enables optional field validation.', correct: false }
+      - { value: 'It ignores fields that are not present.', correct: false }
+    help: |
+      https://symfony.com/doc/current/validation/raw_values
+  - question: 'Which constraint is used to validate that a value is a valid HTML color code (e.g., "#RRGGBB")?'
+    answers:
+      - { value: '`#[Assert\CssColor]`', correct: true }
+      - { value: '`#[Assert\HtmlColor]`', correct: false }
+      - { value: '`#[Assert\HexColor]`', correct: false }
+      - { value: '`#[Assert\ColorCode]`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/CssColor
+  - question: 'What is the purpose of the `Time` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed when the underlying data is not a valid time.', correct: true }
+      - { value: 'Specifies the format of the time string.', correct: false }
+      - { value: 'Sets the default time for validation.', correct: false }
+      - { value: 'Provides a hint for time input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Time
+  - question: 'What is the purpose of the `Date` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed when the underlying data is not a valid date.', correct: true }
+      - { value: 'Specifies the format of the date string.', correct: false }
+      - { value: 'Sets the default date for validation.', correct: false }
+      - { value: 'Provides a hint for date input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Date
+  - question: 'What is the purpose of the `DateTime` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed when the underlying data is not a valid datetime.', correct: true }
+      - { value: 'Specifies the format of the datetime string.', correct: false }
+      - { value: 'Sets the default datetime for validation.', correct: false }
+      - { value: 'Provides a hint for datetime input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/DateTime
+  - question: 'Which of the following is a valid placeholder for the `DateTime` constraint''s `message` option (introduced in Symfony 7.3)?'
+    answers:
+      - { value: '`{{ format }}`', correct: true }
+      - { value: '`{{ datetimeFormat }}`', correct: false }
+      - { value: '`{{ expectedFormat }}`', correct: false }
+      - { value: '`{{ pattern }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/DateTime
+  - question: 'What is the purpose of the `Email` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the underlying data is not a valid email address.', correct: true }
+      - { value: 'Specifies the format of the email address.', correct: false }
+      - { value: 'Sets the default email address for validation.', correct: false }
+      - { value: 'Provides a hint for email input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Email
+  - question: 'What is the purpose of the `Regex` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the custom error message displayed to the user when the validation fails.', correct: true }
+      - { value: 'Specifies the regular expression pattern.', correct: false }
+      - { value: 'Sets the default message for regex errors.', correct: false }
+      - { value: 'Provides a hint for regex input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Regex
+  - question: 'Which placeholder is commonly available in `Regex` constraint''s `message` option to represent the expected matching pattern?'
+    answers:
+      - { value: '`{{ pattern }}`', correct: true }
+      - { value: '`{{ regex }}`', correct: false }
+      - { value: '`{{ expectedPattern }}`', correct: false }
+      - { value: '`{{ format }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Regex
+  - question: 'What is the purpose of the `Url` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the underlying data is not a valid URL.', correct: true }
+      - { value: 'Specifies the protocol for the URL.', correct: false }
+      - { value: 'Sets the default URL for validation.', correct: false }
+      - { value: 'Provides a hint for URL input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Url
+  - question: 'What is the purpose of the `Ip` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the underlying data is not a valid IP address.', correct: true }
+      - { value: 'Specifies the IP version (IPv4 or IPv6).', correct: false }
+      - { value: 'Sets the default IP address for validation.', correct: false }
+      - { value: 'Provides a hint for IP input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Ip
+  - question: 'What is the purpose of the `Uuid` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the underlying data is not a valid UUID.', correct: true }
+      - { value: 'Specifies the UUID version.', correct: false }
+      - { value: 'Sets the default UUID for validation.', correct: false }
+      - { value: 'Provides a hint for UUID input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Uuid
+  - question: 'What is the purpose of the `Ulid` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the underlying data is not a valid ULID.', correct: true }
+      - { value: 'Specifies the ULID format.', correct: false }
+      - { value: 'Sets the default ULID for validation.', correct: false }
+      - { value: 'Provides a hint for ULID input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Ulid
+  - question: 'What is the purpose of the `Length` constraint''s `minMessage` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the string is too short.', correct: true }
+      - { value: 'Sets the minimum length of the string.', correct: false }
+      - { value: 'Provides a default message for minimum length errors.', correct: false }
+      - { value: 'Specifies the message for when the length is exactly the minimum.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Length
+  - question: 'What is the purpose of the `Length` constraint''s `maxMessage` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the string is too long.', correct: true }
+      - { value: 'Sets the maximum length of the string.', correct: false }
+      - { value: 'Provides a default message for maximum length errors.', correct: false }
+      - { value: 'Specifies the message for when the length is exactly the maximum.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Length
+  - question: 'Which placeholder is commonly available in `Length` constraint''s `minMessage` and `maxMessage` options to represent the current length?'
+    answers:
+      - { value: '`{{ value }}`', correct: true }
+      - { value: '`{{ length }}`', correct: false }
+      - { value: '`{{ currentLength }}`', correct: false }
+      - { value: '`{{ count }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Length
+  - question: 'Which placeholder is commonly available in `Length` constraint''s `minMessage` to represent the minimum required length?'
+    answers:
+      - { value: '`{{ limit }}`', correct: true }
+      - { value: '`{{ min }}`', correct: false }
+      - { value: '`{{ minLength }}`', correct: false }
+      - { value: '`{{ required }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Length
+  - question: 'Which placeholder is commonly available in `Length` constraint''s `maxMessage` to represent the maximum allowed length?'
+    answers:
+      - { value: '`{{ limit }}`', correct: true }
+      - { value: '`{{ max }}`', correct: false }
+      - { value: '`{{ maxLength }}`', correct: false }
+      - { value: '`{{ allowed }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Length
+  - question: 'What is the purpose of the `Range` constraint''s `minMessage` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is too low.', correct: true }
+      - { value: 'Sets the minimum value for the range.', correct: false }
+      - { value: 'Provides a default message for minimum range errors.', correct: false }
+      - { value: 'Specifies the message for when the value is exactly the minimum.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Range
+  - question: 'What is the purpose of the `Range` constraint''s `maxMessage` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is too high.', correct: true }
+      - { value: 'Sets the maximum value for the range.', correct: false }
+      - { value: 'Provides a default message for maximum range errors.', correct: false }
+      - { value: 'Specifies the message for when the value is exactly the maximum.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Range
+  - question: 'Which placeholder is commonly available in `Range` constraint''s `minMessage` and `maxMessage` options to represent the current value?'
+    answers:
+      - { value: '`{{ value }}`', correct: true }
+      - { value: '`{{ current }}`', correct: false }
+      - { value: '`{{ number }}`', correct: false }
+      - { value: '`{{ data }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Range
+  - question: 'Which placeholder is commonly available in `Range` constraint''s `minMessage` to represent the minimum allowed value?'
+    answers:
+      - { value: '`{{ limit }}`', correct: true }
+      - { value: '`{{ min }}`', correct: false }
+      - { value: '`{{ minValue }}`', correct: false }
+      - { value: '`{{ lowerBound }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Range
+  - question: 'Which placeholder is commonly available in `Range` constraint''s `maxMessage` to represent the maximum allowed value?'
+    answers:
+      - { value: '`{{ limit }}`', correct: true }
+      - { value: '`{{ max }}`', correct: false }
+      - { value: '`{{ maxValue }}`', correct: false }
+      - { value: '`{{ upperBound }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Range
+  - question: 'What is the purpose of the `Count` constraint''s `minMessage` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the collection has too few elements.', correct: true }
+      - { value: 'Sets the minimum number of elements required.', correct: false }
+      - { value: 'Provides a default message for minimum count errors.', correct: false }
+      - { value: 'Specifies the message for when the count is exactly the minimum.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Count
+  - question: 'What is the purpose of the `Count` constraint''s `maxMessage` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the collection has too many elements.', correct: true }
+      - { value: 'Sets the maximum number of elements allowed.', correct: false }
+      - { value: 'Provides a default message for maximum count errors.', correct: false }
+      - { value: 'Specifies the message for when the count is exactly the maximum.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Count
+  - question: 'Which placeholder is commonly available in `Count` constraint''s `minMessage` and `maxMessage` options to represent the current count?'
+    answers:
+      - { value: '`{{ count }}`', correct: true }
+      - { value: '`{{ value }}`', correct: false }
+      - { value: '`{{ currentCount }}`', correct: false }
+      - { value: '`{{ size }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Count
+  - question: 'Which placeholder is commonly available in `Count` constraint''s `minMessage` to represent the minimum required count?'
+    answers:
+      - { value: '`{{ limit }}`', correct: true }
+      - { value: '`{{ min }}`', correct: false }
+      - { value: '`{{ minCount }}`', correct: false }
+      - { value: '`{{ requiredCount }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Count
+  - question: 'Which placeholder is commonly available in `Count` constraint''s `maxMessage` to represent the maximum allowed count?'
+    answers:
+      - { value: '`{{ limit }}`', correct: true }
+      - { value: '`{{ max }}`', correct: false }
+      - { value: '`{{ maxCount }}`', correct: false }
+      - { value: '`{{ allowedCount }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Count
+  - question: 'What is the purpose of the `File` constraint''s `maxSizeMessage` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the file is too large.', correct: true }
+      - { value: 'Sets the maximum allowed file size.', correct: false }
+      - { value: 'Provides a default message for maximum size errors.', correct: false }
+      - { value: 'Specifies the message for when the file size is exactly the maximum.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/File
+  - question: 'What is the purpose of the `File` constraint''s `mimeTypesMessage` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the file''s MIME type is not allowed.', correct: true }
+      - { value: 'Sets the allowed MIME types for the file.', correct: false }
+      - { value: 'Provides a default message for MIME type errors.', correct: false }
+      - { value: 'Specifies the message for when the MIME type is exactly one of the allowed types.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/File
+  - question: 'Which placeholder is commonly available in `File` constraint''s `maxSizeMessage` to represent the current file size?'
+    answers:
+      - { value: '`{{ size }}`', correct: true }
+      - { value: '`{{ value }}`', correct: false }
+      - { value: '`{{ currentSize }}`', correct: false }
+      - { value: '`{{ fileSize }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/File
+  - question: 'Which placeholder is commonly available in `File` constraint''s `maxSizeMessage` to represent the maximum allowed file size?'
+    answers:
+      - { value: '`{{ limit }}`', correct: true }
+      - { value: '`{{ max }}`', correct: false }
+      - { value: '`{{ maxSize }}`', correct: false }
+      - { value: '`{{ allowedSize }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/File
+  - question: 'Which placeholder is commonly available in `File` constraint''s `mimeTypesMessage` to represent the current MIME type?'
+    answers:
+      - { value: '`{{ type }}`', correct: true }
+      - { value: '`{{ mimeType }}`', correct: false }
+      - { value: '`{{ value }}`', correct: false }
+      - { value: '`{{ currentType }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/File
+  - question: 'Which placeholder is commonly available in `File` constraint''s `mimeTypesMessage` to represent the allowed MIME types?'
+    answers:
+      - { value: '`{{ types }}`', correct: true }
+      - { value: '`{{ allowedTypes }}`', correct: false }
+      - { value: '`{{ mimeTypes }}`', correct: false }
+      - { value: '`{{ format }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/File
+  - question: 'What is the purpose of the `Image` constraint''s `maxHeightMessage` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the image height is too large.', correct: true }
+      - { value: 'Sets the maximum allowed image height.', correct: false }
+      - { value: 'Provides a default message for maximum height errors.', correct: false }
+      - { value: 'Specifies the message for when the image height is exactly the maximum.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Image
+  - question: 'What is the purpose of the `Image` constraint''s `maxWidthMessage` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the image width is too large.', correct: true }
+      - { value: 'Sets the maximum allowed image width.', correct: false }
+      - { value: 'Provides a default message for maximum width errors.', correct: false }
+      - { value: 'Specifies the message for when the image width is exactly the maximum.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Image
+  - question: 'What is the purpose of the `Image` constraint''s `minHeightMessage` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the image height is too small.', correct: true }
+      - { value: 'Sets the minimum allowed image height.', correct: false }
+      - { value: 'Provides a default message for minimum height errors.', correct: false }
+      - { value: 'Specifies the message for when the image height is exactly the minimum.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Image
+  - question: 'What is the purpose of the `Image` constraint''s `minWidthMessage` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the image width is too small.', correct: true }
+      - { value: 'Sets the minimum allowed image width.', correct: false }
+      - { value: 'Provides a default message for minimum width errors.', correct: false }
+      - { value: 'Specifies the message for when the image width is exactly the minimum.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Image
+  - question: 'Which placeholder is commonly available in `Image` constraint''s dimension messages to represent the current dimension?'
+    answers:
+      - { value: '`{{ width }}` or `{{ height }}`', correct: true }
+      - { value: '`{{ value }}`', correct: false }
+      - { value: '`{{ dimension }}`', correct: false }
+      - { value: '`{{ size }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Image
+  - question: 'Which placeholder is commonly available in `Image` constraint''s dimension messages to represent the allowed dimension limit?'
+    answers:
+      - { value: '`{{ limit }}`', correct: true }
+      - { value: '`{{ max }}` or `{{ min }}`', correct: false }
+      - { value: '`{{ allowed }}`', correct: false }
+      - { value: '`{{ boundary }}`', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Image
+  - question: 'What is the purpose of the `Json` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid JSON string.', correct: true }
+      - { value: 'Specifies the JSON schema to validate against.', correct: false }
+      - { value: 'Sets the default JSON string for validation.', correct: false }
+      - { value: 'Provides a hint for JSON input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Json
+  - question: 'What is the purpose of the `Yaml` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid YAML string.', correct: true }
+      - { value: 'Specifies the YAML schema to validate against.', correct: false }
+      - { value: 'Sets the default YAML string for validation.', correct: false }
+      - { value: 'Provides a hint for YAML input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Yaml
+  - question: 'What is the purpose of the `Expression` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the expression evaluates to `false`.', correct: true }
+      - { value: 'Specifies the expression to evaluate.', correct: false }
+      - { value: 'Sets the default message for expression errors.', correct: false }
+      - { value: 'Provides a hint for expression input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Expression
+  - question: 'What is the purpose of the `NotCompromisedPassword` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the password has been found in a data breach.', correct: true }
+      - { value: 'Specifies the API endpoint for checking compromised passwords.', correct: false }
+      - { value: 'Sets the default message for compromised password errors.', correct: false }
+      - { value: 'Provides a hint for password input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NotCompromisedPassword
+  - question: 'What is the purpose of the `PasswordStrength` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the password does not meet the required strength.', correct: true }
+      - { value: 'Specifies the minimum password strength level.', correct: false }
+      - { value: 'Sets the default message for password strength errors.', correct: false }
+      - { value: 'Provides a hint for password strength requirements.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/PasswordStrength
+  - question: 'What is the purpose of the `UserPassword` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the provided password does not match the current user''s password.', correct: true }
+      - { value: 'Specifies the user to compare the password against.', correct: false }
+      - { value: 'Sets the default message for user password errors.', correct: false }
+      - { value: 'Provides a hint for user password input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/UserPassword
+  - question: 'What is the purpose of the `CardScheme` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the credit card number is not valid for the specified scheme(s).', correct: true }
+      - { value: 'Specifies the allowed card schemes.', correct: false }
+      - { value: 'Sets the default message for card scheme errors.', correct: false }
+      - { value: 'Provides a hint for credit card input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/CardScheme
+  - question: 'What is the purpose of the `DivisibleBy` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not divisible by the given number.', correct: true }
+      - { value: 'Specifies the divisor.', correct: false }
+      - { value: 'Sets the default message for divisibility errors.', correct: false }
+      - { value: 'Provides a hint for divisible input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/DivisibleBy
+  - question: 'What is the purpose of the `Isbn` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid ISBN.', correct: true }
+      - { value: 'Specifies the ISBN version (ISBN-10 or ISBN-13).', correct: false }
+      - { value: 'Sets the default message for ISBN errors.', correct: false }
+      - { value: 'Provides a hint for ISBN input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Isbn
+  - question: 'What is the purpose of the `Issn` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid ISSN.', correct: true }
+      - { value: 'Specifies the ISSN format.', correct: false }
+      - { value: 'Sets the default message for ISSN errors.', correct: false }
+      - { value: 'Provides a hint for ISSN input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Issn
+  - question: 'What is the purpose of the `Iban` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid IBAN.', correct: true }
+      - { value: 'Specifies the IBAN country code.', correct: false }
+      - { value: 'Sets the default message for IBAN errors.', correct: false }
+      - { value: 'Provides a hint for IBAN input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Iban
+  - question: 'What is the purpose of the `Bic` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid BIC/SWIFT code.', correct: true }
+      - { value: 'Specifies the BIC format.', correct: false }
+      - { value: 'Sets the default message for BIC errors.', correct: false }
+      - { value: 'Provides a hint for BIC input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Bic
+  - question: 'What is the purpose of the `Timezone` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid timezone identifier.', correct: true }
+      - { value: 'Specifies the timezone format.', correct: false }
+      - { value: 'Sets the default message for timezone errors.', correct: false }
+      - { value: 'Provides a hint for timezone input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Timezone
+  - question: 'What is the purpose of the `Language` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid language code.', correct: true }
+      - { value: 'Specifies the language format.', correct: false }
+      - { value: 'Sets the default message for language errors.', correct: false }
+      - { value: 'Provides a hint for language input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Language
+  - question: 'What is the purpose of the `Locale` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid locale code.', correct: true }
+      - { value: 'Specifies the locale format.', correct: false }
+      - { value: 'Sets the default message for locale errors.', correct: false }
+      - { value: 'Provides a hint for locale input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Locale
+  - question: 'What is the purpose of the `Country` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid country code.', correct: true }
+      - { value: 'Specifies the country format.', correct: false }
+      - { value: 'Sets the default message for country errors.', correct: false }
+      - { value: 'Provides a hint for country input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Country
+  - question: 'What is the purpose of the `Unique` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not unique.', correct: true }
+      - { value: 'Specifies the field to check for uniqueness.', correct: false }
+      - { value: 'Sets the default message for uniqueness errors.', correct: false }
+      - { value: 'Provides a hint for unique input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Unique
+  - question: 'What is the purpose of the `Currency` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid currency code.', correct: true }
+      - { value: 'Specifies the currency format.', correct: false }
+      - { value: 'Sets the default message for currency errors.', correct: false }
+      - { value: 'Provides a hint for currency input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Currency
+  - question: 'What is the purpose of the `AtLeastOneOf` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if none of the nested constraints pass.', correct: true }
+      - { value: 'Specifies the minimum number of constraints that must pass.', correct: false }
+      - { value: 'Sets the default message for "at least one" errors.', correct: false }
+      - { value: 'Provides a hint for conditional validation.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/AtLeastOneOf
+  - question: 'What is the purpose of the `Sequentially` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if any of the sequential constraints fail.', correct: true }
+      - { value: 'Specifies the order of constraints.', correct: false }
+      - { value: 'Sets the default message for sequential validation errors.', correct: false }
+      - { value: 'Provides a hint for sequential input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Sequentially
+  - question: 'What is the purpose of the `Cidr` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid CIDR notation.', correct: true }
+      - { value: 'Specifies the CIDR format.', correct: false }
+      - { value: 'Sets the default message for CIDR errors.', correct: false }
+      - { value: 'Provides a hint for CIDR input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Cidr
+  - question: 'What is the purpose of the `Hostname` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid hostname.', correct: true }
+      - { value: 'Specifies the hostname format.', correct: false }
+      - { value: 'Sets the default message for hostname errors.', correct: false }
+      - { value: 'Provides a hint for hostname input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Hostname
+  - question: 'What is the purpose of the `MacAddress` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid MAC address.', correct: true }
+      - { value: 'Specifies the MAC address format.', correct: false }
+      - { value: 'Sets the default message for MAC address errors.', correct: false }
+      - { value: 'Provides a hint for MAC address input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/MacAddress
+  - question: 'What is the purpose of the `NoSuspiciousCharacters` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the string contains suspicious characters.', correct: true }
+      - { value: 'Specifies the list of suspicious characters.', correct: false }
+      - { value: 'Sets the default message for suspicious character errors.', correct: false }
+      - { value: 'Provides a hint for character input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NoSuspiciousCharacters
+  - question: 'What is the purpose of the `WordCount` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the word count is outside the specified range.', correct: true }
+      - { value: 'Specifies the minimum and maximum word count.', correct: false }
+      - { value: 'Sets the default message for word count errors.', correct: false }
+      - { value: 'Provides a hint for word count input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/WordCount
+  - question: 'What is the purpose of the `Charset` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the string contains characters outside the specified charset.', correct: true }
+      - { value: 'Specifies the allowed character set.', correct: false }
+      - { value: 'Sets the default message for charset errors.', correct: false }
+      - { value: 'Provides a hint for charset input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Charset
+  - question: 'What is the purpose of the `CssColor` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid CSS color string.', correct: true }
+      - { value: 'Specifies the CSS color format.', correct: false }
+      - { value: 'Sets the default message for CSS color errors.', correct: false }
+      - { value: 'Provides a hint for CSS color input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/CssColor
+  - question: 'What is the purpose of the `ExpressionSyntax` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the string does not contain valid Expression Language syntax.', correct: true }
+      - { value: 'Specifies the Expression Language syntax.', correct: false }
+      - { value: 'Sets the default message for Expression Language syntax errors.', correct: false }
+      - { value: 'Provides a hint for Expression Language input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/ExpressionSyntax
+  - question: 'What is the purpose of the `Twig` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not valid Twig template syntax.', correct: true }
+      - { value: 'Specifies the Twig template path.', correct: false }
+      - { value: 'Sets the default message for Twig syntax errors.', correct: false }
+      - { value: 'Provides a hint for Twig input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Twig
+  - question: 'What is the purpose of the `Positive` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not strictly positive.', correct: true }
+      - { value: 'Specifies the minimum positive value.', correct: false }
+      - { value: 'Sets the default message for positive errors.', correct: false }
+      - { value: 'Provides a hint for positive input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Positive
+  - question: 'What is the purpose of the `PositiveOrZero` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not positive or zero.', correct: true }
+      - { value: 'Specifies the minimum positive or zero value.', correct: false }
+      - { value: 'Sets the default message for positive or zero errors.', correct: false }
+      - { value: 'Provides a hint for positive or zero input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/PositiveOrZero
+  - question: 'What is the purpose of the `Negative` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not strictly negative.', correct: true }
+      - { value: 'Specifies the maximum negative value.', correct: false }
+      - { value: 'Sets the default message for negative errors.', correct: false }
+      - { value: 'Provides a hint for negative input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Negative
+  - question: 'What is the purpose of the `NegativeOrZero` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not negative or zero.', correct: true }
+      - { value: 'Specifies the maximum negative or zero value.', correct: false }
+      - { value: 'Sets the default message for negative or zero errors.', correct: false }
+      - { value: 'Provides a hint for negative or zero input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/NegativeOrZero
+  - question: 'What is the purpose of the `Week` constraint''s `message` option?'
+    answers:
+      - { value: 'Defines the error message displayed if the value is not a valid week number.', correct: true }
+      - { value: 'Specifies the week format.', correct: false }
+      - { value: 'Sets the default message for week errors.', correct: false }
+      - { value: 'Provides a hint for week input.', correct: false }
+    help: |
+      https://symfony.com/doc/current/reference/constraints/Week
+```
