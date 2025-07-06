@@ -1,0 +1,502 @@
+category: Automated Tests
+questions:
+  -
+    question: 'What is the standard command to run all PHPUnit tests in a Symfony application?'
+    answers:
+      - { value: 'php bin/console phpunit', correct: false }
+      - { value: 'php bin/phpunit', correct: true }
+      - { value: 'composer run-tests', correct: false }
+      - { value: 'bin/console tests:run', correct: false }
+    help: |
+      'The `php bin/phpunit` command executes all tests configured by default in `phpunit.xml.dist`.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_1'
+  -
+    question: 'When writing an integration test in Symfony that requires access to the Dependency Injection Container, which base class should your test extend?'
+    answers:
+      - { value: 'PHPUnit\Framework\TestCase', correct: false }
+      - { value: 'Symfony\Bundle\FrameworkBundle\Test\WebTestCase', correct: false }
+      - { value: 'Symfony\Bundle\FrameworkBundle\Test\KernelTestCase', correct: true }
+      - { value: 'Symfony\Component\HttpKernel\Test\TestContainer', correct: false }
+    help: |
+      '`KernelTestCase` is the base class for integration tests that need to boot the Symfony kernel to access services.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_3'
+  -
+    question: 'How do you access a service from the Dependency Injection Container within a test extending `KernelTestCase`?'
+    answers:
+      - { value: '$this->get(\'service_id\')', correct: false }
+      - { value: 'self::getContainer()->get(\'service_id\')', correct: true }
+      - { value: '$this->container->get(\'service_id\')', correct: false }
+      - { value: 'static::bootKernel()->getContainer()->get(\'service_id\')', correct: false }
+    help: |
+      'After calling `self::bootKernel()`, you can access the container via `static::getContainer()` to retrieve services.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_10'
+  -
+    question: 'Which Composer package is commonly used in Symfony to ensure that each functional test involving the database runs within a transaction that is rolled back afterwards, providing a clean state?'
+    answers:
+      - { value: 'doctrine/orm', correct: false }
+      - { value: 'symfony/doctrine-bridge', correct: false }
+      - { value: 'dama/doctrine-test-bundle', correct: true }
+      - { value: 'doctrine/data-fixtures', correct: false }
+    help: |
+      'The `dama/doctrine-test-bundle` automatically rolls back database transactions after each test.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_14'
+  -
+    question: 'To configure a separate database for the test environment in Symfony, which file should you typically modify or create?'
+    answers:
+      - { value: '.env', correct: false }
+      - { value: 'config/services.yaml', correct: false }
+      - { value: '.env.test.local', correct: true }
+      - { value: 'phpunit.xml.dist', correct: false }
+    help: |
+      'The `.env.test.local` file is used to override environment variables specifically for the test environment, such as `DATABASE_URL`.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_12'
+  -
+    question: 'For functional tests that simulate a web browser and interact with the full Symfony application stack (HTTP requests, responses, etc.), which base class should your test extend?'
+    answers:
+      - { value: 'PHPUnit\Framework\TestCase', correct: false }
+      - { value: 'Symfony\Bundle\FrameworkBundle\Test\KernelTestCase', correct: false }
+      - { value: 'Symfony\Bundle\FrameworkBundle\Test\WebTestCase', correct: true }
+      - { value: 'Symfony\Component\BrowserKit\HttpBrowser', correct: false }
+    help: |
+      '`WebTestCase` provides methods to simulate HTTP requests and interact with the application as a browser.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_22'
+  -
+    question: 'How do you create a test client in a functional test extending `WebTestCase`?'
+    answers:
+      - { value: '$client = new Client();', correct: false }
+      - { value: '$client = $this->createClient();', correct: false }
+      - { value: '$client = static::createClient();', correct: true }
+      - { value: '$client = self::bootKernel()->getClient();', correct: false }
+    help: |
+      'The `static::createClient()` method initializes a test client that acts as a browser.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_22'
+  -
+    question: 'Given a `$client` object in a functional test, how would you make a GET request to the `/products` URL?'
+    answers:
+      - { value: '$client->get(\'/products\');', correct: false }
+      - { value: '$client->request(\'GET\', \'/products\');', correct: true }
+      - { value: '$client->sendRequest(\'GET\', \'/products\');', correct: false }
+      - { value: '$client->browse(\'/products\');', correct: false }
+    help: |
+      'The `request()` method is used to simulate an HTTP request.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_22'
+  -
+    question: 'After making a request with the test client, which assertion method can you use to verify that the HTTP response was successful (status code 2xx)?'
+    answers:
+      - { value: '$this->assertResponseOk();', correct: false }
+      - { value: '$this->assertResponseStatus(200);', correct: false }
+      - { value: '$this->assertResponseIsSuccessful();', correct: true }
+      - { value: '$this->assertStatusCodeIsSuccessful();', correct: false }
+    help: |
+      '`assertResponseIsSuccessful()` checks if the HTTP status code is in the 2xx range.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_45'
+  -
+    question: 'To assert that a response has a specific HTTP status code, for example, 404 Not Found, which method should be used?'
+    answers:
+      - { value: '$this->assertStatusCode(404);', correct: false }
+      - { value: '$this->assertResponseCode(404);', correct: false }
+      - { value: '$this->assertResponseStatusCodeSame(404);', correct: true }
+      - { value: '$this->assertEquals(404, $client->getResponse()->getStatusCode());', correct: false }
+    help: |
+      '`assertResponseStatusCodeSame()` directly asserts the HTTP status code.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_45'
+  -
+    question: 'After performing a request, you have a `$crawler` object. How do you assert that an `<h1>` element contains the text "Welcome to my Blog"?'
+    answers:
+      - { value: '$this->assertTextContains(\'h1\', \'Welcome to my Blog\');', correct: false }
+      - { value: '$this->assertSelectorTextContains(\'h1\', \'Welcome to my Blog\');', correct: true }
+      - { value: '$crawler->filter(\'h1\')->text()->assertContains(\'Welcome to my Blog\');', correct: false }
+      - { value: '$this->assertContains(\'Welcome to my Blog\', $crawler->filter(\'h1\')->text());', correct: false }
+    help: |
+      '`assertSelectorTextContains()` checks if the first element matching the selector contains the specified text.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_50'
+  -
+    question: 'How can you assert that there are exactly 3 elements matching the CSS selector `.product-item` on the page using the `$crawler` object?'
+    answers:
+      - { value: '$this->assertEquals(3, $crawler->filter(\'.product-item\')->count());', correct: false }
+      - { value: '$this->assertCount(3, $crawler->filter(\'.product-item\'));', correct: true }
+      - { value: '$crawler->filter(\'.product-item\')->assertCount(3);', correct: false }
+      - { value: '$this->assertSelectorCount(\'.product-item\', 3);', correct: false }
+    help: |
+      '`assertCount()` is a PHPUnit assertion used on the result of `Crawler::filter()`.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_23'
+  -
+    question: 'Which method of the test client allows you to simulate a user being logged in without going through the actual login form?'
+    answers:
+      - { value: '$client->login(\'username\', \'password\');', correct: false }
+      - { value: '$client->authenticateUser($userObject);', correct: false }
+      - { value: '$client->loginUser($userObject);', correct: true }
+      - { value: '$client->setSecurityToken($token);', correct: false }
+    help: |
+      '`loginUser()` simulates a user being logged in for functional tests.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_28'
+  -
+    question: 'When writing functional tests that involve multiple clients interacting with each other (e.g., a chat application), and you want to prevent global state issues, what method should be called on each client?'
+    answers:
+      - { value: '$client->reset();', correct: false }
+      - { value: '$client->clear();', correct: false }
+      - { value: '$client->insulate();', correct: true }
+      - { value: '$client->disconnect();', correct: false }
+    help: |
+      '`insulate()` runs requests in dedicated and clean PHP processes to prevent global state side effects.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing/insulating_clients.rst#_snippet_1'
+  -
+    question: 'How do you enable the Symfony Profiler for the *next* request in a functional test to collect data for analysis?'
+    answers:
+      - { value: '$client->enableProfiler();', correct: true }
+      - { value: '$client->getProfiler()->enable();', correct: false }
+      - { value: '$this->getContainer()->get(\'profiler\')->enable();', correct: false }
+      - { value: 'static::bootKernel()->getProfiler()->enable();', correct: false }
+    help: |
+      '`enableProfiler()` enables the profiler for the subsequent request.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_39'
+  -
+    question: 'After enabling the profiler and making a request, how do you retrieve the collected profile data from the test client?'
+    answers:
+      - { value: '$client->getProfile();', correct: true }
+      - { value: '$client->getProfilerData();', correct: false }
+      - { value: '$client->getResponse()->getProfile();', correct: false }
+      - { value: '$this->getContainer()->get(\'profiler\')->getData();', correct: false }
+    help: |
+      '`getProfile()` returns the collected profile data for the last request.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_39'
+  -
+    question: 'How can you access the `HttpKernel`''s `Request` object that was used for the last request made by the test client?'
+    answers:
+      - { value: '$client->getRequest();', correct: true }
+      - { value: '$client->getInternalRequest();', correct: false }
+      - { value: '$client->getResponse()->getRequest();', correct: false }
+      - { value: '$this->request;', correct: false }
+    help: |
+      '`getRequest()` returns the `HttpKernel` request instance. `getInternalRequest()` returns the `BrowserKit` request instance.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_38'
+  -
+    question: 'How can you access the `HttpKernel`''s `Response` object received from the last request made by the test client?'
+    answers:
+      - { value: '$client->getResponse();', correct: true }
+      - { value: '$client->getInternalResponse();', correct: false }
+      - { value: '$client->getRequest()->getResponse();', correct: false }
+      - { value: '$this->response;', correct: false }
+    help: |
+      '`getResponse()` returns the `HttpKernel` response instance. `getInternalResponse()` returns the `BrowserKit` response instance.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_38'
+  -
+    question: 'Which method of the test client allows you to retrieve the `CookieJar` object, containing all cookies set during the test?'
+    answers:
+      - { value: '$client->getCookies();', correct: false }
+      - { value: '$client->getCookieJar();', correct: true }
+      - { value: '$client->getSession()->getCookies();', correct: false }
+      - { value: '$client->getBrowser()->getCookieJar();', correct: false }
+    help: |
+      '`getCookieJar()` provides access to the `CookieJar` object for inspecting cookies.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_38'
+  -
+    question: 'To ensure that Twig templates in the test environment throw an error when an undefined variable is accessed, which configuration setting should be enabled in `config/packages/test/twig.yaml`?'
+    answers:
+      - { value: 'twig: { debug: true }', correct: false }
+      - { value: 'twig: { error_on_undefined: true }', correct: false }
+      - { value: 'twig: { strict_variables: true }', correct: true }
+      - { value: 'twig: { throw_on_undefined: true }', correct: false }
+    help: |
+      '`strict_variables: true` in Twig configuration makes Twig throw an exception for undefined variables.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_6'
+  -
+    question: 'Which of the following methods can be used to assert that a specific header exists in the response?'
+    answers:
+      - { value: '$this->assertResponseHeaderExists(\'Content-Type\');', correct: false }
+      - { value: '$this->assertResponseHasHeader(\'Content-Type\');', correct: true }
+      - { value: '$client->getResponse()->hasHeader(\'Content-Type\');', correct: false }
+      - { value: '$this->assertHeaderPresent(\'Content-Type\');', correct: false }
+    help: |
+      '`assertResponseHasHeader()` asserts the presence of a given header in the response.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_45'
+  -
+    question: 'How do you assert that a response is a redirect to a specific location, e.g., `/login`?'
+    answers:
+      - { value: '$this->assertRedirectsTo(\'/login\');', correct: false }
+      - { value: '$this->assertResponseRedirects(\'/login\');', correct: true }
+      - { value: '$this->assertResponseStatusCodeSame(302) && $this->assertResponseHeaderSame(\'Location\', \'/login\');', correct: false }
+      - { value: '$client->getResponse()->isRedirect(\'/login\');', correct: false }
+    help: |
+      '`assertResponseRedirects()` asserts that the response is a redirect and optionally checks the target location and status code.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_45'
+  -
+    question: 'Given a form with a select element named `my_form[country]`, how would you programmatically select the option with the value "France" in a functional test?'
+    answers:
+      - { value: '$form[\'my_form[country]\']->select(\'France\');', correct: true }
+      - { value: '$form->set(\'my_form[country]\', \'France\');', correct: false }
+      - { value: '$crawler->filter(\'select[name="my_form[country]"]\')->selectOption(\'France\');', correct: false }
+      - { value: '$client->submitForm(\'Submit\', [\'my_form[country]\' => \'France\']);', correct: false }
+    help: |
+      'The `select()` method on a form field object allows selecting an option in a dropdown or radio button group.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_43'
+  -
+    question: 'How do you programmatically check a checkbox named `my_form[like_symfony]` in a functional test?'
+    answers:
+      - { value: '$form[\'my_form[like_symfony]\']->check();', correct: false }
+      - { value: '$form[\'my_form[like_symfony]\']->tick();', correct: true }
+      - { value: '$form->setCheckbox(\'my_form[like_symfony]\', true);', correct: false }
+      - { value: '$crawler->filter(\'input[name="my_form[like_symfony]"]\')->check();', correct: false }
+    help: |
+      'The `tick()` method on a form field object is used to check a checkbox.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_43'
+  -
+    question: 'How do you simulate uploading a single file named `lucas.jpg` to a file input named `my_form[photo]` in a functional test?'
+    answers:
+      - { value: '$form[\'my_form[photo]\']->upload(\'/path/to/lucas.jpg\');', correct: true }
+      - { value: '$form->setFile(\'my_form[photo]\', \'/path/to/lucas.jpg\');', correct: false }
+      - { value: '$client->submitForm(\'Submit\', [], [\'my_form[photo]\' => \'/path/to/lucas.jpg\']);', correct: false }
+      - { value: '$crawler->filter(\'input[name="my_form[photo]"]\')->uploadFile(\'/path/to/lucas.jpg\');', correct: false }
+    help: |
+      'The `upload()` method on a form field object simulates a file upload.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_43'
+  -
+    question: 'How can you simulate clicking a link with the text "Click here" using the test client?'
+    answers:
+      - { value: '$client->click(\'Click here\');', correct: false }
+      - { value: '$client->clickLink(\'Click here\');', correct: true }
+      - { value: '$crawler->selectLink(\'Click here\')->click();', correct: false }
+      - { value: '$client->request(\'GET\', $crawler->selectLink(\'Click here\')->getUri());', correct: false }
+    help: |
+      '`clickLink()` simulates clicking a link identified by its text or alt attribute.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_40'
+  -
+    question: 'After making a request with `$client->request()`, how do you obtain the `Crawler` object to inspect the response content?'
+    answers:
+      - { value: '$crawler = $client->getCrawler();', correct: false }
+      - { value: '$crawler = $client->getResponse()->getCrawler();', correct: false }
+      - { value: '$crawler = $client->request(\'GET\', \'/path\');', correct: true }
+      - { value: '$crawler = $client->getBrowser()->getCrawler();', correct: false }
+    help: |
+      'The `request()` method of the test client returns the `Crawler` object.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_22'
+  -
+    question: 'Which assertion method is used to check if the HTML `<title>` element of the response is exactly "My Page Title"?'
+    answers:
+      - { value: '$this->assertTitleSame(\'My Page Title\');', correct: false }
+      - { value: '$this->assertPageTitleSame(\'My Page Title\');', correct: true }
+      - { value: '$this->assertSelectorTextSame(\'title\', \'My Page Title\');', correct: false }
+      - { value: '$crawler->filter(\'title\')->text()->assertEquals(\'My Page Title\');', correct: false }
+    help: |
+      '`assertPageTitleSame()` asserts that the `<title>` element is equal to the given title.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_50'
+  -
+    question: 'How do you assert that a form input field named `username` has the value "testuser"?'
+    answers:
+      - { value: '$this->assertInputValueSame(\'username\', \'testuser\');', correct: true }
+      - { value: '$this->assertSelectorAttributeSame(\'input[name="username"]\', \'value\', \'testuser\');', correct: false }
+      - { value: '$this->assertFormValue(\'form\', \'username\', \'testuser\');', correct: false }
+      - { value: '$crawler->filter(\'input[name="username"]\')->attr(\'value\')->assertEquals(\'testuser\');', correct: false }
+    help: |
+      '`assertInputValueSame()` asserts that the value of the form input with the given name equals the expected value.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_50'
+  -
+    question: 'Which method asserts that a checkbox with a given name, e.g., `remember_me`, is checked?'
+    answers:
+      - { value: '$this->assertCheckboxChecked(\'remember_me\');', correct: true }
+      - { value: '$this->assertSelectorChecked(\'input[name="remember_me"]\');', correct: false }
+      - { value: '$crawler->filter(\'input[name="remember_me"]\')->isChecked();', correct: false }
+      - { value: '$this->assertInputValueSame(\'remember_me\', \'on\');', correct: false }
+    help: |
+      '`assertCheckboxChecked()` asserts that the checkbox with the given name is checked.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_50'
+  -
+    question: 'When performing a "smoke test" to check if multiple URLs in your application return successful responses, what PHPUnit feature is commonly used to provide the list of URLs?'
+    answers:
+      - { value: 'Test doubles', correct: false }
+      - { value: 'Annotations', correct: false }
+      - { value: 'Data providers', correct: true }
+      - { value: 'Fixtures', correct: false }
+    help: |
+      'Data providers allow running the same test method with different sets of data.
+      https://github.com/symfony/symfony-docs/blob/7.3/best_practices.rst#_snippet_4'
+  -
+    question: 'When writing end-to-end tests using Symfony Panther, how do you create a Panther client?'
+    answers:
+      - { value: '$client = new PantherClient();', correct: false }
+      - { value: '$client = static::createPantherClient();', correct: true }
+      - { value: '$client = $this->getPantherClient();', correct: false }
+      - { value: '$client = PantherTestCase::createClient();', correct: false }
+    help: |
+      '`static::createPantherClient()` initializes a Panther client, which starts a real browser.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing/end_to_end.rst#_snippet_5'
+  -
+    question: 'To test a multi-domain application with Symfony Panther and ensure isolated tests for different domains, which PHPUnit annotation and client option are used?'
+    answers:
+      - { value: '@runInIsolation and base_uri', correct: false }
+      - { value: '@runInSeparateProcess and external_base_uri', correct: true }
+      - { value: '@isolateProcess and domain_uri', correct: false }
+      - { value: '@separateProcess and target_uri', correct: false }
+    help: |
+      'The `@runInSeparateProcess` annotation and `external_base_uri` option allow testing different domains in isolation.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing/end_to_end.rst#_snippet_19'
+  -
+    question: 'Which of the following assertions are specifically provided by Symfony Panther for end-to-end testing?'
+    answers:
+      - { value: 'assertSelectorIsEnabled()', correct: true }
+      - { value: 'assertPageTitleContains()', correct: false }
+      - { value: 'assertResponseIsSuccessful()', correct: false }
+      - { value: 'assertSelectorAttributeContains()', correct: true }
+    help: |
+      'Panther provides specific assertions for browser element states and attributes, while `assertPageTitleContains()` and `assertResponseIsSuccessful()` are from `WebTestCase`.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing/end_to_end.rst#_snippet_5'
+  -
+    question: 'When unit testing a Doctrine repository in isolation, without a real database connection, what is the recommended approach for its dependencies (like `EntityManager` and `EntityRepository`)?'
+    answers:
+      - { value: 'Use a dedicated in-memory SQLite database.', correct: false }
+      - { value: 'Mock the `EntityManager` and `EntityRepository` using PHPUnit mocks.', correct: true }
+      - { value: 'Use a `KernelTestCase` and access the real `EntityManager`.', correct: false }
+      - { value: 'Skip database-related tests in unit tests.', correct: false }
+    help: |
+      'Mocking dependencies allows testing the repository\'s logic in isolation without actual database interaction.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing/database.rst#_snippet_1'
+  -
+    question: 'When functionally testing a Doctrine repository that requires a real database connection, which Symfony test class should your test extend?'
+    answers:
+      - { value: 'PHPUnit\Framework\TestCase', correct: false }
+      - { value: 'Symfony\Bundle\FrameworkBundle\Test\WebTestCase', correct: false }
+      - { value: 'Symfony\Bundle\FrameworkBundle\Test\KernelTestCase', correct: true }
+      - { value: 'Doctrine\Bundle\DoctrineBundle\Test\DoctrineTestCase', correct: false }
+    help: |
+      '`KernelTestCase` is suitable for tests that need a booted kernel and access to the real database via the `EntityManager`.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing/database.rst#_snippet_2'
+  -
+    question: 'In a `KernelTestCase` for database functional tests, what is the recommended practice in the `tearDown()` method to prevent memory leaks related to the `EntityManager`?'
+    answers:
+      - { value: '$this->entityManager->flush();', correct: false }
+      - { value: '$this->entityManager->clear();', correct: false }
+      - { value: '$this->entityManager->close(); $this->entityManager = null;', correct: true }
+      - { value: '$this->entityManager->rollback();', correct: false }
+    help: |
+      'Closing and nullifying the `EntityManager` in `tearDown()` is recommended to avoid memory leaks.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing/database.rst#_snippet_2'
+  -
+    question: 'Which Composer package is commonly used in Symfony to load dummy data (fixtures) into the database for testing purposes?'
+    answers:
+      - { value: 'doctrine/orm', correct: false }
+      - { value: 'doctrine/migrations', correct: false }
+      - { value: 'doctrine/doctrine-fixtures-bundle', correct: true }
+      - { value: 'symfony/maker-bundle', correct: false }
+    help: |
+      '`doctrine/doctrine-fixtures-bundle` provides tools for creating and loading test data.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_16'
+  -
+    question: 'Which of the following methods can be used to assert properties of emails sent during a functional test?'
+    answers:
+      - { value: 'assertEmailCount()', correct: true }
+      - { value: 'assertEmailSubjectContains()', correct: true }
+      - { value: 'assertEmailAttachmentCount()', correct: true }
+      - { value: 'assertEmailSentTo()', correct: false }
+    help: |
+      'Symfony Mailer assertions include checking email count, subject content, and attachments.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_51'
+  -
+    question: 'Which assertion method verifies that a specific number of notifications have been queued (e.g., using the Messenger component)?'
+    answers:
+      - { value: 'assertNotificationCount()', correct: false }
+      - { value: 'assertQueuedNotificationCount()', correct: true }
+      - { value: 'assertNotificationIsSent()', correct: false }
+      - { value: 'assertNotificationTransportIsEqual()', correct: false }
+    help: |
+      '`assertQueuedNotificationCount()` specifically checks the number of notifications that are queued.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_52'
+  -
+    question: 'How do you assert that exactly 5 requests were made using the default `HttpClient` during a test?'
+    answers:
+      - { value: '$this->assertHttpClientRequestCount(5);', correct: true }
+      - { value: '$this->assertCount(5, $client->getHttpClient()->getRequests());', correct: false }
+      - { value: '$this->assertRequestsMade(5);', correct: false }
+      - { value: '$client->getHttpClient()->assertRequestCount(5);', correct: false }
+    help: |
+      '`assertHttpClientRequestCount()` is used to assert the number of requests made by the HttpClient.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_55'
+  -
+    question: 'Which method asserts that the test client has a cookie named `my_cookie` set?'
+    answers:
+      - { value: '$this->assertCookieExists(\'my_cookie\');', correct: false }
+      - { value: '$this->assertBrowserHasCookie(\'my_cookie\');', correct: true }
+      - { value: '$client->getCookieJar()->has(\'my_cookie\');', correct: false }
+      - { value: '$this->assertResponseHasCookie(\'my_cookie\');', correct: false }
+    help: |
+      '`assertBrowserHasCookie()` asserts that the test client has the given cookie set.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_48'
+  -
+    question: 'How do you assert that a cookie named `session_id` has the value `abc123`?'
+    answers:
+      - { value: '$this->assertBrowserCookieValueSame(\'session_id\', \'abc123\');', correct: true }
+      - { value: '$this->assertCookieValue(\'session_id\', \'abc123\');', correct: false }
+      - { value: '$client->getCookieJar()->get(\'session_id\')->getValue()->assertEquals(\'abc123\');', correct: false }
+      - { value: '$this->assertResponseCookieSame(\'session_id\', \'abc123\');', correct: false }
+    help: |
+      '`assertBrowserCookieValueSame()` asserts that a specific cookie in the test client has the expected value.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_48'
+  -
+    question: 'Which Symfony MakerBundle command can be used to generate a new application test class, prompting for the test type (e.g., `WebTestCase`) and class name?'
+    answers:
+      - { value: 'php bin/console make:test', correct: true }
+      - { value: 'php bin/console generate:test', correct: false }
+      - { value: 'php bin/console create:test', correct: false }
+      - { value: 'php bin/console make:unit', correct: false }
+    help: |
+      '`make:test` is the command to generate new test classes.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_21'
+  -
+    question: 'When simulating user login for functional tests using `loginUser()`, how can you define a simple in-memory user for the test environment?'
+    answers:
+      - { value: 'By creating a custom user provider service.', correct: false }
+      - { value: 'By configuring `users_in_memory` under the `security` key in `config/packages/security.yaml` (or `when@test` specific config).', correct: true }
+      - { value: 'By directly instantiating a `User` entity in the test.', correct: false }
+      - { value: 'By using the `TestUserProvider` service.', correct: false }
+    help: |
+      'In-memory users can be configured in `security.yaml` for testing purposes.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing.rst#_snippet_34'
+  -
+    question: 'Why might you configure a less resource-intensive password hasher specifically for the `test` environment in Symfony?'
+    answers:
+      - { value: 'To improve security during testing.', correct: false }
+      - { value: 'To speed up test execution.', correct: true }
+      - { value: 'To prevent accidental hashing of real passwords.', correct: false }
+      - { value: 'To enable debugging of password hashing.', correct: false }
+    help: |
+      'Using a faster password hasher in the test environment optimizes test execution time.
+      https://github.com/symfony/symfony-docs/blob/7.3/security/passwords.rst#_snippet_3'
+  -
+    question: 'Which class from the Symfony Clock component allows you to control and manipulate time within your tests for time-sensitive logic?'
+    answers:
+      - { value: 'Symfony\Component\Clock\SystemClock', correct: false }
+      - { value: 'Symfony\Component\Clock\TestClock', correct: false }
+      - { value: 'Symfony\Component\Clock\MockClock', correct: true }
+      - { value: 'Symfony\Component\Clock\FrozenClock', correct: false }
+    help: |
+      '`MockClock` provides methods to set and advance time for predictable testing of time-dependent code.
+      https://github.com/symfony/symfony-docs/blob/7.3/components/clock.rst#_snippet_5'
+  -
+    question: 'Given a `MockClock` instance, how can you instantly advance the time by 10 minutes (600 seconds) in a test?'
+    answers:
+      - { value: '$clock->advance(600);', correct: false }
+      - { value: '$clock->sleep(600);', correct: true }
+      - { value: '$clock->add(new \DateInterval(\'PT10M\'));', correct: false }
+      - { value: '$clock->setTime(\'+10 minutes\');', correct: false }
+    help: |
+      'The `sleep()` method on `MockClock` instantly changes the time as if the specified duration has passed.
+      https://github.com/symfony/symfony-docs/blob/7.3/components/clock.rst#_snippet_5'
+  -
+    question: 'In `config/packages/test/web_profiler.yaml`, what is the purpose of setting `framework.profiler.collect: false`?'
+    answers:
+      - { value: 'To completely disable the profiler in the test environment.', correct: false }
+      - { value: 'To enable the profiler but prevent it from collecting data by default, allowing selective collection per test.', correct: true }
+      - { value: 'To collect only errors and exceptions, not full profile data.', correct: false }
+      - { value: 'To indicate that profiler data should be collected asynchronously.', correct: false }
+    help: |
+      'Setting `collect: false` enables the profiler but requires explicit `enableProfiler()` calls to collect data for specific requests.
+      https://github.com/symfony/symfony-docs/blob/7.3/testing/profiling.rst#_snippet_0'
+  -
+    question: 'In a basic PHPUnit test for a simple PHP application that uses `$_GET` parameters, how would you simulate a GET request with a specific parameter and capture the output?'
+    answers:
+      - { value: 'By directly setting `$_GET` and using output buffering (`ob_start()`, `ob_get_clean()`).', correct: true }
+      - { value: 'By using a `Symfony\Component\HttpFoundation\Request` object.', correct: false }
+      - { value: 'By calling a test client.', correct: false }
+      - { value: 'By mocking the `$_GET` superglobal.', correct: false }
+    help: |
+      'For very basic PHP applications, direct manipulation of `$_GET` and output buffering is a common testing pattern.
+      https://github.com/symfony/symfony-docs/blob/7.3/create_framework/http_foundation.rst#_snippet_3'
