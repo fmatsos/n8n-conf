@@ -28,6 +28,7 @@ questions:
       - { value: '<answer1>', correct: true|false }
       - { value: '<answer2>', correct: true|false }
       ...
+      - { value: '<answerX>', correct: true|false }
     help: |
       'Explanation if required + <link to Symfony documentation or PHP manual>'
 ```
@@ -75,7 +76,8 @@ Use this tool for **each topic** you generate questions for, to ensure freshness
 
 - Each YAML file must start with `category: <topic name>`  
 - No free-text commentary in YAML  
-- Each question must have between 3 and 5 answers
+- Each question must have between 3 and 5 answers max
+- Question can have one or many correct answers
 - Set `correct: true|false` precisely  
 - Use `help` to add the official doc URL and a short explanation if required 
 - Avoid outdated APIs or deprecated features  
@@ -90,26 +92,6 @@ Use this tool for **each topic** you generate questions for, to ensure freshness
 - Ensure clear English with concise phrasing  
 - Questions should be clear even to a non-native speaker  
 - Vary the difficulty (easy to hard)  
-
----
-
-## EXAMPLE
-
-Here is an example YAML file for the `HTTP` topic:
-
-```yaml
-category: HTTP
-questions:
-  - 
-    question: 'What is the correct way to render a ESI tag using HTML?'
-    answers:
-      - { value: <include:esi src="http://..." />, correct: false }
-      - { value: <esi:include src="http://..." />, correct: true }
-      - { value: <include src="http://..." />, correct: false }
-      - { value: <esi src="http://..." />, correct: false }
-    help: |
-      'https://symfony.com/doc/current/http_cache/esi.html'
-```
 
 ---
 
