@@ -22,16 +22,18 @@ Each topic must be exported in a **separate YAML file** with this structure:
 ```yaml
 category: <Topic Name>
 questions:
-  - question: "<Question text>"
+  -
+    question: '<Question text>'
     answers:
-      - { value: "<answer1>", correct: true|false }
-      - { value: "<answer2>", correct: true|false }
+      - { value: '<answer1>', correct: true|false }
+      - { value: '<answer2>', correct: true|false }
       ...
     help: |
-      "<link to Symfony documentation or PHP manual>"
+      'Explanation if required + <link to Symfony documentation or PHP manual>'
 ```
 
 Questions may include code snippets, and test either understanding of concepts or knowledge of exact syntax / behavior.
+Helps may include code snippets examples and some explanations. But always required link to documentation.
 
 ---
 
@@ -118,4 +120,4 @@ questions:
 - Do not include topics like Doctrine or API Platform or other external libraries
 - The questions will be reviewed by a **Symfony certified expert**, so maintain high accuracy
 - Do not include any extra commentary. 
-- Only return the raw YAML content.
+- Only return the raw YAML content, without Markdown markup.
