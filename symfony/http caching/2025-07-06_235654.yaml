@@ -1,0 +1,891 @@
+```yaml
+category: HTTP Caching
+questions:
+  -
+    question: 'What are the primary types of HTTP caches that Symfony''s HTTP Cache component can interact with?'
+    answers:
+      - { value: 'Browser caches', correct: true }
+      - { value: 'Proxy caches (e.g., Squid)', correct: true }
+      - { value: 'Reverse proxy caches (e.g., Varnish, Symfony''s built-in HttpCache)', correct: true }
+      - { value: 'Database caches', correct: false }
+      - { value: 'Application-level caches (e.g., Doctrine cache)', correct: false }
+    help: |
+      HTTP caching involves different layers, including browser caches, shared proxy caches, and reverse proxy caches. Symfony's HttpCache acts as a reverse proxy.
+      https://symfony.com/doc/current/http_cache.html#http-cache-types
+  -
+    question: 'How can you enable the built-in Symfony HTTP cache reverse proxy for a production environment using YAML configuration?'
+    answers:
+      - { value: '```yaml
+when@prod:
+    framework:
+        http_cache: true
+```', correct: true }
+      - { value: '```yaml
+framework:
+    http_cache:
+        enabled: true
+```', correct: false }
+      - { value: '```yaml
+services:
+    Symfony\\Bundle\\FrameworkBundle\\HttpCache\\HttpCache:
+        public: true
+```', correct: false }
+      - { value: '```yaml
+# config/packages/cache.yaml
+http_cache: true
+```', correct: false }
+    help: |
+      The `http_cache` option under the `framework` configuration in `config/packages/framework.yaml` enables the built-in reverse proxy. It's typically enabled only for production.
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache.rst#_snippet_0
+  -
+    question: 'Which `Cache-Control` directive is used to specify the maximum amount of time a resource is considered fresh by *all* caches (both shared and private)?'
+    answers:
+      - { value: '`s-maxage`', correct: false }
+      - { value: '`max-age`', correct: true }
+      - { value: '`public`', correct: false }
+      - { value: '`private`', correct: false }
+    help: |
+      The `max-age` directive indicates the maximum amount of time a resource is considered fresh from the time of the request. It applies to all caches.
+      https://symfony.com/doc/current/http_cache/expiration.html#cache-control-header
+  -
+    question: 'Which `Cache-Control` directive is used to specify the maximum amount of time a resource is considered fresh by *shared* caches only?'
+    answers:
+      - { value: '`max-age`', correct: false }
+      - { value: '`s-maxage`', correct: true }
+      - { value: '`private`', correct: false }
+      - { value: '`proxy-revalidate`', correct: false }
+    help: |
+      The `s-maxage` (shared max-age) directive is specific to shared caches (like reverse proxies) and overrides `max-age` for them.
+      https://symfony.com/doc/current/http_cache/expiration.html#cache-control-header
+  -
+    question: 'What is the purpose of the `Expires` HTTP header in caching?'
+    answers:
+      - { value: 'It specifies a relative time in seconds for cache freshness.', correct: false }
+      - { value: 'It indicates the absolute date and time after which the response is considered stale.', correct: true }
+      - { value: 'It is used for cache validation, not expiration.', correct: false }
+      - { value: 'It forces caches to revalidate the content.', correct: false }
+    help: |
+      The `Expires` header specifies an absolute date and time after which the response is considered stale. It's an older header, largely superseded by `Cache-Control: max-age`.
+      https://symfony.com/doc/current/http_cache/expiration.html#expires-header
+  -
+    question: 'What is the primary purpose of the `ETag` header in HTTP caching?'
+    answers:
+      - { value: 'To specify the maximum age of a cached resource.', correct: false }
+      - { value: 'To provide a unique identifier for a specific version of a resource, used for validation.', correct: true }
+      - { value: 'To indicate if a resource is public or private.', correct: false }
+      - { value: 'To force a cache to store the response.', correct: false }
+    help: |
+      The `ETag` (Entity Tag) is an opaque identifier assigned by a web server to a specific version of a resource found at a URL. If the resource content changes, a new ETag is generated. Clients use `If-None-Match` to validate.
+      https://symfony.com/doc/current/http_cache/validation.html#etag
+  -
+    question: 'What is the primary purpose of the `Last-Modified` header in HTTP caching?'
+    answers:
+      - { value: 'To indicate when the cached entry should expire.', correct: false }
+      - { value: 'To specify the date and time the resource was last modified, used for validation.', correct: true }
+      - { value: 'To prevent caching of the resource.', correct: false }
+      - { value: 'To define the content type of the response.', correct: false }
+    help: |
+      The `Last-Modified` header indicates the date and time at which the origin server believes the resource was last modified. Clients use `If-Modified-Since` to validate.
+      https://symfony.com/doc/current/http_cache/validation.html#last-modified
+  -
+    question: 'What does calling `$response->setPublic()` on a Symfony `Response` object achieve in terms of caching?'
+    answers:
+      - { value: 'It makes the response uncacheable.', correct: false }
+      - { value: 'It explicitly allows the response to be cached by any cache (shared or private).', correct: true }
+      - { value: 'It marks the response as specific to a single user.', correct: false }
+      - { value: 'It sets the `Cache-Control: no-store` directive.', correct: false }
+    help: |
+      `setPublic()` adds the `public` directive to the `Cache-Control` header, indicating that the response is cacheable by any cache.
+      https://symfony.com/doc/current/http_cache/expiration.html#marking-a-response-public-or-private
+  -
+    question: 'What does calling `$response->setPrivate()` on a Symfony `Response` object achieve in terms of caching?'
+    answers:
+      - { value: 'It explicitly allows the response to be cached by shared caches.', correct: false }
+      - { value: 'It explicitly marks the response as intended for a single user and prevents shared caches from storing it.', correct: true }
+      - { value: 'It makes the response immutable.', correct: false }
+      - { value: 'It sets a longer `max-age` for the response.', correct: false }
+    help: |
+      `setPrivate()` adds the `private` directive to the `Cache-Control` header, indicating that the response is intended for a single user and should not be stored by shared caches.
+      https://symfony.com/doc/current/http_cache/expiration.html#marking-a-response-public-or-private
+  -
+    question: 'When should you use the `Response::isNotModified($request)` method in a Symfony controller?'
+    answers:
+      - { value: 'To force a full re-render of the page every time.', correct: false }
+      - { value: 'To check if the client''s cached version of the resource is still valid based on `If-None-Match` or `If-Modified-Since` headers, and return a 304 response if so.', correct: true }
+      - { value: 'To set the `max-age` directive for the response.', correct: false }
+      - { value: 'To invalidate all existing cache entries for the resource.', correct: false }
+    help: |
+      `isNotModified()` compares the request's validation headers (`If-None-Match`, `If-Modified-Since`) with the response's (`ETag`, `Last-Modified`). If they match, it sets the response status to 304 Not Modified, avoiding unnecessary content transfer.
+      https://symfony.com/doc/current/http_cache/validation.html#checking-if-a-resource-is-not-modified
+  -
+    question: 'How can you set an ETag on a Symfony `Response` object?'
+    answers:
+      - { value: '`$response->headers->set(''ETag'', $etagValue);`', correct: false }
+      - { value: '`$response->setEtag($etagValue);`', correct: true }
+      - { value: '`$response->setCache([''etag'' => $etagValue]);`', correct: true }
+      - { value: '`$response->addHeader(''ETag'', $etagValue);`', correct: false }
+    help: |
+      The `Response` object provides a dedicated `setEtag()` method. Alternatively, you can use `setCache()` with the `etag` option.
+      https://symfony.com/doc/current/http_cache/validation.html#etag
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache.rst#_snippet_9
+  -
+    question: 'How can you set the `Last-Modified` header on a Symfony `Response` object?'
+    answers:
+      - { value: '`$response->setLastModified(new \DateTime());`', correct: true }
+      - { value: '`$response->headers->set(''Last-Modified'', $dateString);`', correct: false }
+      - { value: '`$response->setCache([''last_modified'' => new \DateTime()]);`', correct: true }
+      - { value: '`$response->setExpires(new \DateTime());`', correct: false }
+    help: |
+      The `Response` object provides a dedicated `setLastModified()` method that accepts a `DateTime` object. Alternatively, you can use `setCache()` with the `last_modified` option.
+      https://symfony.com/doc/current/http_cache/validation.html#last-modified
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache.rst#_snippet_9
+  -
+    question: 'What is the purpose of the `#[Cache]` attribute in Symfony controllers?'
+    answers:
+      - { value: 'To define database caching strategies for entities.', correct: false }
+      - { value: 'To declaratively configure HTTP caching headers (like `Cache-Control` and `Expires`) for a controller action.', correct: true }
+      - { value: 'To enable ESI processing for the entire controller.', correct: false }
+      - { value: 'To specify which cache adapter to use for the response.', correct: false }
+    help: |
+      The `#[Cache]` attribute provides a convenient way to configure HTTP caching directives directly on controller methods, simplifying cache setup.
+      https://symfony.com/doc/current/http_cache/expiration.html#configuring-with-the-cache-attribute
+  -
+    question: 'What does the `Cache-Control: no-cache` directive indicate to a cache?'
+    answers:
+      - { value: 'The response must not be stored by any cache.', correct: false }
+      - { value: 'The response can be cached, but it must be revalidated with the origin server before each use.', correct: true }
+      - { value: 'The response is immutable and can be served indefinitely.', correct: false }
+      - { value: 'The response should only be cached by the browser.', correct: false }
+    help: |
+      `no-cache` means the cache must revalidate with the origin server before serving a cached copy, even if it's still "fresh" according to `max-age`.
+      https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#no-cache
+  -
+    question: 'What does the `Cache-Control: no-store` directive indicate to a cache?'
+    answers:
+      - { value: 'The response can be stored, but only for a very short period.', correct: false }
+      - { value: 'The response must not be stored by any cache, and it must not be used for subsequent requests.', correct: true }
+      - { value: 'The response can be stored, but only by private caches.', correct: false }
+      - { value: 'The response should be stored on disk, not in memory.', correct: false }
+    help: |
+      `no-store` is the strongest caching directive, instructing caches not to store any part of the request or response.
+      https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#no-store
+  -
+    question: 'What is the purpose of the `Vary` HTTP header?'
+    answers:
+      - { value: 'To specify the content encoding of the response.', correct: false }
+      - { value: 'To indicate that the cached response should vary based on the values of specified request headers.', correct: true }
+      - { value: 'To define the maximum number of times a resource can be cached.', correct: false }
+      - { value: 'To force a cache to ignore certain request headers.', correct: false }
+    help: |
+      The `Vary` header informs caches that the response content varies depending on one or more request header fields. This ensures that different cached versions are served based on client characteristics (e.g., `Accept-Encoding` for compression, `User-Agent` for device-specific content).
+      https://symfony.com/doc/current/http_cache/cache_vary.html
+  -
+    question: 'What is the role of the `Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache` class in Symfony?'
+    answers:
+      - { value: 'It provides an interface for interacting with various cache adapters (e.g., Redis, Memcached).', correct: false }
+      - { value: 'It acts as a built-in reverse proxy cache that sits in front of your Symfony application.', correct: true }
+      - { value: 'It is responsible for generating ETag values for responses.', correct: false }
+      - { value: 'It manages the application''s session data.', correct: false }
+    help: |
+      The `HttpCache` class implements Symfony's internal reverse proxy, handling caching logic based on HTTP headers.
+      https://symfony.com/doc/current/http_cache.html#symfony-reverse-proxy
+  -
+    question: 'How can you implement a custom cache invalidation mechanism (e.g., for `PURGE` requests) with Symfony''s HTTP Cache?'
+    answers:
+      - { value: 'By directly manipulating the cache store service (`http_cache.store`).', correct: false }
+      - { value: 'By decorating the `http_cache` service with a custom `CacheKernel` that overrides the `invalidate()` method.', correct: true }
+      - { value: 'By sending a `Cache-Control: no-cache` header with the `PURGE` request.', correct: false }
+      - { value: 'Symfony''s HttpCache does not support custom invalidation beyond expiration.', correct: false }
+    help: |
+      To handle custom invalidation logic, such as `PURGE` requests, you can extend `HttpCache` and override its `invalidate()` method, then register your custom class as a decorator for the `http_cache` service.
+      https://symfony.com/doc/current/http_cache/cache_invalidation.html#overriding-the-invalidate-method
+  -
+    question: 'What is the effect of calling `$response->expire()` on a Symfony `Response` object?'
+    answers:
+      - { value: 'It sets the `Expires` header to a future date.', correct: false }
+      - { value: 'It immediately marks the response as stale, forcing caches to revalidate it.', correct: true }
+      - { value: 'It removes all caching headers from the response.', correct: false }
+      - { value: 'It deletes the corresponding entry from the cache store.', correct: false }
+    help: |
+      The `expire()` method marks the response stale, meaning caches must revalidate it with the origin server before serving it again.
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache.rst#_snippet_7
+  -
+    question: 'What does `$response->setNotModified()` do?'
+    answers:
+      - { value: 'It sets the HTTP status code to 200 OK and adds a `Cache-Control` header.', correct: false }
+      - { value: 'It forces the response to return a 304 Not Modified status code with no content, indicating the client''s cached version is still valid.', correct: true }
+      - { value: 'It removes the `ETag` and `Last-Modified` headers from the response.', correct: false }
+      - { value: 'It prevents the response from being cached by any proxy.', correct: false }
+    help: |
+      `setNotModified()` is used to explicitly send a 304 Not Modified response, typically after `isNotModified()` has determined that the content hasn't changed.
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache.rst#_snippet_8
+  -
+    question: 'Which HTTP headers are primarily used for client-side caching (browser caching)?'
+    answers:
+      - { value: '`X-Cache` and `X-Served-By`', correct: false }
+      - { value: '`Expires`, `Cache-Control`, `ETag`, `Last-Modified`', correct: true }
+      - { value: '`Vary` and `Age`', correct: false }
+      - { value: '`Set-Cookie` and `Authorization`', correct: false }
+    help: |
+      Browsers use `Expires` and `Cache-Control` for expiration, and `ETag` and `Last-Modified` for validation.
+      https://symfony.com/doc/current/http_cache.html#http-cache-types
+  -
+    question: 'Which HTTP headers are primarily used by a reverse proxy cache to determine if a response can be cached and for how long?'
+    answers:
+      - { value: '`Content-Type` and `Content-Length`', correct: false }
+      - { value: '`Expires`, `Cache-Control`, `ETag`, `Last-Modified`, `Vary`', correct: true }
+      - { value: '`User-Agent` and `Accept-Language`', correct: false }
+      - { value: '`X-Debug-Token` and `X-Profiler-Token`', correct: false }
+    help: |
+      Reverse proxies rely on standard HTTP caching headers like `Expires`, `Cache-Control`, `ETag`, `Last-Modified`, and `Vary` to manage their cache.
+      https://symfony.com/doc/current/http_cache.html#http-cache-types
+  -
+    question: 'What is ESI (Edge Side Includes) used for in the context of Symfony''s HTTP Cache?'
+    answers:
+      - { value: 'To include external JavaScript libraries into a page.', correct: false }
+      - { value: 'To allow a reverse proxy to cache an entire page while still allowing parts of it to be dynamically generated or have different caching rules.', correct: true }
+      - { value: 'To define server-side includes for static HTML files.', correct: false }
+      - { value: 'To manage session data across multiple requests.', correct: false }
+    help: |
+      ESI allows you to mark parts of a page as "holes" that the reverse proxy will fill by making sub-requests to the application, enabling fine-grained caching.
+      https://symfony.com/doc/current/http_cache/esi.html
+  -
+    question: 'How do you enable ESI support when configuring Symfony''s `HttpCache`?'
+    answers:
+      - { value: 'By setting `framework.esi_enabled: true` in `config/packages/framework.yaml`.', correct: false }
+      - { value: 'By passing an instance of `Symfony\Component\HttpKernel\HttpCache\Esi` to the `HttpCache` constructor.', correct: true }
+      - { value: 'ESI is enabled by default when `http_cache` is active.', correct: false }
+      - { value: 'By including `<esi:include>` tags directly in your Twig templates without further configuration.', correct: false }
+    help: |
+      You need to explicitly pass an `Esi` object when instantiating `HttpCache` to enable ESI processing.
+      https://github.com/symfony/symfony-docs/blob/7.3/create_framework/http_kernel_httpkernelinterface.rst#_snippet_2
+  -
+    question: 'What does the `stale-while-revalidate` Cache-Control extension allow a cache to do?'
+    answers:
+      - { value: 'Serve a stale response only if an error occurs during revalidation.', correct: false }
+      - { value: 'Serve a stale response immediately while asynchronously revalidating it in the background.', correct: true }
+      - { value: 'Force the client to revalidate the cache entry every time.', correct: false }
+      - { value: 'Store the response indefinitely without revalidation.', correct: false }
+    help: |
+      `stale-while-revalidate` allows a cache to serve a stale response while it revalidates the content in the background, improving perceived performance.
+      https://symfony.com/doc/current/reference/configuration/framework.html#stale-while-revalidate
+  -
+    question: 'What does the `stale-if-error` Cache-Control extension allow a cache to do?'
+    answers:
+      - { value: 'Always serve fresh content, even if an error occurs.', correct: false }
+      - { value: 'Serve a stale response if an error is encountered when trying to revalidate or fetch a fresh response from the origin server.', correct: true }
+      - { value: 'Indicate that the response is only valid if no errors occurred during its generation.', correct: false }
+      - { value: 'Prevent caching if any error is detected.', correct: false }
+    help: |
+      `stale-if-error` allows a cache to serve a stale response if the origin server returns an error during revalidation or fetching.
+      https://symfony.com/doc/current/reference/configuration/framework.html#stale-if-error
+  -
+    question: 'In Symfony''s `http_cache` configuration, what is the purpose of the `private_headers` option?'
+    answers:
+      - { value: 'To define headers that should always be removed before caching.', correct: false }
+      - { value: 'To specify request headers that, if present, will cause a response without explicit `public` or `private` directives to be treated as `private`.', correct: true }
+      - { value: 'To list headers that are only visible to private caches.', correct: false }
+      - { value: 'To force all responses containing these headers to be uncacheable.', correct: false }
+    help: |
+      `private_headers` lists request headers (like `Authorization` or `Cookie`) that, if present, trigger `private` cache-control behavior on responses that don't explicitly state their cacheability.
+      https://symfony.com/doc/current/reference/configuration/framework.html#private-headers
+  -
+    question: 'In Symfony''s `http_cache` configuration, what is the purpose of the `skip_response_headers` option?'
+    answers:
+      - { value: 'To define headers that must always be present in a cached response.', correct: false }
+      - { value: 'To list response headers that will never be cached, even if the response is otherwise cacheable and public.', correct: true }
+      - { value: 'To specify headers that should only be sent to private caches.', correct: false }
+      - { value: 'To prevent certain headers from being sent to the client.', correct: false }
+    help: |
+      `skip_response_headers` allows you to specify response headers (e.g., `Set-Cookie`) that should always be removed before caching, even if the response is public and cacheable.
+      https://symfony.com/doc/current/reference/configuration/framework.html#skip-response-headers
+  -
+    question: 'How can you enable debug mode for Symfony''s HTTP Cache and what does it provide?'
+    answers:
+      - { value: 'Set `http_cache.debug: true` in `framework.yaml`. It provides detailed `X-Symfony-Cache` headers with caching information.', correct: true }
+      - { value: 'Set `kernel.debug: true` in `config/services.yaml`. It enables verbose logging for all cache operations.', correct: false }
+      - { value: 'Run `bin/console cache:clear --env=dev`. It provides a graphical interface for cache inspection.', correct: false }
+      - { value: 'Debug mode is automatically enabled in the `dev` environment and provides no special headers.', correct: false }
+    help: |
+      Setting `http_cache.debug: true` (which is the default in `dev` environment via `%kernel.debug%`) enables the `X-Symfony-Cache` header, providing insights into cache hits, misses, and other debugging information.
+      https://symfony.com/doc/current/reference/configuration/framework.html#debug
+  -
+    question: 'What is the purpose of the `default_ttl` option in Symfony''s `http_cache` configuration?'
+    answers:
+      - { value: 'It defines the maximum lifetime for all cache entries, overriding `max-age`.', correct: false }
+      - { value: 'It specifies the default number of seconds a cache entry should be considered fresh when no explicit freshness information is provided in a response.', correct: true }
+      - { value: 'It sets the Time-To-Live for database connections.', correct: false }
+      - { value: 'It controls how long session data is stored in the cache.', correct: false }
+    help: |
+      `default_ttl` provides a fallback freshness lifetime for responses that don't explicitly define `Cache-Control` or `Expires` headers.
+      https://symfony.com/doc/current/reference/configuration/framework.html#default-ttl
+  -
+    question: 'What do `allow_reload` and `allow_revalidate` options in Symfony''s `http_cache` configuration control?'
+    answers:
+      - { value: 'They control whether the cache automatically reloads content after a certain period.', correct: false }
+      - { value: '`allow_reload` permits clients to force a full cache reload (`no-cache`), and `allow_revalidate` permits clients to force a revalidation (`max-age=0`).', correct: true }
+      - { value: 'They enable or disable ESI processing for sub-requests.', correct: false }
+      - { value: 'They determine if the cache should store responses with `Vary` headers.', correct: false }
+    help: |
+      These options control whether the Symfony HttpCache respects client-sent `Cache-Control` directives like `no-cache` and `max-age=0` to force reloads or revalidations.
+      https://symfony.com/doc/current/reference/configuration/framework.html#allow-reload
+      https://symfony.com/doc/current/reference/configuration/framework.html#allow-revalidate
+  -
+    question: 'How can you prevent Symfony from automatically making responses uncacheable when a user session is started?'
+    answers:
+      - { value: 'By setting `$response->setPublic();` on every response.', correct: false }
+      - { value: 'By setting the `AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER` header on the response to `true`.', correct: true }
+      - { value: 'By disabling the session listener entirely in `config/services.yaml`.', correct: false }
+      - { value: 'Symfony always makes responses with active sessions uncacheable; this behavior cannot be overridden.', correct: false }
+    help: |
+      Symfony's `AbstractSessionListener` automatically adds `private, no-cache` headers if a session is started. You can override this for specific responses by setting `AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER`.
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache.rst#_snippet_6
+  -
+    question: 'What is the `CachingHttpClient` in Symfony used for?'
+    answers:
+      - { value: 'To cache database queries executed by the HTTP client.', correct: false }
+      - { value: 'To add HTTP caching capabilities to the Symfony HTTP Client, allowing it to cache responses from external APIs or services.', correct: true }
+      - { value: 'To cache HTTP requests made by the browser.', correct: false }
+      - { value: 'To serve cached HTML content directly from the filesystem.', correct: false }
+    help: |
+      `CachingHttpClient` decorates an existing `HttpClient` instance to add caching behavior for outgoing HTTP requests.
+      https://github.com/symfony/symfony-docs/blob/7.3/http_client.rst#_snippet_57
+  -
+    question: 'What is the `Symfony\Component\Config\ConfigCache` component primarily used for?'
+    answers:
+      - { value: 'Caching HTTP responses from controllers.', correct: false }
+      - { value: 'Managing cached files that depend on other resources (e.g., configuration files), regenerating them only when the resources change.', correct: true }
+      - { value: 'Storing user session data.', correct: false }
+      - { value: 'Caching database query results.', correct: false }
+    help: |
+      `ConfigCache` is specifically designed for caching compiled configuration, routing, or other code that depends on external resources, ensuring regeneration only when necessary.
+      https://symfony.com/doc/current/components/config/caching.html
+  -
+    question: 'How does `ConfigCache` determine if a cached file is fresh?'
+    answers:
+      - { value: 'By checking if the cached file exists.', correct: false }
+      - { value: 'By comparing the modification timestamps of the cached file and its associated resources (e.g., `FileResource`).', correct: true }
+      - { value: 'By checking a `max-age` directive within the cached file.', correct: false }
+      - { value: 'By performing a checksum comparison of the cached file''s content.', correct: false }
+    help: |
+      `ConfigCache` uses a `.meta` file (in debug mode) to store serialized resources. `isFresh()` compares the timestamps of these resources with the cached file's modification time.
+      https://symfony.com/doc/current/components/config/caching.html#basic-usage
+  -
+    question: 'What is the `PhpArrayAdapter` in Symfony''s Cache component optimized for?'
+    answers:
+      - { value: 'Storing large binary files efficiently.', correct: false }
+      - { value: 'Storing cache items in a database.', correct: false }
+      - { value: 'Storing static data that can be loaded directly into OPcache memory for maximum performance.', correct: true }
+      - { value: 'Distributing cache items across multiple servers.', correct: false }
+    help: |
+      `PhpArrayAdapter` is designed to store cache items as PHP arrays in a single file, which can then be loaded very efficiently by PHP's OPcache, making it ideal for static or infrequently changing data.
+      https://symfony.com/doc/current/components/cache/adapters/php_array_cache_adapter.html
+  -
+    question: 'Why might you use cache versioning (e.g., with `withSubNamespace`) in Symfony?'
+    answers:
+      - { value: 'To store different types of data in the same cache pool without conflicts.', correct: false }
+      - { value: 'To invalidate a group of related cache entries without clearing the entire cache, especially when underlying data changes.', correct: true }
+      - { value: 'To encrypt cache data for security purposes.', correct: false }
+      - { value: 'To automatically refresh cache entries after a set period.', correct: false }
+    help: |
+      Cache versioning, often implemented using sub-namespaces, allows you to effectively "bust" a subset of your cache when the data they represent changes, without affecting other cached items.
+      https://symfony.com/doc/current/components/cache.html#cache-versioning
+  -
+    question: 'What is the purpose of the `beta` parameter when using `CacheInterface::get` for cache items?'
+    answers:
+      - { value: 'It defines the probability of a cache hit.', correct: false }
+      - { value: 'It enables probabilistic early expiration, allowing some users to get stale data while the cache is recomputed in the background to prevent stampedes.', correct: true }
+      - { value: 'It sets a fallback value if the cache item is not found.', correct: false }
+      - { value: 'It specifies the cache adapter to use for the item.', correct: false }
+    help: |
+      The `beta` parameter helps prevent cache stampedes by allowing a small percentage of requests to trigger an early recomputation of a cache item before its actual expiration, while others still receive the stale (but still valid) item.
+      https://symfony.com/doc/current/components/cache.html#probabilistic-early-expiration
+  -
+    question: 'How can you configure a cache pool in Symfony to use asynchronous value computation via the Messenger component?'
+    answers:
+      - { value: 'By setting `early_expiration_message_bus` for the cache pool and routing `EarlyExpirationMessage` to a Messenger transport.', correct: true }
+      - { value: 'By directly injecting the Messenger bus into the cache adapter''s constructor.', correct: false }
+      - { value: 'Asynchronous cache computation is not supported out-of-the-box in Symfony.', correct: false }
+      - { value: 'By using a dedicated `AsyncCacheAdapter` provided by Symfony.', correct: false }
+    help: |
+      Symfony allows configuring cache pools to use a Messenger bus for early expiration messages, enabling asynchronous recomputation of cache values.
+      https://symfony.com/doc/current/cache.html#asynchronous-cache-pool
+  -
+    question: 'Which of the following are valid cache adapters provided by the Symfony Cache component?'
+    answers:
+      - { value: '`DatabaseAdapter`', correct: false }
+      - { value: '`FilesystemAdapter`', correct: true }
+      - { value: '`MemcachedAdapter`', correct: true }
+      - { value: '`ApcuAdapter`', correct: true }
+      - { value: '`RedisAdapter`', correct: true }
+      - { value: '`ElasticsearchAdapter`', correct: false }
+    help: |
+      Symfony provides various built-in cache adapters for different storage backends, including filesystem, APCu, Memcached, and Redis.
+      https://symfony.com/doc/current/components/cache/adapters.html
+  -
+    question: 'Where does `FilesystemAdapter` store cached data by default if no directory is specified?'
+    answers:
+      - { value: 'In the system''s temporary directory.', correct: true }
+      - { value: 'In the `var/cache` directory of the Symfony project.', correct: false }
+      - { value: 'In the current working directory of the application.', correct: false }
+      - { value: 'It throws an error, as a directory is always required.', correct: false }
+    help: |
+      If no directory is provided to the `FilesystemAdapter` constructor, it defaults to creating a directory inside the system's temporary directory.
+      https://symfony.com/doc/current/components/cache/adapters/filesystem_adapter.html
+  -
+    question: 'What is a prerequisite for using Symfony''s `ApcuAdapter`?'
+    answers:
+      - { value: 'A running Redis server.', correct: false }
+      - { value: 'The APCu PHP extension must be installed and enabled.', correct: true }
+      - { value: 'The Memcached extension must be installed.', correct: false }
+      - { value: 'A database connection configured for caching.', correct: false }
+    help: |
+      The `ApcuAdapter` leverages the APCu (Alternative PHP Cache for Users) extension, which must be installed and enabled on your PHP environment.
+      https://symfony.com/doc/current/components/cache/adapters/apcu_adapter.html
+  -
+    question: 'When instantiating `MemcachedAdapter`, what does a `defaultLifetime` of `0` signify?'
+    answers:
+      - { value: 'The cache items will expire immediately.', correct: false }
+      - { value: 'The cache items will be stored indefinitely (until cleared or server restart).', correct: true }
+      - { value: 'The lifetime will be determined by the Memcached server''s default.', correct: false }
+      - { value: 'It disables caching for all items in the pool.', correct: false }
+    help: |
+      A `defaultLifetime` of 0 for `MemcachedAdapter` means that items without an explicit lifetime will be stored indefinitely, or until the Memcached server is restarted or the cache is explicitly cleared.
+      https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#usage
+  -
+    question: 'What happens when `libketama_compatible` is enabled for `MemcachedAdapter`?'
+    answers:
+      - { value: 'It enables data encryption for Memcached communication.', correct: false }
+      - { value: 'It allows other libketama-based clients (e.g., Python, Ruby) to access keys stored by this client transparently.', correct: true }
+      - { value: 'It forces the use of a specific hashing algorithm and distribution method for key mapping.', correct: true }
+      - { value: 'It disables consistent hashing for the Memcached cluster.', correct: false }
+    help: |
+      Enabling `libketama_compatible` ensures interoperability with other clients using the libketama consistent hashing algorithm. It automatically sets the `hash` option to `md5` and `distribution` to `consistent`.
+      https://github.com/symfony/symfony-docs/blob/7.3/components/cache/adapters/memcached_adapter.rst#_snippet_12
+  -
+    question: 'What is the benefit of enabling `tcp_keepalive` for `MemcachedAdapter`?'
+    answers:
+      - { value: 'It encrypts the TCP connection to Memcached.', correct: false }
+      - { value: 'It reduces network latency for Memcached requests.', correct: false }
+      - { value: 'It sends periodic probes to detect unresponsive Memcached servers, ensuring connection stability and proper resource management.', correct: true }
+      - { value: 'It automatically reconnects to Memcached if the connection is lost.', correct: false }
+    help: |
+      TCP keep-alive probes help maintain active connections and detect if a remote server has become unresponsive, preventing stale connections.
+      https://github.com/symfony/symfony-docs/blob/7.3/components/cache/adapters/memcached_adapter.rst#_snippet_25
+  -
+    question: 'If both `Cache-Control: max-age` and `Expires` headers are present in a response, which one takes precedence for modern HTTP clients?'
+    answers:
+      - { value: '`Expires` always takes precedence.', correct: false }
+      - { value: '`Cache-Control: max-age` always takes precedence.', correct: true }
+      - { value: 'It depends on the browser implementation.', correct: false }
+      - { value: 'Neither, the response is considered uncacheable.', correct: false }
+    help: |
+      According to RFC 7234, `Cache-Control` directives take precedence over `Expires` for HTTP/1.1 and later.
+      https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#directives
+  -
+    question: 'Which `Cache-Control` directive should be used for content that is specific to a single user and should not be stored by shared caches?'
+    answers:
+      - { value: '`public`', correct: false }
+      - { value: '`private`', correct: true }
+      - { value: '`no-store`', correct: false }
+      - { value: '`immutable`', correct: false }
+    help: |
+      The `private` directive indicates that the response is intended for a single user and should not be stored by shared caches (like reverse proxies), though private caches (like browsers) may store it.
+      https://symfony.com/doc/current/http_cache/expiration.html#marking-a-response-public-or-private
+  -
+    question: 'Which `Cache-Control` directive should be used for content that can be cached by any cache (shared or private)?'
+    answers:
+      - { value: '`private`', correct: false }
+      - { value: '`no-cache`', correct: false }
+      - { value: '`public`', correct: true }
+      - { value: '`must-revalidate`', correct: false }
+    help: |
+      The `public` directive indicates that the response may be cached by any cache, including shared caches.
+      https://symfony.com/doc/current/http_cache/expiration.html#marking-a-response-public-or-private
+  -
+    question: 'How does the `Vary` header affect how a cache stores and retrieves responses?'
+    answers:
+      - { value: 'It forces the cache to always revalidate the response, ignoring its freshness.', correct: false }
+      - { value: 'It instructs the cache to store different versions of the response based on the values of the specified request headers, effectively making the Varying headers part of the cache key.', correct: true }
+      - { value: 'It prevents the cache from storing the response if any of the listed headers are present.', correct: false }
+      - { value: 'It defines the maximum size of the cached response.', correct: false }
+    help: |
+      The `Vary` header tells a cache that the response is dependent on the values of specified request headers. This means the cache will store a separate entry for each unique combination of those header values.
+      https://symfony.com/doc/current/http_cache/cache_vary.html
+  -
+    question: 'Which of the following is a common strategy for invalidating cached content in a Symfony application using a reverse proxy?'
+    answers:
+      - { value: 'Manually deleting cache files from the server''s filesystem.', correct: false }
+      - { value: 'Implementing a `PURGE` HTTP method that triggers the cache to remove specific URLs.', correct: true }
+      - { value: 'Restarting the entire Symfony application server after every content update.', correct: false }
+      - { value: 'Setting `Cache-Control: no-cache` on all responses to prevent caching.', correct: false }
+    help: |
+      A common strategy for explicit cache invalidation with reverse proxies is to implement a custom `PURGE` HTTP method. This allows you to selectively remove specific URLs from the cache when their content changes.
+      https://symfony.com/doc/current/http_cache/cache_invalidation.html
+  -
+    question: 'When using `Response::setCache()`, which option is used to indicate that a cache must not store any part of either the request or response?'
+    answers:
+      - { value: '`no_cache`', correct: false }
+      - { value: '`no_store`', correct: true }
+      - { value: '`must_revalidate`', correct: false }
+      - { value: '`private`', correct: false }
+    help: |
+      The `no_store` option within `setCache()` corresponds to the `Cache-Control: no-store` directive, which prohibits any caching.
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache.rst#_snippet_9
+  -
+    question: 'Which `Cache-Control` directive, when set via `Response::setCache()`, indicates that the response will not change over time and can be cached indefinitely by the client without revalidation?'
+    answers:
+      - { value: '`max_age`', correct: false }
+      - { value: '`immutable`', correct: true }
+      - { value: '`public`', correct: false }
+      - { value: '`proxy_revalidate`', correct: false }
+    help: |
+      The `immutable` directive (part of `Cache-Control`) indicates that the response body will not change over time, allowing clients to cache it without revalidation until its `max-age` or `Expires` time.
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache.rst#_snippet_9
+  -
+    question: 'What is the purpose of the `trace_header` option in Symfony''s `http_cache` configuration?'
+    answers:
+      - { value: 'To define a custom header for tracking user sessions.', correct: false }
+      - { value: 'To specify the name of the HTTP header used by Symfony''s HttpCache to provide debugging information (e.g., cache hits/misses).', correct: true }
+      - { value: 'To enable distributed tracing for all HTTP requests.', correct: false }
+      - { value: 'To log all cache operations to a specific file.', correct: false }
+    help: |
+      The `trace_header` option allows you to customize the name of the header (default is `X-Symfony-Cache`) that provides debugging information about the HttpCache's behavior.
+      https://symfony.com/doc/current/reference/configuration/framework.html#trace-header
+  -
+    question: 'Which `Cache-Control` directive is similar to `must-revalidate` but applies specifically to shared caches?'
+    answers:
+      - { value: '`no-cache`', correct: false }
+      - { value: '`proxy-revalidate`', correct: true }
+      - { value: '`s-maxage`', correct: false }
+      - { value: '`private`', correct: false }
+    help: |
+      `proxy-revalidate` is similar to `must-revalidate` but specifically applies to shared caches, indicating they must revalidate stale cached entries with the origin server.
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache.rst#_snippet_9
+  -
+    question: 'What is the significance of the `Age` HTTP response header in caching?'
+    answers:
+      - { value: 'It indicates the maximum age a response can be cached for.', correct: false }
+      - { value: 'It represents the time in seconds since the response was generated or successfully validated by the origin server.', correct: true }
+      - { value: 'It specifies the last modification time of the resource.', correct: false }
+      - { value: 'It is used to determine the expiration date of the response.', correct: false }
+    help: |
+      The `Age` header indicates the time in seconds that the object has been in a proxy cache.
+      https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Age
+  -
+    question: 'Which of the following is NOT a valid `Cache-Control` directive?'
+    answers:
+      - { value: '`max-stale`', correct: false }
+      - { value: '`only-if-cached`', correct: false }
+      - { value: '`do-not-cache`', correct: true }
+      - { value: '`no-transform`', correct: false }
+    help: |
+      `do-not-cache` is not a standard HTTP `Cache-Control` directive. Common directives include `max-age`, `s-maxage`, `public`, `private`, `no-cache`, `no-store`, `must-revalidate`, `proxy-revalidate`, `immutable`, `max-stale`, `min-fresh`, `only-if-cached`, `no-transform`.
+      https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#directives
+  -
+    question: 'What is the purpose of the `no-transform` directive in `Cache-Control`?'
+    answers:
+      - { value: 'It prevents the response from being compressed.', correct: false }
+      - { value: 'It prevents proxy servers from modifying the content of the response (e.g., by converting image formats).', correct: true }
+      - { value: 'It ensures that the response is always served over HTTPS.', correct: false }
+      - { value: 'It disables all caching for the response.', correct: false }
+    help: |
+      The `no-transform` directive instructs caches and proxies not to modify the payload of the response.
+      https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#no-transform
+  -
+    question: 'When is it appropriate to use a "weak" ETag (e.g., `W/"abcdef"`)?'
+    answers:
+      - { value: 'When the resource content is guaranteed to be byte-for-byte identical across versions.', correct: false }
+      - { value: 'When the resource content is semantically equivalent but may have byte-level differences (e.g., due to compression or minor formatting changes).', correct: true }
+      - { value: 'When the ETag is generated based on a timestamp.', correct: false }
+      - { value: 'Weak ETags are deprecated and should not be used.', correct: false }
+    help: |
+      Weak ETags are used when two representations are semantically equivalent but not byte-for-byte identical. They are prefixed with `W/`.
+      https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag#weak_etags
+  -
+    question: 'Consider the following `Cache-Control` header: `Cache-Control: public, max-age=3600, must-revalidate`. What does `must-revalidate` imply?'
+    answers:
+      - { value: 'The cache can serve a stale response if the origin server is unreachable.', correct: false }
+      - { value: 'The cache must revalidate stale cached entries with the origin server before serving them, even if the client doesn''t explicitly request revalidation.', correct: true }
+      - { value: 'The response should never be cached.', correct: false }
+      - { value: 'The response is immutable and never needs revalidation.', correct: false }
+    help: |
+      `must-revalidate` forces caches to revalidate with the origin server once the `max-age` has expired, rather than serving a stale response.
+      https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#must-revalidate
+  -
+    question: 'What is the primary benefit of using ESI with Symfony''s HTTP Cache?'
+    answers:
+      - { value: 'It allows for dynamic content to be generated entirely on the client-side.', correct: false }
+      - { value: 'It enables caching of static assets like CSS and JavaScript files.', correct: false }
+      - { value: 'It allows for aggressive caching of entire pages while still enabling dynamic or personalized sections to be rendered separately and merged by the reverse proxy.', correct: true }
+      - { value: 'It simplifies database query caching.', correct: false }
+    help: |
+      ESI is crucial for "hole-punching" in full-page caching, allowing parts of a page to be excluded from the main cache and fetched dynamically.
+      https://symfony.com/doc/current/http_cache/esi.html
+  -
+    question: 'Which method on the `Response` object allows you to set multiple HTTP cache-related headers in a single call using an array of options?'
+    answers:
+      - { value: '`setHeaders()`', correct: false }
+      - { value: '`setCache()`', correct: true }
+      - { value: '`setHttpCache()`', correct: false }
+      - { value: '`configureCache()`', correct: false }
+    help: |
+      The `setCache()` method is a convenient way to set various cache-related headers (`max-age`, `public`, `etag`, `last_modified`, etc.) using an associative array.
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache.rst#_snippet_9
+  -
+    question: 'When configuring Symfony''s `HttpCache`, what is the default value for `default_ttl`?'
+    answers:
+      - { value: '3600 seconds (1 hour)', correct: false }
+      - { value: '0 seconds (no default TTL)', correct: true }
+      - { value: '60 seconds', correct: false }
+      - { value: 'It depends on the `kernel.debug` parameter.', correct: false }
+    help: |
+      The `default_ttl` option has a default value of `0`, meaning no explicit freshness information is provided by default.
+      https://symfony.com/doc/current/reference/configuration/framework.html#default-ttl
+  -
+    question: 'What is the primary purpose of the `X-Symfony-Cache` header when HTTP caching is enabled in debug mode?'
+    answers:
+      - { value: 'To indicate the Symfony version being used.', correct: false }
+      - { value: 'To provide debugging information about the cache status (e.g., `HIT`, `MISS`, `STALE`), helping to understand caching behavior.', correct: true }
+      - { value: 'To set a unique identifier for each request.', correct: false }
+      - { value: 'To specify the cache adapter used by Symfony.', correct: false }
+    help: |
+      The `X-Symfony-Cache` header is invaluable for debugging, showing whether a request was a cache hit or miss, and detailing the cache operations.
+      https://symfony.com/doc/current/http_cache.html#debugging
+  -
+    question: 'If you have a page that includes user-specific content (e.g., a "Welcome, [username]" message) but also large sections of public content, how would you typically handle caching with Symfony''s HTTP Cache?'
+    answers:
+      - { value: 'Mark the entire page as `private` and prevent any shared caching.', correct: false }
+      - { value: 'Use ESI to mark the user-specific section as a separate sub-request, allowing the rest of the page to be publicly cached.', correct: true }
+      - { value: 'Disable HTTP caching for the entire page.', correct: false }
+      - { value: 'Implement client-side JavaScript to fetch and display the user-specific content after the page loads.', correct: true }
+    help: |
+      ESI is the ideal solution for this "hole-punching" scenario, allowing you to cache the public parts of the page while dynamically rendering the private sections. Client-side rendering is also a valid approach for dynamic content.
+      https://symfony.com/doc/current/http_cache/esi.html
+  -
+    question: 'Which of the following describes a "cache hit" in the context of a reverse proxy?'
+    answers:
+      - { value: 'The request reached the application server, and a new response was generated.', correct: false }
+      - { value: 'The reverse proxy had a fresh copy of the requested resource and served it directly without contacting the application server.', correct: true }
+      - { value: 'The reverse proxy had a stale copy and had to revalidate it with the application server.', correct: false }
+      - { value: 'The client''s browser already had the resource cached.', correct: false }
+    help: |
+      A cache hit means the reverse proxy successfully served the request from its cache without forwarding it to the backend application.
+      https://symfony.com/doc/current/http_cache.html#symfony-reverse-proxy
+  -
+    question: 'Which of the following describes a "cache miss" in the context of a reverse proxy?'
+    answers:
+      - { value: 'The reverse proxy served a stale response.', correct: false }
+      - { value: 'The reverse proxy did not have a fresh copy of the requested resource and forwarded the request to the application server.', correct: true }
+      - { value: 'The client''s browser failed to retrieve the resource.', correct: false }
+      - { value: 'The application server returned an error.', correct: false }
+    help: |
+      A cache miss occurs when the reverse proxy cannot serve a fresh response from its cache and must forward the request to the origin server.
+      https://symfony.com/doc/current/http_cache.html#symfony-reverse-proxy
+  -
+    question: 'What is the purpose of the `kernel.cache_dir` parameter in Symfony?'
+    answers:
+      - { value: 'It defines the directory for storing application logs.', correct: false }
+      - { value: 'It specifies the absolute path to the Symfony application''s cache directory, used for various cached files (e.g., compiled container, routes, Twig templates).', correct: true }
+      - { value: 'It points to the directory where user-uploaded files are stored.', correct: false }
+      - { value: 'It is a deprecated parameter and no longer used in Symfony 7.', correct: false }
+    help: |
+      `kernel.cache_dir` is a fundamental parameter defining the location for all application-level cache files generated by Symfony.
+      https://github.com/symfony/symfony-docs/blob/7.3/reference/configuration/kernel.rst#_snippet_6
+  -
+    question: 'When using `PhpFilesAdapter`, what is the structure of a typical cached file?'
+    answers:
+      - { value: 'A JSON file containing key-value pairs.', correct: false }
+      - { value: 'A serialized PHP object representing the cache item.', correct: false }
+      - { value: 'A PHP file that returns an array containing the expiration timestamp and the cached content.', correct: true }
+      - { value: 'An XML file with cache metadata.', correct: false }
+    help: |
+      `PhpFilesAdapter` generates PHP files that return an array, optimized for OPcache.
+      https://github.com/symfony/symfony-docs/blob/7.3/components/cache/adapters/php_files_adapter.rst#_snippet_0
+  -
+    question: 'What is the main advantage of using `PhpArrayAdapter` over `FilesystemAdapter` for static or infrequently changing data?'
+    answers:
+      - { value: '`PhpArrayAdapter` supports distributed caching across multiple servers.', correct: false }
+      - { value: '`PhpArrayAdapter` stores data in a database, offering better persistence.', correct: false }
+      - { value: '`PhpArrayAdapter` stores data as a single PHP array file that can be loaded directly into PHP''s OPcache, providing superior performance by avoiding filesystem I/O on subsequent requests.', correct: true }
+      - { value: '`PhpArrayAdapter` automatically invalidates cache entries when source files change.', correct: false }
+    help: |
+      `PhpArrayAdapter` is specifically designed to leverage OPcache, making it extremely fast for static data by avoiding repeated filesystem reads.
+      https://symfony.com/doc/current/components/cache/adapters/php_array_cache_adapter.html
+  -
+    question: 'Which of the following is a valid way to set the `Vary` header on a Symfony `Response` object?'
+    answers:
+      - { value: '`$response->setVary(''User-Agent'');`', correct: true }
+      - { value: '`$response->setVary([''Accept-Encoding'', ''User-Agent'']);`', correct: true }
+      - { value: '`$response->headers->add(''Vary'', ''Accept-Encoding'');`', correct: false }
+      - { value: '`$response->setCache([''vary'' => ''Accept-Encoding'']);`', correct: false }
+    help: |
+      The `setVary()` method on the `Response` object allows setting one or multiple `Vary` headers.
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache/cache_vary.rst#_snippet_2
+  -
+    question: 'What is the purpose of the `allow_reload` option in Symfony''s `http_cache` configuration?'
+    answers:
+      - { value: 'It allows the cache to automatically reload expired content.', correct: false }
+      - { value: 'It specifies whether the client can force a cache reload by including a `Cache-Control: no-cache` directive in the request.', correct: true }
+      - { value: 'It enables hot-reloading of application code without restarting the server.', correct: false }
+      - { value: 'It determines if the cache should reload its configuration from disk.', correct: false }
+    help: |
+      `allow_reload` controls whether the Symfony HttpCache respects the client's `Cache-Control: no-cache` directive to bypass the cache and fetch a fresh response.
+      https://symfony.com/doc/current/reference/configuration/framework.html#allow-reload
+  -
+    question: 'What is the purpose of the `allow_revalidate` option in Symfony''s `http_cache` configuration?'
+    answers:
+      - { value: 'It allows the cache to revalidate content in the background.', correct: false }
+      - { value: 'It specifies whether the client can force a cache revalidation by including a `Cache-Control: max-age=0` directive in the request.', correct: true }
+      - { value: 'It enables automatic revalidation of all cached content at regular intervals.', correct: false }
+      - { value: 'It controls whether the cache can serve stale content during revalidation.', correct: false }
+    help: |
+      `allow_revalidate` controls whether the Symfony HttpCache respects the client's `Cache-Control: max-age=0` directive to revalidate a cached response.
+      https://symfony.com/doc/current/reference/configuration/framework.html#allow-revalidate
+  -
+    question: 'Which HTTP status code is returned when a resource has not been modified according to the client''s cache validation headers?'
+    answers:
+      - { value: '200 OK', correct: false }
+      - { value: '301 Moved Permanently', correct: false }
+      - { value: '304 Not Modified', correct: true }
+      - { value: '404 Not Found', correct: false }
+    help: |
+      A 304 Not Modified status code indicates that the client's cached version of the resource is still valid, and the server does not need to send the full response body again.
+      https://symfony.com/doc/current/http_cache/validation.html#checking-if-a-resource-is-not-modified
+  -
+    question: 'What is the recommended approach for handling ETags when using Apache''s `mod_deflate` or `mod_brotli` for compression?'
+    answers:
+      - { value: 'Disable ETag generation entirely to avoid conflicts.', correct: false }
+      - { value: 'Configure Apache to preserve both the original and compressed ETags using `RequestHeader edit` directives.', correct: true }
+      - { value: 'Always use weak ETags, as they are compatible with compression.', correct: false }
+      - { value: 'Apache automatically handles ETag modification with compression, no special configuration is needed.', correct: false }
+    help: |
+      Apache's compression modules can alter the ETag. It's recommended to configure Apache to preserve both the original and compressed ETags to ensure proper validation.
+      https://symfony.com/doc/current/http_cache/validation.html#apache-and-compression
+  -
+    question: 'What is the role of `HttpKernel\HttpCache\Store` when configuring Symfony''s `HttpCache`?'
+    answers:
+      - { value: 'It manages the application''s session data.', correct: false }
+      - { value: 'It provides the underlying storage mechanism for cached HTTP responses (e.g., filesystem).', correct: true }
+      - { value: 'It handles the routing of incoming HTTP requests.', correct: false }
+      - { value: 'It is responsible for generating HTTP cache headers.', correct: false }
+    help: |
+      The `Store` object is where `HttpCache` physically stores the cached responses. By default, it uses the filesystem.
+      https://symfony.com/doc/current/create_framework/http_kernel_httpkernelinterface.html#integrating-httpcache-for-reverse-proxy-caching
+  -
+    question: 'When decorating the `http_cache` service with a custom `CacheKernel`, which arguments are typically passed to the `CacheKernel` constructor?'
+    answers:
+      - { value: 'The `Request` object, the `Response` object, and the `Router` service.', correct: false }
+      - { value: 'The main `kernel`, the `http_cache.store` service, and optionally the `esi` service.', correct: true }
+      - { value: 'The `ContainerBuilder`, the `LoggerInterface`, and the `EventDispatcher`.', correct: false }
+      - { value: 'Only the `http_cache.store` service is required.', correct: false }
+    help: |
+      When decorating, you typically pass the original kernel, the cache store, and the ESI service (if used) to your custom `CacheKernel`.
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache/cache_invalidation.rst#_snippet_1
+  -
+    question: 'What is the primary benefit of using a reverse proxy cache like Symfony''s `HttpCache` compared to only relying on browser caches?'
+    answers:
+      - { value: 'Reverse proxies can cache dynamic content that browsers cannot.', correct: false }
+      - { value: 'Reverse proxies reduce the load on the origin server for all users, not just individual browsers, and can serve cached content even if the origin server is down.', correct: true }
+      - { value: 'Reverse proxies only cache static assets, while browsers cache dynamic content.', correct: false }
+      - { value: 'Reverse proxies are easier to configure than browser caches.', correct: false }
+    help: |
+      Reverse proxies provide shared caching for all users, reducing server load and improving performance for everyone. They can also serve stale content during origin server issues.
+      https://symfony.com/doc/current/http_cache.html#http-cache-types
+  -
+    question: 'What is the purpose of the `trace_level` option in Symfony''s `http_cache` configuration?'
+    answers:
+      - { value: 'To set the logging level for cache operations (e.g., `info`, `debug`).', correct: false }
+      - { value: 'To control the level of detail provided in the `X-Symfony-Cache` header (e.g., `none`, `short`, `full`).', correct: true }
+      - { value: 'To specify the number of cache entries to trace.', correct: false }
+      - { value: 'To enable or disable tracing of ESI sub-requests.', correct: false }
+    help: |
+      `trace_level` allows you to adjust the verbosity of the `X-Symfony-Cache` header, from no trace to a full trace.
+      https://symfony.com/doc/current/reference/configuration/framework.html#trace-level
+  -
+    question: 'Which of the following is a valid way to configure `Cache-Control` and `Expires` headers using the `#[Cache]` attribute in a Symfony controller?'
+    answers:
+      - { value: '```php
+#[Cache(public: true, maxage: 3600, expires: "+1 hour")]
+public function index(): Response {}
+```', correct: true }
+      - { value: '```php
+#[Cache(private: true, ttl: 600)]
+public function index(): Response {}
+```', correct: false }
+      - { value: '```php
+#[Cache(cacheControl: "public, max-age=3600")]
+public function index(): Response {}
+```', correct: false }
+      - { value: '```php
+#[Cache(expires: new \DateTime("+1 day"))]
+public function index(): Response {}
+```', correct: false }
+    help: |
+      The `#[Cache]` attribute supports `public`, `maxage`, and `expires` (using a string format like `"+600 seconds"`).
+      https://symfony.com/doc/current/http_cache/expiration.html#configuring-with-the-cache-attribute
+  -
+    question: 'How can you manually force a Symfony `Response` to be uncacheable, even if other headers might suggest otherwise?'
+    answers:
+      - { value: '`$response->setPublic(false);`', correct: false }
+      - { value: '`$response->setCache([''no_store'' => true]);`', correct: true }
+      - { value: '`$response->setMaxAge(0);`', correct: false }
+      - { value: '`$response->setPrivate();`', correct: false }
+    help: |
+      Setting `no_store` to `true` via `setCache()` adds the `Cache-Control: no-store` directive, which explicitly forbids any caching.
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache.rst#_snippet_9
+  -
+    question: 'What is the primary difference between `max-age` and `s-maxage` in the `Cache-Control` header?'
+    answers:
+      - { value: '`max-age` applies to private caches only, while `s-maxage` applies to shared caches only.', correct: false }
+      - { value: '`max-age` specifies the freshness for all caches, while `s-maxage` overrides `max-age` specifically for shared caches.', correct: true }
+      - { value: '`max-age` is for validation, `s-maxage` is for expiration.', correct: false }
+      - { value: '`s-maxage` is deprecated in favor of `max-age`.', correct: false }
+    help: |
+      `max-age` is a general directive, while `s-maxage` provides a specific freshness lifetime for shared caches, overriding `max-age` for them.
+      https://symfony.com/doc/current/http_cache/expiration.html#cache-control-header
+  -
+    question: 'Which of the following is a valid way to configure a cache pool in Symfony using YAML, specifying a `default_lifetime` and `namespace`?'
+    answers:
+      - { value: '```yaml
+framework:
+    cache:
+        pools:
+            app.cache:
+                adapter: cache.adapter.filesystem
+                default_lifetime: 3600
+                namespace: my_app_cache
+```', correct: true }
+      - { value: '```yaml
+services:
+    app.cache:
+        class: Symfony\\Component\\Cache\\Adapter\\FilesystemAdapter
+        arguments: [3600, my_app_cache]
+```', correct: false }
+      - { value: '```yaml
+cache:
+    app.cache:
+        lifetime: 3600
+        prefix: my_app_cache
+```', correct: false }
+      - { value: '```yaml
+framework:
+    cache_pools:
+        app.cache:
+            ttl: 3600
+            key_prefix: my_app_cache
+```', correct: false }
+    help: |
+      Cache pools are configured under `framework.cache.pools`, where you can specify the adapter, `default_lifetime`, and `namespace`.
+      https://symfony.com/doc/current/components/cache/adapters.html#configuration
+  -
+    question: 'What is the purpose of the `must_revalidate` option when setting cache headers via `Response::setCache()`?'
+    answers:
+      - { value: 'It indicates that the response must not be served from a cache without revalidation.', correct: true }
+      - { value: 'It forces the client to always revalidate the cache, regardless of freshness.', correct: false }
+      - { value: 'It specifies that the cache should revalidate the content in the background.', correct: false }
+      - { value: 'It makes the response uncacheable.', correct: false }
+    help: |
+      `must_revalidate` adds the `Cache-Control: must-revalidate` directive, requiring caches to revalidate stale entries with the origin server.
+      https://github.com/symfony/symfony-docs/blob/7.3/http_cache.rst#_snippet_9
+```
