@@ -1,0 +1,1044 @@
+```yaml
+category: PHP
+questions:
+  -
+    question: 'Which of the following is true about readonly classes introduced in PHP 8.2?'
+    answers:
+      - { value: 'All properties of a readonly class must be declared as readonly.', correct: true }
+      - { value: 'Readonly classes can extend non-readonly classes.', correct: true }
+      - { value: 'Readonly classes can be extended by non-readonly classes.', correct: false }
+      - { value: 'Properties of a readonly class can be modified after initialization within the constructor.', correct: true }
+      - { value: 'Static properties can be declared in a readonly class.', correct: false }
+    help: |
+      'https://www.php.net/manual/en/language.oop5.properties.php#language.oop5.properties.readonly'
+  -
+    question: 'Consider the following PHP code:
+```php
+<?php
+
+class Animal {
+    protected string $name;
+
+    public function __construct(string $name) {
+        $this->name = $name;
+    }
+
+    public function speak(): string {
+        return "Generic sound";
+    }
+}
+
+class Dog extends Animal {
+    public function speak(): string {
+        return "Woof!";
+    }
+}
+
+$dog = new Dog("Buddy");
+echo $dog->speak();
+?>
+```
+What will be the output of this code?'
+    answers:
+      - { value: 'Generic sound', correct: false }
+      - { value: 'Woof!', correct: true }
+      - { value: 'Buddy', correct: false }
+      - { value: 'An error will occur due to incorrect method overriding.', correct: false }
+    help: |
+      'This question tests understanding of method overriding in inheritance. The `Dog` class overrides the `speak` method of the `Animal` class.
+      https://www.php.net/manual/en/language.oop5.inheritance.php'
+  -
+    question: 'Which of the following correctly defines and uses a namespace in PHP?'
+    answers:
+      - { value: '
+```php
+<?php
+namespace App\Controller;
+
+class HomeController {
+    // ...
+}
+
+$controller = new App\Controller\HomeController();
+?>
+', correct: true }
+      - { value: '
+```php
+<?php
+namespace App/Controller;
+
+class HomeController {
+    // ...
+}
+
+$controller = new App/Controller/HomeController();
+?>
+', correct: false }
+      - { value: '
+```php
+<?php
+namespace App.Controller;
+
+class HomeController {
+    // ...
+}
+
+$controller = new App.Controller.HomeController();
+?>
+', correct: false }
+      - { value: '
+```php
+<?php
+namespace App\Controller;
+
+use App\Controller\HomeController;
+
+class HomeController {
+    // ...
+}
+
+$controller = new HomeController();
+?>
+', correct: true }
+    help: |
+      'Namespaces are declared using the `namespace` keyword followed by a backslash-separated name. Classes within a namespace can be instantiated using their fully qualified name or by importing them with the `use` keyword.
+      https://www.php.net/manual/en/language.namespaces.definition.php'
+  -
+    question: 'Given the following PHP interface:
+```php
+<?php
+interface LoggerInterface {
+    public function log(string $message): void;
+    public function error(string $message): void;
+}
+?>
+```
+Which of the following classes correctly implements `LoggerInterface`?'
+    answers:
+      - { value: '
+```php
+<?php
+class FileLogger implements LoggerInterface {
+    public function log(string $message): void { /* ... */ }
+    // error method is missing
+}
+?>
+', correct: false }
+      - { value: '
+```php
+<?php
+class DatabaseLogger implements LoggerInterface {
+    public function log(string $message): void { /* ... */ }
+    private function error(string $message): void { /* ... */ } // Visibility mismatch
+}
+?>
+', correct: false }
+      - { value: '
+```php
+<?php
+class ConsoleLogger implements LoggerInterface {
+    public function log(string $message): void { /* ... */ }
+    public function error(string $message): void { /* ... */ }
+}
+?>
+', correct: true }
+      - { value: '
+```php
+<?php
+class NullLogger implements LoggerInterface {
+    protected function log(string $message): void { /* ... */ } // Visibility mismatch
+    public function error(string $message): void { /* ... */ }
+}
+?>
+', correct: false }
+    help: |
+      'When implementing an interface, all methods declared in the interface must be defined in the implementing class with the same visibility.
+      https://www.php.net/manual/en/language.oop5.interfaces.php'
+  -
+    question: 'What is the purpose of the `use` keyword when defining an anonymous function (closure) in PHP?'
+    answers:
+      - { value: 'To import classes or namespaces into the closure''s scope.', correct: false }
+      - { value: 'To pass arguments to the closure when it is called.', correct: false }
+      - { value: 'To inherit variables from the parent scope into the closure''s scope.', correct: true }
+      - { value: 'To define a return type for the closure.', correct: false }
+    help: |
+      'The `use` keyword in anonymous functions allows the closure to inherit variables from the parent scope. These variables are inherited by value at the time the closure is defined, unless passed by reference.
+      https://www.php.net/manual/en/functions.anonymous.php'
+  -
+    question: 'Which statement is true regarding abstract classes in PHP?'
+    answers:
+      - { value: 'An abstract class must contain at least one abstract method.', correct: false }
+      - { value: 'Abstract classes can be instantiated directly.', correct: false }
+      - { value: 'Classes extending an abstract class must implement all abstract methods declared in the parent abstract class.', correct: true }
+      - { value: 'Abstract methods must define a body.', correct: false }
+    help: |
+      'Abstract classes cannot be instantiated and may or may not contain abstract methods. If they do contain abstract methods, any non-abstract class extending them must implement all of those abstract methods.
+      https://www.php.net/manual/en/language.oop5.abstract.php'
+  -
+    question: 'Which of the following is the correct way to catch multiple specific exceptions in PHP 8.0+?'
+    answers:
+      - { value: '
+```php
+try {
+    // ...
+} catch (ExceptionTypeA | ExceptionTypeB $e) {
+    // handle A or B
+}
+```
+', correct: true }
+      - { value: '
+```php
+try {
+    // ...
+} catch (ExceptionTypeA, ExceptionTypeB $e) {
+    // handle A or B
+}
+```
+', correct: false }
+      - { value: '
+```php
+try {
+    // ...
+} catch (ExceptionTypeA $e) {
+    // handle A
+} catch (ExceptionTypeB $e) {
+    // handle B
+}
+```
+', correct: true }
+      - { value: '
+```php
+try {
+    // ...
+} catch (ExceptionTypeA || ExceptionTypeB $e) {
+    // handle A or B
+}
+```
+', correct: false }
+    help: |
+      'PHP 8.0 introduced the ability to catch multiple exceptions with a single `catch` block using the `|` (bitwise OR) operator. Multiple `catch` blocks are also a valid way to handle different exception types.
+      https://www.php.net/manual/en/language.exceptions.php#language.exceptions.multicatch'
+  -
+    question: 'What is the primary purpose of a `finally` block in PHP exception handling?'
+    answers:
+      - { value: 'To execute code only if an exception is caught.', correct: false }
+      - { value: 'To execute code only if no exception is thrown.', correct: false }
+      - { value: 'To execute code regardless of whether an exception was thrown or caught.', correct: true }
+      - { value: 'To re-throw the caught exception.', correct: false }
+    help: |
+      'The `finally` block will always be executed after the `try` and `catch` blocks, regardless of whether an exception was thrown or caught. It is commonly used for cleanup operations.
+      https://www.php.net/manual/en/language.exceptions.php#language.exceptions.finally'
+  -
+    question: 'Which of the following statements about Traits in PHP is true?'
+    answers:
+      - { value: 'Traits can be instantiated directly.', correct: false }
+      - { value: 'A class can use multiple traits.', correct: true }
+      - { value: 'Traits can define constructors and destructors.', correct: true }
+      - { value: 'Traits can implement interfaces.', correct: false }
+      - { value: 'Methods from a trait always override methods from the class itself.', correct: false }
+    help: |
+      'Traits are a mechanism for code reuse in single inheritance languages like PHP. They cannot be instantiated directly. A class can use multiple traits, and traits can define methods, properties, and even constructors/destructors. Methods from the class itself override methods from a trait.
+      https://www.php.net/manual/en/language.oop5.traits.php'
+  -
+    question: 'How can you resolve naming conflicts when using multiple traits that define methods with the same name in a single class?'
+    answers:
+      - { value: 'By using the `insteadof` operator in the `use` statement.', correct: true }
+      - { value: 'By using the `as` operator to alias the conflicting methods.', correct: true }
+      - { value: 'PHP automatically resolves conflicts by prioritizing the first trait declared.', correct: false }
+      - { value: 'It is not possible to use traits with conflicting method names.', correct: false }
+    help: |
+      'The `insteadof` operator allows you to specify which trait''s method should be used when a naming conflict occurs. The `as` operator can be used to alias a method from a trait, effectively renaming it within the class to avoid conflict.
+      https://www.php.net/manual/en/language.oop5.traits.php#language.oop5.traits.conflict'
+  -
+    question: 'Which PHP extension is commonly used for interacting with relational databases like MySQL or PostgreSQL?'
+    answers:
+      - { value: 'GD', correct: false }
+      - { value: 'cURL', correct: false }
+      - { value: 'PDO', correct: true }
+      - { value: 'XML', correct: false }
+    help: |
+      'PDO (PHP Data Objects) is a database access layer providing a uniform method of access to multiple databases.
+      https://www.php.net/manual/en/book.pdo.php'
+  -
+    question: 'Which PHP extension is essential for handling HTTP requests and responses, often used for making API calls?'
+    answers:
+      - { value: 'OpenSSL', correct: false }
+      - { value: 'cURL', correct: true }
+      - { value: 'JSON', correct: false }
+      - { value: 'Intl', correct: false }
+    help: |
+      'cURL is a library for transferring data with URLs. The PHP cURL extension allows PHP scripts to communicate with many different types of servers using many different types of protocols.
+      https://www.php.net/manual/en/book.curl.php'
+  -
+    question: 'What does SPL stand for in PHP, and what is its primary purpose?'
+    answers:
+      - { value: 'Standard PHP Library; provides a collection of interfaces and classes to solve common problems.', correct: true }
+      - { value: 'Symfony Project Loader; a component for loading Symfony applications.', correct: false }
+      - { value: 'Server-Side Programming Language; a general term for PHP.', correct: false }
+      - { value: 'Simple PHP Logic; a framework for basic PHP applications.', correct: false }
+    help: |
+      'The Standard PHP Library (SPL) provides a set of interfaces and classes that are designed to solve standard problems, such as data structures, iterators, and autoloading.
+      https://www.php.net/manual/en/book.spl.php'
+  -
+    question: 'Which SPL interface is commonly used to make objects iterable, allowing them to be used with `foreach` loops?'
+    answers:
+      - { value: '`Countable`', correct: false }
+      - { value: '`ArrayAccess`', correct: false }
+      - { value: '`Iterator`', correct: true }
+      - { value: '`Serializable`', correct: false }
+    help: |
+      'The `Iterator` interface allows an object to be iterated over, similar to an array, using constructs like `foreach`.
+      https://www.php.net/manual/en/class.iterator.php'
+  -
+    question: 'Which PHP 8.0 feature allows you to define a shorter, more concise syntax for class constructors?'
+    answers:
+      - { value: 'Constructor property promotion', correct: true }
+      - { value: 'Named arguments', correct: false }
+      - { value: 'Union types', correct: false }
+      - { value: 'Attributes', correct: false }
+    help: |
+      'Constructor property promotion allows you to define and initialize class properties directly in the constructor signature, reducing boilerplate code.
+      https://www.php.net/manual/en/language.oop5.decon.php#language.oop5.decon.constructor.promotion'
+  -
+    question: 'What is the purpose of the `match` expression introduced in PHP 8.0?'
+    answers:
+      - { value: 'To perform pattern matching on strings using regular expressions.', correct: false }
+      - { value: 'To provide a more concise and type-safe alternative to `switch` statements.', correct: true }
+      - { value: 'To define anonymous functions with multiple return values.', correct: false }
+      - { value: 'To handle multiple exceptions in a single `try-catch` block.', correct: false }
+    help: |
+      'The `match` expression is similar to a `switch` statement but has key differences: it is an expression (returns a value), it performs strict comparisons (`===`), and it does not have fall-through behavior.
+      https://www.php.net/manual/en/control-structures.match.php'
+  -
+    question: 'In PHP 8.1, what is the significance of the `never` return type?'
+    answers:
+      - { value: 'It indicates that a function will always return `null`.', correct: false }
+      - { value: 'It indicates that a function will never return a value, either by throwing an exception or by terminating script execution.', correct: true }
+      - { value: 'It indicates that a function can return any type of value.', correct: false }
+      - { value: 'It is an alias for `void`.', correct: false }
+    help: |
+      'The `never` return type indicates that the function will not return a value. Instead, it will either throw an exception or terminate the script''s execution (e.g., via `die()`, `exit()`).
+      https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.return.never'
+  -
+    question: 'Which of the following is a valid way to declare a union type in PHP 8.0+?'
+    answers:
+      - { value: '`function foo(int|string $param)`', correct: true }
+      - { value: '`function foo(int or string $param)`', correct: false }
+      - { value: '`function foo(int, string $param)`', correct: false }
+      - { value: '`function foo(int & string $param)`', correct: false }
+    help: |
+      'Union types allow a variable to accept values of multiple different types. They are declared using the `|` operator.
+      https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.union'
+  -
+    question: 'What is the purpose of the `#[AllowDynamicProperties]` attribute introduced in PHP 8.2?'
+    answers:
+      - { value: 'To explicitly allow dynamic properties on a class, suppressing the deprecation warning.', correct: true }
+      - { value: 'To prevent any dynamic properties from being added to a class.', correct: false }
+      - { value: 'To define properties that can change their type at runtime.', correct: false }
+      - { value: 'To make all properties of a class public and modifiable.', correct: false }
+    help: |
+      'In PHP 8.2, dynamic properties are deprecated. The `#[AllowDynamicProperties]` attribute can be used on a class to explicitly allow dynamic properties and suppress the deprecation warning.
+      https://www.php.net/manual/en/language.attributes.php#language.attributes.predefined.allowdynamicproperties'
+  -
+    question: 'Which magic method is called when an object is treated as a string (e.g., with `echo` or `print`)?'
+    answers:
+      - { value: '`__call()`', correct: false }
+      - { value: '`__toString()`', correct: true }
+      - { value: '`__invoke()`', correct: false }
+      - { value: '`__debugInfo()`', correct: false }
+    help: |
+      'The `__toString()` method allows a class to decide how it will react when it is treated as a string.
+      https://www.php.net/manual/en/language.oop5.magic.php#object.tostring'
+  -
+    question: 'What is the difference between `public`, `protected`, and `private` access modifiers in PHP OOP?'
+    answers:
+      - { value: '`public` members are accessible from anywhere; `protected` from the class itself and its descendants; `private` only from the class itself.', correct: true }
+      - { value: '`public` members are accessible from anywhere; `protected` only from the class itself; `private` from the class and its descendants.', correct: false }
+      - { value: '`public` and `protected` are the same; `private` restricts access to the current file.', correct: false }
+      - { value: '`public` allows read-only access; `protected` allows write-only access; `private` allows both.', correct: false }
+    help: |
+      'Access modifiers control the visibility of properties and methods. `public` members are accessible from anywhere. `protected` members are accessible from the class itself and by inherited and parent classes. `private` members are accessible only from the class that defines the member.
+      https://www.php.net/manual/en/language.oop5.visibility.php'
+  -
+    question: 'What is method overloading in PHP, and how is it achieved?'
+    answers:
+      - { value: 'Defining multiple methods with the same name but different parameters in the same class. Achieved using `__call()` and `__callStatic()` magic methods.', correct: true }
+      - { value: 'Defining multiple methods with the same name in different classes within an inheritance hierarchy. Achieved through polymorphism.', correct: false }
+      - { value: 'Defining a method that accepts a variable number of arguments. Achieved using variadic functions (`...`).', correct: false }
+      - { value: 'Defining a method that can return multiple data types. Achieved using union types.', correct: false }
+    help: |
+      'PHP does not support traditional method overloading (defining multiple methods with the same name but different signatures). Instead, it uses the `__call()` and `__callStatic()` magic methods to handle calls to inaccessible (non-existent or private) methods.
+      https://www.php.net/manual/en/language.oop5.overloading.php#object.call'
+  -
+    question: 'Which of the following best describes polymorphism in PHP OOP?'
+    answers:
+      - { value: 'The ability of an object to take on many forms, typically through inheritance or interface implementation, allowing a single interface to represent different underlying forms.', correct: true }
+      - { value: 'The process of hiding the internal implementation details of an object and exposing only the necessary functionalities.', correct: false }
+      - { value: 'The mechanism of creating new classes based on existing classes, inheriting their properties and methods.', correct: false }
+      - { value: 'The ability to define multiple methods with the same name but different parameters within a single class.', correct: false }
+    help: |
+      'Polymorphism, in the context of OOP, refers to the ability of objects of different classes to be treated as objects of a common type (e.g., an interface or a parent class). This allows for flexible and extensible code.
+      https://www.php.net/manual/en/language.oop5.interfaces.php (as it relates to interface polymorphism)'
+  -
+    question: 'When should you use an abstract class instead of an interface in PHP?'
+    answers:
+      - { value: 'When you want to define a contract that multiple classes must adhere to, without providing any default implementation.', correct: false }
+      - { value: 'When you want to provide a base class with some common implementation details and also enforce certain methods to be implemented by child classes.', correct: true }
+      - { value: 'When you need to allow multiple inheritance for behavior reuse.', correct: false }
+      - { value: 'When you only need to define constants that are shared across multiple classes.', correct: false }
+    help: |
+      'Abstract classes are used when you want to provide a partial implementation and require child classes to complete the implementation of abstract methods. Interfaces define a contract without any implementation.
+      https://www.php.net/manual/en/language.oop5.abstract.php'
+  -
+    question: 'What is the purpose of the `final` keyword when applied to a class or method in PHP?'
+    answers:
+      - { value: 'When applied to a class, it prevents the class from being extended. When applied to a method, it prevents the method from being overridden by child classes.', correct: true }
+      - { value: 'It makes the class or method immutable, meaning its state cannot be changed after creation.', correct: false }
+      - { value: 'It indicates that the class or method is deprecated and should not be used.', correct: false }
+      - { value: 'It makes the class or method accessible only within the file where it is defined.', correct: false }
+    help: |
+      'The `final` keyword prevents inheritance (for classes) or method overriding (for methods).
+      https://www.php.net/manual/en/language.oop5.final.php'
+  -
+    question: 'What is the correct way to declare a constant within a class in PHP?'
+    answers:
+      - { value: '`public const MY_CONSTANT = "value";`', correct: true }
+      - { value: '`define("MY_CONSTANT", "value");`', correct: false }
+      - { value: '`const MY_CONSTANT = "value";`', correct: true }
+      - { value: '`var MY_CONSTANT = "value";`', correct: false }
+    help: |
+      'Class constants are declared using the `const` keyword. They are implicitly public.
+      https://www.php.net/manual/en/language.oop5.constants.php'
+  -
+    question: 'How do you access a static property or method from within the same class in PHP?'
+    answers:
+      - { value: 'Using `$this->propertyName` or `$this->methodName()`.', correct: false }
+      - { value: 'Using `self::$propertyName` or `self::methodName()`.', correct: true }
+      - { value: 'Using `static::$propertyName` or `static::methodName()`.', correct: true }
+      - { value: 'Using `ClassName::$propertyName` or `ClassName::methodName()`.', correct: true }
+    help: |
+      'Static properties and methods are accessed using the `self::`, `static::`, or `ClassName::` syntax. `self::` refers to the class where the code is written, while `static::` refers to the class that was called at runtime (Late Static Bindings).
+      https://www.php.net/manual/en/language.oop5.static.php'
+  -
+    question: 'What is the purpose of the `__invoke()` magic method in PHP?'
+    answers:
+      - { value: 'It is called when a script attempts to call a method that does not exist.', correct: false }
+      - { value: 'It is called when an object is treated as a function.', correct: true }
+      - { value: 'It is called when an object is serialized.', correct: false }
+      - { value: 'It is called when an object is cloned.', correct: false }
+    help: |
+      'The `__invoke()` method is called when a script tries to call an object as a function.
+      https://www.php.net/manual/en/language.oop5.magic.php#object.invoke'
+  -
+    question: 'Which of the following is a valid way to define an anonymous class in PHP?'
+    answers:
+      - { value: '
+```php
+$object = new class {
+    public function greet() {
+        return "Hello!";
+    }
+};
+```
+', correct: true }
+      - { value: '
+```php
+$object = new anonymous class {
+    public function greet() {
+        return "Hello!";
+    }
+};
+```
+', correct: false }
+      - { value: '
+```php
+$object = new class() {
+    public function greet() {
+        return "Hello!";
+    }
+};
+```
+', correct: true }
+      - { value: '
+```php
+$object = new Class() {
+    public function greet() {
+        return "Hello!";
+    }
+};
+```
+', correct: false }
+    help: |
+      'Anonymous classes are classes without a name. They are defined using `new class` and can extend classes and implement interfaces.
+      https://www.php.net/manual/en/language.oop5.anonymous.php'
+  -
+    question: 'What is the primary benefit of using `declare(strict_types=1);` at the top of a PHP file?'
+    answers:
+      - { value: 'It enables strict type checking for function arguments and return values, throwing `TypeError` exceptions on mismatches.', correct: true }
+      - { value: 'It forces all variables to be declared with a type before use.', correct: false }
+      - { value: 'It prevents PHP from performing any type coercion automatically.', correct: false }
+      - { value: 'It optimizes script execution speed by disabling dynamic typing.', correct: false }
+    help: |
+      'The `declare(strict_types=1);` directive enables strict mode for type declarations in the current file, meaning that type mismatches will result in a `TypeError` rather than PHP attempting to coerce the value.
+      https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.strict'
+  -
+    question: 'Which of the following is a new feature introduced in PHP 8.1 related to class constants?'
+    answers:
+      - { value: 'Readonly class constants', correct: false }
+      - { value: 'Final class constants', correct: true }
+      - { value: 'Private class constants', correct: false }
+      - { value: 'Abstract class constants', correct: false }
+    help: |
+      'PHP 8.1 introduced the ability to declare `final` class constants, which prevents them from being overridden in child classes.
+      https://www.php.net/manual/en/language.oop5.constants.php#language.oop5.constants.final'
+  -
+    question: 'What is the purpose of the `__debugInfo()` magic method?'
+    answers:
+      - { value: 'It is called when `var_dump()` is used on an object, allowing customization of the debug output.', correct: true }
+      - { value: 'It is called when an error occurs during object instantiation.', correct: false }
+      - { value: 'It is used to log debugging information to a file.', correct: false }
+      - { value: 'It provides information about the object''s memory usage.', correct: false }
+    help: |
+      'The `__debugInfo()` method is called when `var_dump()` is used on an object. This allows you to customize the information that is shown when the object is dumped.
+      https://www.php.net/manual/en/language.oop5.magic.php#object.debuginfo'
+  -
+    question: 'Which PHP function is used to check if a class exists?'
+    answers:
+      - { value: '`class_exists()`', correct: true }
+      - { value: '`object_exists()`', correct: false }
+      - { value: '`is_class()`', correct: false }
+      - { value: '`has_class()`', correct: false }
+    help: |
+      'The `class_exists()` function checks whether the given class has been defined.
+      https://www.php.net/manual/en/function.class-exists.php'
+  -
+    question: 'Which PHP function is used to check if a method exists in a given object or class?'
+    answers:
+      - { value: '`method_exists()`', correct: true }
+      - { value: '`function_exists()`', correct: false }
+      - { value: '`is_callable()`', correct: false }
+      - { value: '`has_method()`', correct: false }
+    help: |
+      'The `method_exists()` function checks if the class method exists.
+      https://www.php.net/manual/en/function.method-exists.php'
+  -
+    question: 'In PHP, what is the purpose of the `static` keyword when declaring a variable inside a function?'
+    answers:
+      - { value: 'It makes the variable accessible from outside the function.', correct: false }
+      - { value: 'It ensures the variable retains its value between successive calls to the function.', correct: true }
+      - { value: 'It makes the variable a class-level property.', correct: false }
+      - { value: 'It makes the variable constant and immutable.', correct: false }
+    help: |
+      'A `static` variable in a function retains its value from the last call to the function.
+      https://www.php.net/manual/en/language.variables.scope.php#language.variables.scope.static'
+  -
+    question: 'Which of the following is true about `null` in PHP?'
+    answers:
+      - { value: '`null` is a case-insensitive keyword.', correct: true }
+      - { value: 'A variable is `null` if it has been assigned the value `NULL`.', correct: true }
+      - { value: 'An undefined variable is considered `null`.', correct: true }
+      - { value: 'The `isset()` function returns `true` for `null` variables.', correct: false }
+    help: |
+      'The `null` type has only one value: `NULL`. A variable is considered `null` if it has been assigned the constant `NULL`, or if it has not been set yet. `isset()` returns `false` for `null` variables.
+      https://www.php.net/manual/en/language.types.null.php'
+  -
+    question: 'What is the correct way to define a constant using the `define()` function?'
+    answers:
+      - { value: '`define("MY_CONSTANT", "value");`', correct: true }
+      - { value: '`const MY_CONSTANT = "value";`', correct: false }
+      - { value: '`define MY_CONSTANT = "value";`', correct: false }
+      - { value: '`$MY_CONSTANT = "value"; define($MY_CONSTANT);`', correct: false }
+    help: |
+      'The `define()` function defines a named constant at runtime.
+      https://www.php.net/manual/en/function.define.php'
+  -
+    question: 'Which PHP function is used to convert a string to an integer?'
+    answers:
+      - { value: '`intval()`', correct: true }
+      - { value: '`strtoint()`', correct: false }
+      - { value: '`to_int()`', correct: false }
+      - { value: '`parse_int()`', correct: false }
+    help: |
+      'The `intval()` function returns the integer value of a variable. Type casting to `(int)` or `(integer)` also works.
+      https://www.php.net/manual/en/function.intval.php'
+  -
+    question: 'What is the purpose of the `array_map()` function?'
+    answers:
+      - { value: 'To filter elements of an array based on a callback function.', correct: false }
+      - { value: 'To apply a callback function to each element of an array and return a new array with the modified elements.', correct: true }
+      - { value: 'To reduce an array to a single value using a callback function.', correct: false }
+      - { value: 'To sort an array using a user-defined comparison function.', correct: false }
+    help: |
+      'The `array_map()` function applies the callback to the elements of the given arrays.
+      https://www.php.net/manual/en/function.array-map.php'
+  -
+    question: 'Which of the following is a valid way to create an associative array in PHP?'
+    answers:
+      - { value: '`$array = ["key1" => "value1", "key2" => "value2"];`', correct: true }
+      - { value: '`$array = array("key1" : "value1", "key2" : "value2");`', correct: false }
+      - { value: '`$array = {"key1" : "value1", "key2" : "value2"};`', correct: false }
+      - { value: '`$array = ["value1", "value2", "key1", "key2"];`', correct: false }
+    help: |
+      'Associative arrays are created using key-value pairs, with the `=>` operator associating keys with values.
+      https://www.php.net/manual/en/language.types.array.php'
+  -
+    question: 'What is the difference between `require` and `include` in PHP?'
+    answers:
+      - { value: '`require` generates a fatal error if the file is not found, halting script execution. `include` generates a warning, and the script continues to execute.', correct: true }
+      - { value: '`require` is used for external libraries, while `include` is for internal files.', correct: false }
+      - { value: '`include` is faster than `require`.', correct: false }
+      - { value: '`require` can only be used once, while `include` can be used multiple times for the same file.', correct: false }
+    help: |
+      'The `require` statement is identical to `include` except upon failure it will also produce a fatal `E_COMPILE_ERROR` level error. In other words, it will halt the script whereas `include` only emits a warning (`E_WARNING`) which allows the script to continue.
+      https://www.php.net/manual/en/function.require.php'
+  -
+    question: 'Which superglobal variable contains information about the server environment?'
+    answers:
+      - { value: '`$_GET`', correct: false }
+      - { value: '`$_POST`', correct: false }
+      - { value: '`$_SERVER`', correct: true }
+      - { value: '`$_REQUEST`', correct: false }
+    help: |
+      '`$_SERVER` is an array containing information such as headers, paths, and script locations.
+      https://www.php.net/manual/en/reserved.variables.server.php'
+  -
+    question: 'What is the purpose of the `spl_autoload_register()` function?'
+    answers:
+      - { value: 'To register multiple autoload functions, allowing PHP to automatically load classes and interfaces when they are first used.', correct: true }
+      - { value: 'To register a function that will be called when a script finishes execution.', correct: false }
+      - { value: 'To register a function for handling uncaught exceptions.', correct: false }
+      - { value: 'To register a function that will be called before any other code in the script.', correct: false }
+    help: |
+      'The `spl_autoload_register()` function registers any number of autoloaders, enabling classes and interfaces to be loaded automatically when they are referenced.
+      https://www.php.net/manual/en/function.spl-autoload-register.php'
+  -
+    question: 'Which SPL class provides a way to interact with an array as if it were an object, allowing property access via `[]`?'
+    answers:
+      - { value: '`SplQueue`', correct: false }
+      - { value: '`ArrayObject`', correct: true }
+      - { value: '`SplStack`', correct: false }
+      - { value: '`SplFixedArray`', correct: false }
+    help: |
+      'The `ArrayObject` class provides the functionality of an array that allows objects to be used as arrays.
+      https://www.php.net/manual/en/class.arrayobject.php'
+  -
+    question: 'What is the correct way to throw a custom exception in PHP?'
+    answers:
+      - { value: '`throw new MyCustomException("Something went wrong!");`', correct: true }
+      - { value: '`catch new MyCustomException("Something went wrong!");`', correct: false }
+      - { value: '`error_log(new MyCustomException("Something went wrong!"));`', correct: false }
+      - { value: '`trigger_error("Something went wrong!", E_USER_ERROR);`', correct: false }
+    help: |
+      'Custom exceptions are created by extending the `Exception` class and are thrown using the `throw` keyword.
+      https://www.php.net/manual/en/language.exceptions.php#language.exceptions.throwing'
+  -
+    question: 'What is the purpose of the `fn` keyword introduced in PHP 7.4?'
+    answers:
+      - { value: 'To define a new type of function that only accepts named arguments.', correct: false }
+      - { value: 'To define arrow functions (short closures) with implicit `return` and access to the parent scope without `use`.', correct: true }
+      - { value: 'To declare a function as final, preventing it from being overridden.', correct: false }
+      - { value: 'To create a function that can only be called once.', correct: false }
+    help: |
+      'Arrow functions, introduced in PHP 7.4, provide a more concise syntax for anonymous functions. They implicitly return the value of their expression and automatically capture variables from the parent scope by value.
+      https://www.php.net/manual/en/functions.arrow.php'
+  -
+    question: 'Which of the following is a valid way to define a generator function in PHP?'
+    answers:
+      - { value: 'A function that uses the `yield` keyword to return an iterable sequence of values.', correct: true }
+      - { value: 'A function that returns an `Iterator` object directly.', correct: false }
+      - { value: 'A function that uses `return` multiple times to send values.', correct: false }
+      - { value: 'A function that is declared with the `generator` keyword.', correct: false }
+    help: |
+      'Generator functions are special functions that use the `yield` keyword to return data one piece at a time, allowing for efficient iteration over large datasets without loading the entire dataset into memory.
+      https://www.php.net/manual/en/language.generators.php'
+  -
+    question: 'What is the purpose of the `__serialize()` and `__unserialize()` magic methods introduced in PHP 7.4?'
+    answers:
+      - { value: 'To customize the serialization and unserialization behavior of an object, replacing `Serializable` interface.', correct: true }
+      - { value: 'To define how an object should be converted to and from a JSON string.', correct: false }
+      - { value: 'To encrypt and decrypt object data for secure storage.', correct: false }
+      - { value: 'To automatically generate getter and setter methods for object properties.', correct: false }
+    help: |
+      'The `__serialize()` and `__unserialize()` methods allow for custom serialization logic, replacing the `Serializable` interface for most use cases, and providing better control over the serialization process.
+      https://www.php.net/manual/en/language.oop5.magic.php#object.serialize'
+  -
+    question: 'Which PHP function is used to determine if a variable is empty?'
+    answers:
+      - { value: '`is_null()`', correct: false }
+      - { value: '`isset()`', correct: false }
+      - { value: '`empty()`', correct: true }
+      - { value: '`is_blank()`', correct: false }
+    help: |
+      'The `empty()` function determines whether a variable is empty. A variable is considered empty if it does not exist or if its value equals `false`. `empty()` does not generate a warning if the variable does not exist.
+      https://www.php.net/manual/en/function.empty.php'
+  -
+    question: 'What is the difference between `==` and `===` operators in PHP?'
+    answers:
+      - { value: '`==` performs loose equality comparison (type juggling), while `===` performs strict equality comparison (checks both value and type).', correct: true }
+      - { value: '`==` compares values, `===` compares references.', correct: false }
+      - { value: '`===` is used for strings, `==` for numbers.', correct: false }
+      - { value: 'There is no difference; they are interchangeable.', correct: false }
+    help: |
+      'The `==` operator performs a loose equality comparison, attempting type coercion if types differ. The `===` operator performs a strict equality comparison, requiring both value and type to be identical.
+      https://www.php.net/manual/en/language.operators.comparison.php'
+  -
+    question: 'Which of the following is NOT a valid way to comment code in PHP?'
+    answers:
+      - { value: '`// Single line comment`', correct: false }
+      - { value: '`# Another single line comment`', correct: false }
+      - { value: '`/* Multi-line comment */`', correct: false }
+      - { value: '`<!-- HTML-style comment -->`', correct: true }
+    help: |
+      'PHP supports C-style (`/* ... */`), C++ style (`//`), and Unix shell style (`#`) comments. HTML comments (`<!-- ... -->`) are not parsed as PHP comments.
+      https://www.php.net/manual/en/language.basic-syntax.comments.php'
+  -
+    question: 'What is the purpose of the `declare(ticks=N);` directive in PHP?'
+    answers:
+      - { value: 'To specify how many statements should be executed before a registered tick function is called.', correct: true }
+      - { value: 'To set the maximum execution time for the script in seconds.', correct: false }
+      - { value: 'To enable or disable strict type checking for the file.', correct: false }
+      - { value: 'To define a fixed number of iterations for a loop.', correct: false }
+    help: |
+      'A tick is an event that occurs for every `N` low-level statements executed by the parser within the `declare` block. It is used with `register_tick_function()`.
+      https://www.php.net/manual/en/control-structures.declare.php#control-structures.declare.ticks'
+  -
+    question: 'Which PHP function is used to get the current date and time?'
+    answers:
+      - { value: '`time()`', correct: false }
+      - { value: '`date()`', correct: true }
+      - { value: '`now()`', correct: false }
+      - { value: '`get_datetime()`', correct: false }
+    help: |
+      'The `date()` function formats a local date and time. `time()` returns the current Unix timestamp.
+      https://www.php.net/manual/en/function.date.php'
+  -
+    question: 'What is the correct way to include a file only once in a PHP script?'
+    answers:
+      - { value: '`include_once "file.php";`', correct: true }
+      - { value: '`require_once "file.php";`', correct: true }
+      - { value: '`include "file.php";`', correct: false }
+      - { value: '`require "file.php";`', correct: false }
+    help: |
+      'The `include_once` and `require_once` statements are identical to their `include` and `require` counterparts, respectively, except PHP will check if the file has already been included, and if it has, it will not include it again.
+      https://www.php.net/manual/en/function.include-once.php'
+  -
+    question: 'Which of the following is a valid way to define a variadic function in PHP 5.6+?'
+    answers:
+      - { value: '`function sum(...$numbers)`', correct: true }
+      - { value: '`function sum($numbers...)`', correct: false }
+      - { value: '`function sum(array $numbers)`', correct: false }
+      - { value: '`function sum(params $numbers)`', correct: false }
+    help: |
+      'Variadic functions accept a variable number of arguments. In PHP 5.6+, this is achieved using the `...` token.
+      https://www.php.net/manual/en/functions.variable-arg-num.php'
+  -
+    question: 'What is the purpose of the `yield from` expression in PHP generators?'
+    answers:
+      - { value: 'To delegate to another generator or iterable, effectively flattening the iteration.', correct: true }
+      - { value: 'To yield multiple values at once from the current generator.', correct: false }
+      - { value: 'To send a value back into the generator from the caller.', correct: false }
+      - { value: 'To stop the generator and return a final value.', correct: false }
+    help: |
+      'The `yield from` expression allows you to delegate to another generator or `Traversable` object. It will iterate over the delegated generator/iterable and yield each value from it.
+      https://www.php.net/manual/en/language.generators.php#control-structures.yield.from'
+  -
+    question: 'Which PHP 8.0 feature allows you to define metadata for classes, methods, properties, and functions?'
+    answers:
+      - { value: 'Annotations', correct: false }
+      - { value: 'Attributes', correct: true }
+      - { value: 'Decorators', correct: false }
+      - { value: 'Traits', correct: false }
+    help: |
+      'Attributes (often called annotations in other languages) provide a way to add structured, machine-readable metadata to declarations in PHP code.
+      https://www.php.net/manual/en/language.attributes.php'
+  -
+    question: 'What is the purpose of the `readonly` property modifier introduced in PHP 8.1?'
+    answers:
+      - { value: 'To make a property immutable after its initial assignment, typically in the constructor.', correct: true }
+      - { value: 'To make a property accessible only for reading, not writing, from outside the class.', correct: false }
+      - { value: 'To mark a property as deprecated.', correct: false }
+      - { value: 'To ensure a property always holds a `null` value.', correct: false }
+    help: |
+      'The `readonly` property modifier ensures that a property can only be initialized once, typically in the constructor, and cannot be modified thereafter.
+      https://www.php.net/manual/en/language.oop5.properties.php#language.oop5.properties.readonly'
+  -
+    question: 'Which of the following is a valid way to define a typed property in PHP 7.4+?'
+    answers:
+      - { value: '`public string $name;`', correct: true }
+      - { value: '`public $name: string;`', correct: false }
+      - { value: '`public var string $name;`', correct: false }
+      - { value: '`public $name string;`', correct: false }
+    help: |
+      'Typed properties were introduced in PHP 7.4, allowing properties to be declared with type hints.
+      https://www.php.net/manual/en/language.oop5.properties.php#language.oop5.properties.type-declaration'
+  -
+    question: 'What is the purpose of the `match` expression''s exhaustiveness check in PHP 8.0?'
+    answers:
+      - { value: 'It ensures that all possible values for the subject expression are covered by a `match` arm, otherwise a `UnhandledMatchError` is thrown.', correct: true }
+      - { value: 'It ensures that each `match` arm returns a value of the same type.', correct: false }
+      - { value: 'It checks if the `match` expression is used within a `try-catch` block.', correct: false }
+      - { value: 'It verifies that the subject expression is not `null`.', correct: false }
+    help: |
+      'The `match` expression requires all possible values to be covered. If a value is not matched by any arm, an `UnhandledMatchError` is thrown.
+      https://www.php.net/manual/en/control-structures.match.php'
+  -
+    question: 'Which of the following is true about `WeakMap` introduced in PHP 8.0?'
+    answers:
+      - { value: 'Keys in a `WeakMap` are strongly referenced, preventing garbage collection.', correct: false }
+      - { value: '`WeakMap` allows objects to be used as keys without preventing them from being garbage collected if no other references exist.', correct: true }
+      - { value: '`WeakMap` can store any scalar value as a key.', correct: false }
+      - { value: '`WeakMap` is primarily used for caching large datasets permanently.', correct: false }
+    help: |
+      'A `WeakMap` holds "weak" references to objects, meaning that if an object used as a key in a `WeakMap` is no longer referenced elsewhere, it can be garbage collected.
+      https://www.php.net/manual/en/class.weakmap.php'
+  -
+    question: 'What is the purpose of the `str_contains()` function introduced in PHP 8.0?'
+    answers:
+      - { value: 'To check if a string starts with a specific substring.', correct: false }
+      - { value: 'To check if a string ends with a specific substring.', correct: false }
+      - { value: 'To determine if a string contains a specific substring.', correct: true }
+      - { value: 'To replace all occurrences of a substring within a string.', correct: false }
+    help: |
+      'The `str_contains()` function checks if a string contains a given substring. It returns `true` if the substring is found, `false` otherwise.
+      https://www.php.net/manual/en/function.str-contains.php'
+  -
+    question: 'Which PHP 8.0 feature allows for more flexible function calls by explicitly naming arguments?'
+    answers:
+      - { value: 'Named arguments', correct: true }
+      - { value: 'Positional arguments', correct: false }
+      - { value: 'Variadic functions', correct: false }
+      - { value: 'Argument unpacking', correct: false }
+    help: |
+      'Named arguments allow passing arguments to a function based on their parameter name, rather than their position. This improves readability and allows skipping optional parameters.
+      https://www.php.net/manual/en/functions.arguments.php#functions.named-arguments'
+  -
+    question: 'What is the purpose of the `#[Deprecated]` attribute in PHP 8.0+?'
+    answers:
+      - { value: 'To mark a class, method, property, or function as deprecated, signaling that it should no longer be used.', correct: true }
+      - { value: 'To prevent a method from being overridden.', correct: false }
+      - { value: 'To make a property read-only.', correct: false }
+      - { value: 'To define a constructor for a class.', correct: false }
+    help: |
+      'The `#[Deprecated]` attribute is a built-in attribute used to mark code elements as deprecated, indicating that they are no longer recommended for use and may be removed in future versions.
+      https://www.php.net/manual/en/language.attributes.php#language.attributes.predefined.deprecated'
+  -
+    question: 'Which of the following is a valid way to define a `DateTime` object for the current time in PHP?'
+    answers:
+      - { value: '`new DateTime();`', correct: true }
+      - { value: '`new DateTime("now");`', correct: true }
+      - { value: '`DateTime::createFromFormat("Y-m-d H:i:s", "now");`', correct: false }
+      - { value: '`date_create();`', correct: false }
+    help: |
+      'The `DateTime` class can be instantiated without arguments or with the string "now" to represent the current date and time.
+      https://www.php.net/manual/en/datetime.construct.php'
+  -
+    question: 'What is the purpose of the `isset()` function?'
+    answers:
+      - { value: 'To check if a variable has been declared and is not `null`.', correct: true }
+      - { value: 'To check if a variable is empty.', correct: false }
+      - { value: 'To check if a variable is an array.', correct: false }
+      - { value: 'To check if a variable is a string.', correct: false }
+    help: |
+      'The `isset()` function determines if a variable is declared and is not `null`.
+      https://www.php.net/manual/en/function.isset.php'
+  -
+    question: 'Which of the following is true about the `void` return type in PHP 7.1+?'
+    answers:
+      - { value: 'It indicates that the function must return `null`.', correct: false }
+      - { value: 'It indicates that the function must not return any value.', correct: true }
+      - { value: 'It indicates that the function can return any type of value.', correct: false }
+      - { value: 'It is an alias for `mixed`.', correct: false }
+    help: |
+      'The `void` return type indicates that the function should not return a value. If a `return` statement is used, it must not have an argument.
+      https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.return.void'
+  -
+    question: 'What is the purpose of the `__clone()` magic method?'
+    answers:
+      - { value: 'It is called when an object is duplicated using the `clone` keyword, allowing for deep copying of properties.', correct: true }
+      - { value: 'It is called when a new instance of a class is created.', correct: false }
+      - { value: 'It is called when an object is destroyed.', correct: false }
+      - { value: 'It is used to create a singleton instance of a class.', correct: false }
+    help: |
+      'When an object is cloned, PHP performs a shallow copy. The `__clone()` method is called on the new object (the clone) after the cloning operation is complete, allowing you to perform deep copying or other custom logic.
+      https://www.php.net/manual/en/language.oop5.cloning.php#object.clone'
+  -
+    question: 'Which of the following is a valid way to define a typed array in PHP?'
+    answers:
+      - { value: '`function processStrings(array $strings): array { /* ... */ }`', correct: true }
+      - { value: '`function processStrings(string[] $strings): string[] { /* ... */ }`', correct: false }
+      - { value: '`function processStrings(array<string> $strings): array<string> { /* ... */ }`', correct: false }
+      - { value: 'PHP does not support typed arrays directly, only array type hints.', correct: true }
+    help: |
+      'PHP supports type hinting for `array` but does not directly support "typed arrays" in the sense of `string[]` or `array<string>`. You can type hint that a parameter is an array, but not the type of its elements at the language level. This is often handled by static analysis tools.
+      https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.array'
+  -
+    question: 'What is the purpose of the `ReflectionClass` class in SPL?'
+    answers:
+      - { value: 'To create new instances of classes dynamically.', correct: false }
+      - { value: 'To retrieve information about a class, its methods, properties, and constants at runtime.', correct: true }
+      - { value: 'To modify the structure of a class dynamically.', correct: false }
+      - { value: 'To serialize and unserialize class objects.', correct: false }
+    help: |
+      'The `ReflectionClass` class provides information about a class. It allows you to inspect classes, interfaces, traits, methods, properties, and constants.
+      https://www.php.net/manual/en/class.reflectionclass.php'
+  -
+    question: 'Which of the following is a correct way to define a constant in the global scope?'
+    answers:
+      - { value: '`const APP_VERSION = "1.0";`', correct: true }
+      - { value: '`define("APP_NAME", "My App");`', correct: true }
+      - { value: '`$GLOBAL_CONSTANT = "value";`', correct: false }
+      - { value: '`public const GLOBAL_VALUE = "test";`', correct: false }
+    help: |
+      'Global constants can be defined using the `const` keyword (at compile time) or the `define()` function (at runtime).
+      https://www.php.net/manual/en/language.constants.php'
+  -
+    question: 'What is the purpose of the `instanceof` operator?'
+    answers:
+      - { value: 'To check if an object is an instance of a particular class or implements a specific interface.', correct: true }
+      - { value: 'To compare the values of two objects.', correct: false }
+      - { value: 'To create a new instance of a class.', correct: false }
+      - { value: 'To check if a variable is an object.', correct: false }
+    help: |
+      'The `instanceof` operator is used to determine whether a PHP variable is an instantiated object of a certain class or a class that inherits from it, or implements an interface.
+      https://www.php.net/manual/en/language.operators.type.php'
+  -
+    question: 'Which of the following is true about `strict_types` in PHP?'
+    answers:
+      - { value: 'It affects type declarations for scalar types (int, float, string, bool).', correct: true }
+      - { value: 'It applies globally to all files in a project once declared in one file.', correct: false }
+      - { value: 'It is enabled by default in PHP 8.2.', correct: false }
+      - { value: 'It only affects return type declarations, not argument type declarations.', correct: false }
+    help: |
+      'The `declare(strict_types=1);` directive must be placed at the very top of each file where strict typing is desired. It affects scalar type declarations for both arguments and return values. It is not enabled by default.
+      https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.strict'
+  -
+    question: 'What is the purpose of the `array_filter()` function?'
+    answers:
+      - { value: 'To apply a callback function to each element of an array.', correct: false }
+      - { value: 'To filter elements of an array using a callback function, keeping only elements for which the callback returns `true`.', correct: true }
+      - { value: 'To sort an array based on a custom comparison function.', correct: false }
+      - { value: 'To merge two or more arrays into one.', correct: false }
+    help: |
+      'The `array_filter()` function iterates over each value in the `array`, passing them to the `callback` function. If the `callback` function returns `true`, the current value from `array` is returned into the result array.
+      https://www.php.net/manual/en/function.array-filter.php'
+  -
+    question: 'Which PHP function is used to convert an array to a JSON string?'
+    answers:
+      - { value: '`json_encode()`', correct: true }
+      - { value: '`json_decode()`', correct: false }
+      - { value: '`serialize()`', correct: false }
+      - { value: '`array_to_json()`', correct: false }
+    help: |
+      'The `json_encode()` function returns a JSON string representation of the value.
+      https://www.php.net/manual/en/function.json-encode.php'
+  -
+    question: 'What is the purpose of the `nullsafe operator` (`?->`) introduced in PHP 8.0?'
+    answers:
+      - { value: 'To allow calling methods or accessing properties on an object that might be `null` without throwing an error, returning `null` instead.', correct: true }
+      - { value: 'To explicitly cast a variable to `null`.', correct: false }
+      - { value: 'To check if a variable is `null` before performing an operation.', correct: false }
+      - { value: 'To make a property nullable.', correct: false }
+    help: |
+      'The nullsafe operator allows you to chain method calls and property accesses, and if any part of the chain is `null`, the entire expression short-circuits and evaluates to `null` instead of throwing an error.
+      https://www.php.net/manual/en/language.operators.nullsafe.php'
+  -
+    question: 'Which of the following is a valid way to define a constant in an interface?'
+    answers:
+      - { value: '`const MY_CONSTANT = "value";`', correct: true }
+      - { value: '`public const MY_CONSTANT = "value";`', correct: true }
+      - { value: '`define("MY_CONSTANT", "value");`', correct: false }
+      - { value: '`var MY_CONSTANT = "value";`', correct: false }
+    help: |
+      'Interfaces can define constants, which are implicitly public.
+      https://www.php.net/manual/en/language.oop5.interfaces.php#language.oop5.interfaces.constants'
+  -
+    question: 'What is the purpose of the `__sleep()` and `__wakeup()` magic methods?'
+    answers:
+      - { value: '`__sleep()` is called before serialization to return an array of properties to be serialized; `__wakeup()` is called after unserialization to re-establish object state.', correct: true }
+      - { value: '`__sleep()` is called when an object goes out of scope; `__wakeup()` when it is instantiated.', correct: false }
+      - { value: 'They are used for asynchronous operations.', correct: false }
+      - { value: 'They are used to pause and resume script execution.', correct: false }
+    help: |
+      'The `__sleep()` method is called prior to serialization. It should return an array of all properties of the object that should be serialized. The `__wakeup()` method is called when an object is unserialized.
+      https://www.php.net/manual/en/language.oop5.magic.php#object.sleep'
+  -
+    question: 'Which of the following is true about PHP''s garbage collection mechanism?'
+    answers:
+      - { value: 'PHP uses reference counting to determine when an object can be freed from memory.', correct: true }
+      - { value: 'PHP uses a mark-and-sweep algorithm for garbage collection.', correct: false }
+      - { value: 'Objects are immediately destroyed once they go out of scope.', correct: false }
+      - { value: 'Developers must manually free memory using `unset()` for all objects.', correct: false }
+    help: |
+      'PHP primarily uses a reference counting mechanism. When the reference count of a variable becomes zero, the memory occupied by it is freed. For circular references, PHP has a cycle detection algorithm.
+      https://www.php.net/manual/en/features.gc.php'
+  -
+    question: 'What is the purpose of the `Error` class hierarchy introduced in PHP 7?'
+    answers:
+      - { value: 'To provide a new base class for all user-defined exceptions.', correct: false }
+      - { value: 'To represent internal PHP errors (like parse errors, type errors) that were previously fatal errors, allowing them to be caught.', correct: true }
+      - { value: 'To replace the traditional exception handling mechanism.', correct: false }
+      - { value: 'To handle database connection errors specifically.', correct: false }
+    help: |
+      'In PHP 7, many fatal errors were converted to `Error` exceptions. This allows for catching and handling these errors, which previously would have halted script execution. `Error` is distinct from `Exception`.
+      https://www.php.net/manual/en/class.error.php'
+  -
+    question: 'Which of the following is the correct way to declare a nullable type in PHP 7.1+?'
+    answers:
+      - { value: '`function foo(?string $param)`', correct: true }
+      - { value: '`function foo(string|null $param)`', correct: true }
+      - { value: '`function foo(string? $param)`', correct: false }
+      - { value: '`function foo(null|string $param)`', correct: true }
+    help: |
+      'Nullable types allow a parameter or return value to be either of the specified type or `null`. This is achieved by prefixing the type with a question mark (`?`) or using a union type with `null`.
+      https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.nullable'
+  -
+    question: 'What is the purpose of the `__serialize()` and `__unserialize()` magic methods introduced in PHP 7.4?'
+    answers:
+      - { value: 'To customize the serialization and unserialization behavior of an object, replacing `Serializable` interface.', correct: true }
+      - { value: 'To define how an object should be converted to and from a JSON string.', correct: false }
+      - { value: 'To encrypt and decrypt object data for secure storage.', correct: false }
+      - { value: 'To automatically generate getter and setter methods for object properties.', correct: false }
+    help: |
+      'The `__serialize()` and `__unserialize()` methods allow for custom serialization logic, replacing the `Serializable` interface for most use cases, and providing better control over the serialization process.
+      https://www.php.net/manual/en/language.oop5.magic.php#object.serialize'
+  -
+    question: 'Which of the following is true about PHP''s `array_reduce()` function?'
+    answers:
+      - { value: 'It iterates over an array and reduces it to a single value using a callback function.', correct: true }
+      - { value: 'It filters elements from an array based on a condition.', correct: false }
+      - { value: 'It applies a function to each element of an array, returning a new array.', correct: false }
+      - { value: 'It sorts an array in descending order.', correct: false }
+    help: |
+      'The `array_reduce()` function iteratively reduces the array to a single value using a callback function.
+      https://www.php.net/manual/en/function.array-reduce.php'
+  -
+    question: 'What is the purpose of the `ReflectionFunction` class in SPL?'
+    answers:
+      - { value: 'To execute a function dynamically.', correct: false }
+      - { value: 'To retrieve information about a function (parameters, return type, etc.) at runtime.', correct: true }
+      - { value: 'To create new functions dynamically.', correct: false }
+      - { value: 'To optimize function calls for better performance.', correct: false }
+    help: |
+      'The `ReflectionFunction` class reports information about a function.
+      https://www.php.net/manual/en/class.reflectionfunction.php'
+  -
+    question: 'In PHP 8.1, what is the purpose of `new` in initializers?'
+    answers:
+      - { value: 'It allows using `new` operator in default parameter values, static variable initializers, and global constant initializers.', correct: true }
+      - { value: 'It allows creating new instances of classes without calling their constructors.', correct: false }
+      - { value: 'It is a shorthand for `new static()`.', correct: false }
+      - { value: 'It enables lazy loading of classes.', correct: false }
+    help: |
+      'PHP 8.1 allows the `new` operator to be used in initializers, meaning you can use objects as default parameter values, static variable initializers, and global constant initializers.
+      https://www.php.net/manual/en/language.oop5.basic.php#language.oop5.basic.new-in-initializers'
+  -
+    question: 'What is the purpose of the `enum` keyword introduced in PHP 8.1?'
+    answers:
+      - { value: 'To define a class that can only have a single instance (singleton).', correct: false }
+      - { value: 'To define a special type of class that represents a fixed set of named values.', correct: true }
+      - { value: 'To declare a variable that can hold multiple data types.', correct: false }
+      - { value: 'To create an anonymous function with a fixed number of arguments.', correct: false }
+    help: |
+      'Enums (enumerations) allow you to define a type that has a fixed set of possible values. They are useful for representing a finite set of distinct states or options.
+      https://www.php.net/manual/en/language.enumerations.php'
+```
