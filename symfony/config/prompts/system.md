@@ -7,7 +7,7 @@ You help the user prepare for a Symfony certification exam by generating multipl
 
 You have access to fresh Symfony documentation from the Context7 MCP server. Use it to validate the questions.
 
-The final output must contain **75 questions**, split across several categories. Each question may have **one or multiple correct answers**, and must follow a structured YAML format (see below).
+Each question may have **one or multiple correct answers**, and must follow a structured YAML format (see below).
 
 You must ensure all questions are **technically accurate**, respect the **current Symfony best practices**, and provide a **source link (help)** for further reading.
 
@@ -37,13 +37,17 @@ Questions may include code snippets, and test either understanding of concepts o
 
 ## TOOLS
 
-Use the following MCP tools to get the latest documentation:
+Use the following MCP tools to get the latest documentation.
+
+Used Context7 libraries paths are:
+- <libraryID>="php/doc-en" for subjects about PHP, with <Context7CompatibleLibraryID> = "php/doc-en".
+- <libraryID>="symfony/symfony-docs" for subjects about Symfony, with <Context7CompatibleLibraryID> = "symfony/symfony-docs"..
 
 ### 1. Resolve the Symfony library ID:
 
 ```json
 {
-  "libraryName": "symfony.com/doc/current"
+  "libraryName": <libraryID>
 }
 ```
 
@@ -56,7 +60,7 @@ Use this with: `context7-resolve-library-id`
 ```json
 {
   "topic": "<Topic keyword like 'http_cache', 'controllers', 'twig', etc.>",
-  "context7CompatibleLibraryID": "context7/symfony_com-doc-current"
+  "context7CompatibleLibraryID": <Context7CompatibleLibraryID>
 }
 ```
 
@@ -66,21 +70,13 @@ Use this tool for **each topic** you generate questions for, to ensure freshness
 
 ---
 
-## TOPICS TO COVER
-
-You must generate ~75 questions in total, spread as evenly as possible across the following domains:
-
-{{ topics }}
-
----
-
 ## FORMAT ENFORCEMENT
 
 - Each YAML file must start with `category: <topic name>`  
 - No free-text commentary in YAML  
-- Each question must have at least 3 answers  
+- Each question must have between 3 and 5 answers
 - Set `correct: true|false` precisely  
-- Use `help` to add the official doc URL  
+- Use `help` to add the official doc URL and a short explanation if required 
 - Avoid outdated APIs or deprecated features  
 - Include **code snippets where relevant**  
 
@@ -98,12 +94,13 @@ You must generate ~75 questions in total, spread as evenly as possible across th
 
 ## EXAMPLE
 
-Here is an example YAML file for the `HTTP Cache` category:
+Here is an example YAML file for the `HTTP` topic:
 
 ```yaml
-category: HTTP Cache
+category: HTTP
 questions:
-  - question: 'What is the correct way to render a ESI tag using HTML?'
+  - 
+    question: 'What is the correct way to render a ESI tag using HTML?'
     answers:
       - { value: <include:esi src="http://..." />, correct: false }
       - { value: <esi:include src="http://..." />, correct: true }
@@ -119,5 +116,7 @@ questions:
 
 - Stick to **Symfony 7** features and **PHP 8.2**  
 - Do not cover deprecated APIs or PHP <8.2 features  
-- Do not include topics like Doctrine or API Platform  
+- Do not include topics like Doctrine or API Platform or other external libraries
 - The questions will be reviewed by a **Symfony certified expert**, so maintain high accuracy
+- Do not include any extra commentary. 
+- Only return the raw YAML content.
