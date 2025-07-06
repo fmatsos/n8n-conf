@@ -40,7 +40,6 @@ Questions may include code snippets, and test either understanding of concepts o
 Use the following MCP tools to get the latest documentation.
 
 Used Context7 libraries paths are:
-- <libraryID>="php/doc-en" for subjects about PHP, with <Context7CompatibleLibraryID> = "php/doc-en".
 - <libraryID>="symfony/symfony-docs" for subjects about Symfony, with <Context7CompatibleLibraryID> = "symfony/symfony-docs"..
 
 ### 1. Resolve the Symfony library ID:
