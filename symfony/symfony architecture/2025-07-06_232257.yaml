@@ -1,0 +1,907 @@
+```yaml
+category: Symfony Architecture
+questions:
+  -
+    question: 'What is the primary purpose of Symfony Flex?'
+    answers:
+      - { value: 'To replace Composer as the dependency manager for Symfony applications.', correct: false }
+      - { value: 'To provide a recipe-based system for managing Symfony packages and their configurations.', correct: true }
+      - { value: 'To automatically generate all application code, including controllers and entities.', correct: false }
+      - { value: 'To enforce a strict directory structure that cannot be customized.', correct: false }
+    help: |
+      'Symfony Flex is a Composer plugin that simplifies the installation and configuration of Symfony packages by providing "recipes".
+      https://symfony.com/doc/current/setup/flex.html'
+  -
+    question: 'When a new Symfony package is installed via Composer in a Flex-enabled project, what does Flex typically do?'
+    answers:
+      - { value: 'It prompts the user to manually configure the package in `config/packages/`.', correct: false }
+      - { value: 'It automatically adds the package to the `composer.json` file and does nothing else.', correct: false }
+      - { value: 'It downloads and executes a recipe that automates common configuration tasks and creates necessary files.', correct: true }
+      - { value: 'It converts the project to a full-stack framework if it was a micro-framework.', correct: false }
+    help: |
+      'Symfony Flex uses recipes to automate the configuration of packages upon installation, creating files like `config/packages/*.yaml` or adding routes.
+      https://symfony.com/doc/current/setup/flex.html#how-flex-works'
+  -
+    question: 'Which file is used by Symfony Flex to manage the installed recipes and their versions?'
+    answers:
+      - { value: '`composer.json`', correct: false }
+      - { value: '`composer.lock`', correct: false }
+      - { value: '`symfony.lock`', correct: true }
+      - { value: '`flex.yaml`', correct: false }
+    help: |
+      '`symfony.lock` is a file managed by Symfony Flex that tracks the versions of the recipes applied to your project.
+      https://symfony.com/doc/current/setup/flex.html#the-symfony-lock-file'
+  -
+    question: 'What is the purpose of a "recipe" in Symfony Flex?'
+    answers:
+      - { value: 'To define the exact version of PHP required for a Symfony application.', correct: false }
+      - { value: 'To provide a set of automated instructions for integrating a package into a Symfony application.', correct: true }
+      - { value: 'To list all available Symfony components for manual installation.', correct: false }
+      - { value: 'To generate database schemas directly from entity definitions.', correct: false }
+    help: |
+      'A Flex recipe is a set of instructions (files to create, modify, or delete) that helps integrate a package into a Symfony application.
+      https://symfony.com/doc/current/setup/flex.html#what-is-a-recipe'
+  -
+    question: 'Which command would you use to update all installed Symfony Flex recipes to their latest versions?'
+    answers:
+      - { value: '`composer update`', correct: false }
+      - { value: '`composer recipes:update`', correct: false }
+      - { value: '`composer symfony:recipes:update`', correct: false }
+      - { value: '`composer update symfony/flex`', correct: false }
+      - { value: '`composer update` (which also updates recipes if new versions are available and compatible)', correct: true }
+    help: |
+      'Running `composer update` will also update your Flex recipes if new versions are available and compatible with your project.
+      https://symfony.com/doc/current/setup/flex.html#updating-recipes'
+  -
+    question: 'What is the role of the `public/index.php` file in a standard Symfony application?'
+    answers:
+      - { value: 'It contains all the application logic and routing definitions.', correct: false }
+      - { value: 'It serves as the front controller, bootstrapping the application and handling incoming requests.', correct: true }
+      - { value: 'It is a configuration file for the web server (e.g., Apache, Nginx).', correct: false }
+      - { value: 'It defines the database connection parameters.', correct: false }
+    help: |
+      'The `public/index.php` file is the front controller; all requests are routed through it. It bootstraps the Symfony application, creates a `Request` object, handles it with the Kernel, and sends the `Response`.
+      https://symfony.com/doc/current/configuration/front_controllers_and_kernel.html'
+  -
+    question: 'Which of the following best describes the Symfony Kernel (`src/Kernel.php`)?'
+    answers:
+      - { value: 'It is responsible for handling database interactions and ORM mappings.', correct: false }
+      - { value: 'It acts as the central orchestrator, managing bundles, loading configuration, and handling the request lifecycle.', correct: true }
+      - { value: 'It primarily defines the application\'s user interface and templates.', correct: false }
+      - { value: 'It is a service container definition file.', correct: false }
+    help: |
+      'The Kernel is the core of a Symfony application. It is responsible for bootstrapping the application, registering bundles, loading configuration, and managing the request-response lifecycle.
+      https://symfony.com/doc/current/configuration/front_controllers_and_kernel.html#the-kernel'
+  -
+    question: 'In a Symfony application, where are most of the application-specific configuration files typically located?'
+    answers:
+      - { value: '`src/`', correct: false }
+      - { value: '`vendor/`', correct: false }
+      - { value: '`config/`', correct: true }
+      - { value: '`public/`', correct: false }
+    help: |
+      'The `config/` directory is where most of the application-specific configuration files are stored, often in YAML, XML, or PHP format.
+      https://symfony.com/doc/current/best_practices.html#configuration'
+  -
+    question: 'What is the recommended way to organize your own PHP classes (e.g., services, controllers, entities) in a Symfony application?'
+    answers:
+      - { value: 'All classes should be placed directly in the `src/` directory without subdirectories.', correct: false }
+      - { value: 'Organize them into subdirectories under `src/` based on their domain or functionality (e.g., `src/Controller`, `src/Service`, `src/Entity`).', correct: true }
+      - { value: 'Place them in the `vendor/` directory.', correct: false }
+      - { value: 'Store them in the `public/` directory.', correct: false }
+    help: |
+      'Symfony encourages organizing your own classes under the `src/` directory, typically namespaced under `App\\`, and further subdivided by their role (e.g., `App\\Controller`, `App\\Service`).
+      https://symfony.com/doc/current/best_practices.html#code-organization'
+  -
+    question: 'Which directory typically contains the application\'s web assets (e.g., CSS, JavaScript, images)?'
+    answers:
+      - { value: '`var/`', correct: false }
+      - { value: '`bin/`', correct: false }
+      - { value: '`public/`', correct: true }
+      - { value: '`config/`', correct: false }
+    help: |
+      'The `public/` directory is the web root and contains all public assets like CSS, JavaScript, and images.
+      https://symfony.com/doc/current/best_practices.html#web-assets'
+  -
+    question: 'What is the purpose of the `var/` directory in a Symfony application?'
+    answers:
+      - { value: 'To store application source code.', correct: false }
+      - { value: 'To hold temporary files, caches, and logs generated during application execution.', correct: true }
+      - { value: 'To define environment variables.', correct: false }
+      - { value: 'To store Composer dependencies.', correct: false }
+    help: |
+      'The `var/` directory is used for storing generated files like cache, logs, and compiled container files.
+      https://symfony.com/doc/current/best_practices.html#var-directory'
+  -
+    question: 'Which Symfony component is responsible for handling HTTP requests and responses?'
+    answers:
+      - { value: '`HttpFoundation`', correct: true }
+      - { value: '`Routing`', correct: false }
+      - { value: '`DependencyInjection`', correct: false }
+      - { value: '`EventDispatcher`', correct: false }
+    help: |
+      'The `HttpFoundation` component provides an object-oriented layer for the HTTP specification, with `Request` and `Response` classes.
+      https://symfony.com/doc/current/components/http_foundation.html'
+  -
+    question: 'When a request comes into a Symfony application, what is the first object created to represent that request?'
+    answers:
+      - { value: '`Symfony\\Component\\HttpFoundation\\Response`', correct: false }
+      - { value: '`Symfony\\Component\\Routing\\Route`', correct: false }
+      - { value: '`Symfony\\Component\\HttpFoundation\\Request`', correct: true }
+      - { value: '`Symfony\\Component\\HttpKernel\\Kernel`', correct: false }
+    help: |
+      'The front controller (`public/index.php`) creates a `Request` object from global PHP variables (`$_GET`, `$_POST`, `$_SERVER`, `$_FILES`, `$_COOKIE`).
+      https://symfony.com/doc/current/introduction/http_fundamentals.html#the-request'
+  -
+    question: 'Which of the following best describes the role of the `HttpKernel` component?'
+    answers:
+      - { value: 'It handles the rendering of Twig templates.', correct: false }
+      - { value: 'It provides the core logic for turning a `Request` into a `Response` by dispatching events and calling controllers.', correct: true }
+      - { value: 'It manages database connections and queries.', correct: false }
+      - { value: 'It is solely responsible for routing URLs to controllers.', correct: false }
+    help: |
+      'The `HttpKernel` component is the heart of the Symfony framework, responsible for the entire request-response lifecycle.
+      https://symfony.com/doc/current/components/http_kernel.html'
+  -
+    question: 'Which event is dispatched by the `HttpKernel` just before the controller is executed?'
+    answers:
+      - { value: '`KernelEvents::REQUEST`', correct: true }
+      - { value: '`KernelEvents::CONTROLLER`', correct: false }
+      - { value: '`KernelEvents::VIEW`', correct: false }
+      - { value: '`KernelEvents::RESPONSE`', correct: false }
+    help: |
+      'The `KernelEvents::REQUEST` event is dispatched at the very beginning of the request handling, before the controller is found and executed. Listeners can modify the `Request` or return a `Response` directly.
+      https://symfony.com/doc/current/reference/events.html#kernel-events'
+  -
+    question: 'Which event is dispatched by the `HttpKernel` after the controller has returned a value, but before the `Response` is sent?'
+    answers:
+      - { value: '`KernelEvents::RESPONSE`', correct: true }
+      - { value: '`KernelEvents::FINISH_REQUEST`', correct: false }
+      - { value: '`KernelEvents::TERMINATE`', correct: false }
+      - { value: '`KernelEvents::VIEW`', correct: true }
+    help: |
+      'The `KernelEvents::VIEW` event is dispatched when a controller returns something other than a `Response` object. The `KernelEvents::RESPONSE` event is dispatched after the controller has returned a `Response` (or a `Response` was created by a `VIEW` listener) and allows modification of the `Response`.
+      https://symfony.com/doc/current/reference/events.html#kernel-events'
+  -
+    question: 'What is the purpose of the `KernelEvents::EXCEPTION` event?'
+    answers:
+      - { value: 'To log all exceptions without handling them.', correct: false }
+      - { value: 'To allow listeners to convert an exception into a `Response` object or modify an existing exception.', correct: true }
+      - { value: 'To stop the application immediately upon any error.', correct: false }
+      - { value: 'To send an email notification for every caught exception.', correct: false }
+    help: |
+      'The `KernelEvents::EXCEPTION` event is dispatched when an exception is thrown during the request handling. Listeners can catch the exception and create a `Response` to be sent to the client, or modify the exception.
+      https://symfony.com/doc/current/reference/events.html#kernel-events'
+  -
+    question: 'How can you register an event listener or subscriber in Symfony?'
+    answers:
+      - { value: 'By manually calling `->addListener()` or `->addSubscriber()` on the `EventDispatcher` service in `public/index.php`.', correct: false }
+      - { value: 'By defining it as a service and tagging it with `kernel.event_listener` or `kernel.event_subscriber`.', correct: true }
+      - { value: 'By placing the listener class in a specific `listeners/` directory.', correct: false }
+      - { value: 'Symfony automatically discovers all classes ending with "Listener" or "Subscriber".', correct: false }
+    help: |
+      'Event listeners and subscribers are typically registered as services in the Dependency Injection Container and tagged appropriately (`kernel.event_listener` or `kernel.event_subscriber`).
+      https://symfony.com/doc/current/event_dispatcher.html#registering-event-listeners-and-subscribers'
+  -
+    question: 'Which of the following is an official Symfony best practice regarding configuration?'
+    answers:
+      - { value: 'Always use XML for configuration files.', correct: false }
+      - { value: 'Store sensitive information directly in `config/services.yaml`.', correct: false }
+      - { value: 'Use environment variables for sensitive data and environment-specific settings.', correct: true }
+      - { value: 'Avoid using the `config/` directory entirely; configure everything in PHP.', correct: false }
+    help: |
+      'Symfony recommends using environment variables for sensitive data and environment-specific configuration, often managed via `.env` files.
+      https://symfony.com/doc/current/best_practices.html#configuration'
+  -
+    question: 'What is the recommended way to define services in Symfony 7?'
+    answers:
+      - { value: 'Using XML configuration files only.', correct: false }
+      - { value: 'Using PHP configuration files only.', correct: false }
+      - { value: 'Using YAML configuration files, typically in `config/services.yaml`.', correct: true }
+      - { value: 'Services are automatically discovered and do not require explicit definition.', correct: false }
+    help: |
+      'The recommended way to define services in Symfony 7 is using YAML configuration files, usually in `config/services.yaml` and related files.
+      https://symfony.com/doc/current/service_container.html#defining-services-in-yaml'
+  -
+    question: 'Which of the following is a core principle of Symfony\'s backward compatibility promise?'
+    answers:
+      - { value: 'Major versions (e.g., 6.x to 7.x) guarantee full backward compatibility.', correct: false }
+      - { value: 'Minor versions (e.g., 6.0 to 6.1) may introduce backward incompatible changes without deprecations.', correct: false }
+      - { value: 'Backward incompatible changes are only introduced in major versions, and are preceded by deprecations in the previous minor versions.', correct: true }
+      - { value: 'All public APIs are guaranteed to be stable forever.', correct: false }
+    help: |
+      'Symfony follows a strict backward compatibility promise: backward incompatible changes are only introduced in major versions, and are always deprecated in the previous minor versions.
+      https://symfony.com/doc/current/contributing/code/bc.html#backward-compatibility-promise'
+  -
+    question: 'When a feature is deprecated in Symfony, what is the typical process for its removal?'
+    answers:
+      - { value: 'It is removed immediately in the next patch release.', correct: false }
+      - { value: 'It is removed in the next minor version without any warning.', correct: false }
+      - { value: 'It is marked as deprecated in a minor version and then removed in the next major version.', correct: true }
+      - { value: 'Deprecated features are never removed, only marked as such.', correct: false }
+    help: |
+      'Deprecated features are marked as such in a minor version and then removed in the subsequent major version, giving developers time to adapt their code.
+      https://symfony.com/doc/current/contributing/code/bc.html#deprecations'
+  -
+    question: 'What does PSR stand for in the context of PHP and Symfony?'
+    answers:
+      - { value: 'PHP Standard Repository', correct: false }
+      - { value: 'PHP Security Rules', correct: false }
+      - { value: 'PHP Standard Recommendation', correct: true }
+      - { value: 'PHP Service Registry', correct: false }
+    help: |
+      'PSR stands for PHP Standard Recommendation. These are guidelines and specifications published by the PHP Framework Interoperability Group (PHP-FIG).
+      https://www.php-fig.org/psr/'
+  -
+    question: 'Which PSR is widely adopted by Symfony for autoloading classes?'
+    answers:
+      - { value: 'PSR-1 (Basic Coding Standard)', correct: false }
+      - { value: 'PSR-4 (Autoloader)', correct: true }
+      - { value: 'PSR-7 (HTTP Message Interfaces)', correct: false }
+      - { value: 'PSR-14 (Event Dispatcher)', correct: false }
+    help: |
+      'Symfony, like most modern PHP frameworks, adheres to PSR-4 for class autoloading.
+      https://www.php-fig.org/psr/psr-4/'
+  -
+    question: 'Which PSR defines common interfaces for HTTP messages, including requests and responses, and is implemented by Symfony\'s `HttpFoundation` component?'
+    answers:
+      - { value: 'PSR-3 (Logger Interface)', correct: false }
+      - { value: 'PSR-6 (Caching Interface)', correct: false }
+      - { value: 'PSR-7 (HTTP Message Interfaces)', correct: true }
+      - { value: 'PSR-11 (Container Interface)', correct: false }
+    help: |
+      'PSR-7 provides common interfaces for representing HTTP messages, which Symfony\'s `HttpFoundation` component implements.
+      https://www.php-fig.org/psr/psr-7/'
+  -
+    question: 'What is the purpose of the `bin/console` executable in a Symfony application?'
+    answers:
+      - { value: 'It is the main entry point for web requests.', correct: false }
+      - { value: 'It provides a command-line interface for performing various development and administrative tasks.', correct: true }
+      - { value: 'It compiles Twig templates into PHP code.', correct: false }
+      - { value: 'It manages Composer dependencies.', correct: false }
+    help: |
+      'The `bin/console` script is the command-line tool for Symfony applications, allowing you to run commands for tasks like cache clearing, database migrations, and debugging.
+      https://symfony.com/doc/current/console.html'
+  -
+    question: 'Which of the following is a core Symfony Component that provides a powerful and flexible Dependency Injection Container?'
+    answers:
+      - { value: '`EventDispatcher`', correct: false }
+      - { value: '`Routing`', correct: false }
+      - { value: '`DependencyInjection`', correct: true }
+      - { value: '`Form`', correct: false }
+    help: |
+      'The `DependencyInjection` component provides a powerful and flexible way to manage services and their dependencies.
+      https://symfony.com/doc/current/components/dependency_injection.html'
+  -
+    question: 'What is the primary benefit of using Symfony\'s Dependency Injection Container?'
+    answers:
+      - { value: 'It automatically generates all your application\'s classes.', correct: false }
+      - { value: 'It reduces coupling between components and improves testability and maintainability.', correct: true }
+      - { value: 'It replaces the need for Composer for package management.', correct: false }
+      - { value: 'It provides a graphical user interface for application development.', correct: false }
+    help: |
+      'Dependency Injection helps decouple components by injecting their dependencies rather than having them create their own, leading to more modular, testable, and maintainable code.
+      https://symfony.com/doc/current/service_container.html#why-use-a-dependency-injection-container'
+  -
+    question: 'What is a "Bridge" in the context of Symfony Components?'
+    answers:
+      - { value: 'A component that connects two different Symfony applications.', correct: false }
+      - { value: 'A component that provides integration between a Symfony component and a third-party library.', correct: true }
+      - { value: 'A tool for migrating code from older Symfony versions to newer ones.', correct: false }
+      - { value: 'A type of database connector.', correct: false }
+    help: |
+      'Symfony "Bridges" are components that provide integration between a Symfony component and a third-party library, for example, `MonologBridge` integrates Monolog with Symfony.
+      https://symfony.com/doc/current/components/index.html#bridges'
+  -
+    question: 'Which Symfony Component is responsible for mapping incoming HTTP requests to the correct controller and action?'
+    answers:
+      - { value: '`HttpFoundation`', correct: false }
+      - { value: '`Routing`', correct: true }
+      - { value: '`Security`', correct: false }
+      - { value: '`Templating`', correct: false }
+    help: |
+      'The `Routing` component is responsible for defining routes and matching incoming URLs to the appropriate controller.
+      https://symfony.com/doc/current/components/routing.html'
+  -
+    question: 'What is the purpose of the `EventDispatcher` component in Symfony?'
+    answers:
+      - { value: 'To send emails to users when certain actions occur.', correct: false }
+      - { value: 'To allow different parts of an application to communicate with each other in a decoupled way through events and listeners.', correct: true }
+      - { value: 'To manage database transactions.', correct: false }
+      - { value: 'To handle user authentication and authorization.', correct: false }
+    help: |
+      'The `EventDispatcher` component implements the Observer design pattern, allowing for a flexible and decoupled way for components to interact by dispatching and listening for events.
+      https://symfony.com/doc/current/components/event_dispatcher.html'
+  -
+    question: 'Which of the following is a key characteristic of Symfony\'s release management and roadmap schedule?'
+    answers:
+      - { value: 'New major versions are released every month.', correct: false }
+      - { value: 'Long-Term Support (LTS) versions are released every two years and supported for three years.', correct: true }
+      - { value: 'Minor versions introduce breaking changes without prior deprecation.', correct: false }
+      - { value: 'There is no predictable release schedule.', correct: false }
+    help: |
+      'Symfony has a predictable release schedule, with new major versions every two years and LTS versions supported for three years.
+      https://symfony.com/doc/current/contributing/community/releases.html'
+  -
+    question: 'What is the recommended naming convention for controller classes in Symfony?'
+    answers:
+      - { value: '`MyController`', correct: false }
+      - { value: '`MyBundleController`', correct: false }
+      - { value: 'Classes should end with `Controller` (e.g., `ProductController`).', correct: true }
+      - { value: 'Classes should start with `Controller` (e.g., `ControllerProduct`).', correct: false }
+    help: |
+      'Symfony best practices suggest that controller classes should end with `Controller`.
+      https://symfony.com/doc/current/best_practices.html#controllers'
+  -
+    question: 'What is the general naming convention for service IDs in Symfony\'s Dependency Injection Container?'
+    answers:
+      - { value: 'CamelCase (e.g., `myServiceId`).', correct: false }
+      - { value: 'snake_case (e.g., `my_service_id`).', correct: true }
+      - { value: 'PascalCase (e.g., `MyServiceId`).', correct: false }
+      - { value: 'kebab-case (e.g., `my-service-id`).', correct: false }
+    help: |
+      'While not strictly enforced, the common convention for service IDs in Symfony is `snake_case`.
+      https://symfony.com/doc/current/service_container.html#service-naming-conventions'
+  -
+    question: 'What is the purpose of the `composer.json` file in a Symfony Flex project?'
+    answers:
+      - { value: 'It defines the application\'s database schema.', correct: false }
+      - { value: 'It lists the project\'s dependencies and metadata, managed by Composer.', correct: true }
+      - { value: 'It stores environment variables for the application.', correct: false }
+      - { value: 'It is a cache file generated by Symfony Flex.', correct: false }
+    help: |
+      'The `composer.json` file is Composer\'s main configuration file, listing all project dependencies and other metadata.
+      https://getcomposer.org/doc/01-basic-usage.md#composer-json-project-setup'
+  -
+    question: 'Which command would you use to install all project dependencies defined in `composer.json` and `composer.lock`?'
+    answers:
+      - { value: '`composer update`', correct: false }
+      - { value: '`composer install`', correct: true }
+      - { value: '`composer require`', correct: false }
+      - { value: '`composer dump-autoload`', correct: false }
+    help: |
+      'The `composer install` command reads the `composer.lock` file (or `composer.json` if `composer.lock` doesn\'t exist) and installs the exact versions of dependencies.
+      https://getcomposer.org/doc/01-basic-usage.md#install-dependencies'
+  -
+    question: 'What is the primary benefit of using `composer.lock` in a Symfony project?'
+    answers:
+      - { value: 'It speeds up the application\'s runtime performance.', correct: false }
+      - { value: 'It ensures that everyone working on the project uses the exact same versions of dependencies, leading to consistent environments.', correct: true }
+      - { value: 'It automatically updates all dependencies to their latest versions.', correct: false }
+      - { value: 'It is used for deploying the application to production.', correct: false }
+    help: |
+      'The `composer.lock` file records the exact versions of all installed dependencies, ensuring that `composer install` always installs the same versions across different environments.
+      https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file'
+  -
+    question: 'Which of the following describes Symfony\'s approach to "Framework Overloading"?'
+    answers:
+      - { value: 'It encourages developers to extend and override core Symfony classes directly.', correct: false }
+      - { value: 'It promotes using event listeners, compiler passes, and configuration to customize behavior rather than modifying core framework code.', correct: true }
+      - { value: 'It means Symfony applications are always very large and resource-intensive.', correct: false }
+      - { value: 'It refers to the ability to run multiple Symfony applications on the same server instance.', correct: false }
+    help: |
+      'Symfony\'s architecture is designed to be extensible without modifying core framework code. Customization is achieved through configuration, event listeners, compiler passes, and decorating services.
+      https://symfony.com/doc/current/best_practices.html#framework-overloading'
+  -
+    question: 'What is the purpose of a "Bundle" in Symfony (prior to Symfony 4\'s shift towards smaller applications) and still relevant for larger applications?'
+    answers:
+      - { value: 'A standalone PHP library that can be used in any PHP project.', correct: false }
+      - { value: 'A structured set of files (controllers, services, templates, etc.) that implements a feature and can be reused across applications.', correct: true }
+      - { value: 'A database migration script.', correct: false }
+      - { value: 'A configuration file for environment variables.', correct: false }
+    help: |
+      'A Bundle is similar to a plugin in other software, a structured set of files that implements a feature and can be reused. While Symfony 4+ encourages smaller, more focused applications without explicit bundles for application code, the concept of reusable bundles for third-party features remains.
+      https://symfony.com/doc/current/bundles.html'
+  -
+    question: 'Which of the following is a common practice for handling exceptions in Symfony applications?'
+    answers:
+      - { value: 'Catching every exception in every controller and manually rendering an error page.', correct: false }
+      - { value: 'Relying on the `KernelEvents::EXCEPTION` event and custom exception listeners to centralize error handling and response generation.', correct: true }
+      - { value: 'Letting all exceptions propagate to the web server, which then displays a generic error.', correct: false }
+      - { value: 'Disabling error reporting in production environments entirely.', correct: false }
+    help: |
+      'Symfony provides a robust exception handling mechanism via the `KernelEvents::EXCEPTION` event, allowing for centralized and customizable error responses.
+      https://symfony.com/doc/current/controller/error_pages.html'
+  -
+    question: 'What is the role of the `Response` object in Symfony\'s request handling?'
+    answers:
+      - { value: 'It stores the incoming HTTP request data.', correct: false }
+      - { value: 'It represents the HTTP response that will be sent back to the client, including headers and content.', correct: true }
+      - { value: 'It defines the routing rules for the application.', correct: false }
+      - { value: 'It manages the application\'s cache.', correct: false }
+    help: |
+      'The `Response` object (`Symfony\\Component\\HttpFoundation\\Response`) encapsulates the HTTP response, including its status code, headers, and content.
+      https://symfony.com/doc/current/introduction/http_fundamentals.html#the-response'
+  -
+    question: 'Which of the following is a best practice for writing controllers in Symfony?'
+    answers:
+      - { value: 'Controllers should contain all business logic and database queries.', correct: false }
+      - { value: 'Controllers should be thin, primarily responsible for coordinating services and returning `Response` objects.', correct: true }
+      - { value: 'Controllers should directly manipulate the global `$_POST` and `$_GET` arrays.', correct: false }
+      - { value: 'Controllers should always return a Twig template, never a JSON response.', correct: false }
+    help: |
+      'Symfony best practices advocate for "thin controllers" that delegate business logic to services, keeping controllers focused on handling requests and preparing responses.
+      https://symfony.com/doc/current/best_practices.html#controllers'
+  -
+    question: 'What is the purpose of the `config/routes.yaml` (or `config/routes/` directory) in a Symfony application?'
+    answers:
+      - { value: 'To define database connection parameters.', correct: false }
+      - { value: 'To configure the application\'s services.', correct: false }
+      - { value: 'To define the URL patterns and map them to specific controller actions.', correct: true }
+      - { value: 'To store environment variables.', correct: false }
+    help: |
+      'The `config/routes.yaml` file (or files within `config/routes/`) is where the application\'s routing configuration is defined, mapping URLs to controllers.
+      https://symfony.com/doc/current/routing.html'
+  -
+    question: 'When should you use a `kernel.event_subscriber` instead of multiple `kernel.event_listener` tags for a class?'
+    answers:
+      - { value: 'When the class only listens to a single event.', correct: false }
+      - { value: 'When the class needs to listen to multiple events and you want to centralize their configuration within the class itself.', correct: true }
+      - { value: 'When the class does not require any services injected.', correct: false }
+      - { value: 'When you want to prevent the event from being dispatched.', correct: false }
+    help: |
+      'An event subscriber implements `EventSubscriberInterface` and defines all the events it listens to within the class itself, making it more self-contained than multiple separate listeners.
+      https://symfony.com/doc/current/event_dispatcher.html#event-subscribers'
+  -
+    question: 'Which of the following is NOT a core Symfony Component?'
+    answers:
+      - { value: '`Console`', correct: false }
+      - { value: '`Doctrine`', correct: true }
+      - { value: '`Validator`', correct: false }
+      - { value: '`Yaml`', correct: false }
+    help: |
+      'Doctrine is a separate ORM (Object-Relational Mapper) library, not a core Symfony Component, although it is widely used with Symfony.
+      https://symfony.com/doc/current/components/index.html'
+  -
+    question: 'What is the purpose of the `composer dump-autoload` command?'
+    answers:
+      - { value: 'To update all project dependencies.', correct: false }
+      - { value: 'To generate or regenerate the Composer autoloader files.', correct: true }
+      - { value: 'To remove all installed packages.', correct: false }
+      - { value: 'To clear the Symfony cache.', correct: false }
+    help: |
+      'The `composer dump-autoload` command regenerates the autoloader files, which is necessary when adding new classes or changing autoloading configurations.
+      https://getcomposer.org/doc/03-cli.md#dump-autoload-dump-a'
+  -
+    question: 'What is the primary function of the `ServiceSubscriberInterface` in Symfony?'
+    answers:
+      - { value: 'To allow a service to subscribe to events without using the `EventSubscriberInterface`.', correct: false }
+      - { value: 'To enable a service to declare its required services as private, preventing circular references and improving performance.', correct: true }
+      - { value: 'To mark a service as a global singleton.', correct: false }
+      - { value: 'To automatically generate a service definition from a class.', correct: false }
+    help: |
+      'The `ServiceSubscriberInterface` allows a service to explicitly declare which services it needs, enabling the container to optimize service wiring and prevent circular dependencies.
+      https://symfony.com/doc/current/service_container/service_subscribers.html'
+  -
+    question: 'Which of the following is true regarding Symfony\'s license?'
+    answers:
+      - { value: 'Symfony is proprietary software and requires a commercial license.', correct: false }
+      - { value: 'Symfony is open-source software released under the MIT license.', correct: true }
+      - { value: 'Symfony is licensed under the GPL, requiring all derivative works to be open source.', correct: false }
+      - { value: 'Symfony has a custom license that restricts its use in commercial projects.', correct: false }
+    help: |
+      'Symfony is open-source software distributed under the MIT license, which is a permissive free software license.
+      https://symfony.com/doc/current/contributing/code/license.html'
+  -
+    question: 'What is the purpose of the `bin/console cache:clear` command?'
+    answers:
+      - { value: 'To delete all log files.', correct: false }
+      - { value: 'To remove the application\'s cache files, forcing Symfony to rebuild them on the next request.', correct: true }
+      - { value: 'To uninstall all Composer dependencies.', correct: false }
+      - { value: 'To reset the database.', correct: false }
+    help: |
+      'The `cache:clear` command removes all cached files generated by Symfony, which is often necessary after making configuration changes or deploying new code.
+      https://symfony.com/doc/current/console/usage.html#cache-clear'
+  -
+    question: 'Which of the following is a best practice for managing environment-specific configurations in Symfony?'
+    answers:
+      - { value: 'Hardcoding environment-specific values directly in `config/services.yaml`.', correct: false }
+      - { value: 'Using separate `.env` files (e.g., `.env.local`, `.env.dev`, `.env.prod`) and the Dotenv component.', correct: true }
+      - { value: 'Storing all environment variables in the `public/` directory.', correct: false }
+      - { value: 'Manually changing configuration files before each deployment.', correct: false }
+    help: |
+      'Symfony recommends using `.env` files and the Dotenv component to manage environment variables, allowing for different configurations per environment.
+      https://symfony.com/doc/current/configuration/environments.html'
+  -
+    question: 'What is the role of the `RequestStack` in Symfony\'s `HttpKernel`?'
+    answers:
+      - { value: 'It manages a stack of `Response` objects.', correct: false }
+      - { value: 'It provides access to the current `Request` and any parent requests (e.g., for sub-requests or embedded controllers).', correct: true }
+      - { value: 'It stores all incoming HTTP headers.', correct: false }
+      - { value: 'It is responsible for routing requests.', correct: false }
+    help: |
+      'The `RequestStack` component manages a stack of `Request` objects, which is crucial for handling sub-requests and embedded controllers.
+      https://symfony.com/doc/current/components/http_kernel.html#the-requeststack'
+  -
+    question: 'Which event is dispatched at the very end of a request, after the response has been sent to the client?'
+    answers:
+      - { value: '`KernelEvents::FINISH_REQUEST`', correct: false }
+      - { value: '`KernelEvents::TERMINATE`', correct: true }
+      - { value: '`KernelEvents::RESPONSE`', correct: false }
+      - { value: '`KernelEvents::POST_RESPONSE`', correct: false }
+    help: |
+      'The `KernelEvents::TERMINATE` event is dispatched after the response has been sent to the client, allowing for tasks that don\'t need to block the response (e.g., logging, sending emails).
+      https://symfony.com/doc/current/reference/events.html#kernel-events'
+  -
+    question: 'What is the primary benefit of using Symfony\'s `MicroKernelTrait`?'
+    answers:
+      - { value: 'It allows building full-stack applications with all Symfony features enabled by default.', correct: false }
+      - { value: 'It simplifies the creation of smaller, more focused applications by providing a minimal kernel setup.', correct: true }
+      - { value: 'It automatically generates all necessary configuration files for a new project.', correct: false }
+      - { value: 'It enables real-time communication via WebSockets.', correct: false }
+    help: |
+      'The `MicroKernelTrait` simplifies the creation of micro-applications or APIs by providing a streamlined kernel setup, reducing boilerplate.
+      https://symfony.com/doc/current/configuration/micro_kernel_trait.html'
+  -
+    question: 'Which of the following is a common naming convention for Twig template files in Symfony?'
+    answers:
+      - { value: '`controller_name.html.twig`', correct: false }
+      - { value: '`action_name.html.twig` (e.g., `index.html.twig` for an `index` action)', correct: true }
+      - { value: '`template.twig.html`', correct: false }
+      - { value: '`view.php`', correct: false }
+    help: |
+      'Twig template files are typically named after the action they render, followed by `.html.twig` (e.g., `index.html.twig`, `show.html.twig`).
+      https://symfony.com/doc/current/templates.html#template-naming'
+  -
+    question: 'What is the purpose of the `src/` directory in a Symfony application?'
+    answers:
+      - { value: 'To store third-party libraries installed via Composer.', correct: false }
+      - { value: 'To contain the application\'s custom PHP code, such as controllers, services, and entities.', correct: true }
+      - { value: 'To hold cached data and log files.', correct: false }
+      - { value: 'To serve public web assets like images and CSS.', correct: false }
+    help: |
+      'The `src/` directory is where your application\'s custom PHP code resides, organized by namespaces (e.g., `App\\`).
+      https://symfony.com/doc/current/best_practices.html#code-organization'
+  -
+    question: 'Which of the following is a best practice for using the `use` keyword for namespaces in Symfony PHP files?'
+    answers:
+      - { value: 'Always use fully qualified class names (FQCNs) without `use` statements.', correct: false }
+      - { value: 'Group `use` statements at the top of the file, ordered alphabetically, and separate them with a blank line from the rest of the code.', correct: true }
+      - { value: 'Place `use` statements randomly throughout the file where the class is first used.', correct: false }
+      - { value: 'Only use `use` statements for classes within the same namespace.', correct: false }
+    help: |
+      'Symfony follows PSR-12 recommendations for coding style, which includes grouping `use` statements at the top of the file, ordered alphabetically.
+      https://www.php-fig.org/psr/psr-12/#3-namespaces-and-use-declarations'
+  -
+    question: 'What is the role of the `ResponseListener` in Symfony\'s `HttpKernel` event flow?'
+    answers:
+      - { value: 'It handles the routing of the request.', correct: false }
+      - { value: 'It ensures that the `Response` object has the correct `Content-Type` header and other default headers.', correct: true }
+      - { value: 'It converts exceptions into error responses.', correct: false }
+      - { value: 'It processes forms submitted by the user.', correct: false }
+    help: |
+      'The `ResponseListener` is a core listener that sets default headers (like `Content-Type`) on the `Response` object.
+      https://symfony.com/doc/current/components/http_kernel.html#the-response-listener'
+  -
+    question: 'What is the purpose of the `UrlMatcher` in the `Routing` component?'
+    answers:
+      - { value: 'To generate URLs from route names and parameters.', correct: false }
+      - { value: 'To match an incoming URL path against the defined routes and determine the corresponding controller.', correct: true }
+      - { value: 'To validate URL parameters.', correct: false }
+      - { value: 'To redirect URLs to different domains.', correct: false }
+    help: |
+      'The `UrlMatcher` takes an incoming URL and attempts to match it against the configured routes to find the correct controller and its arguments.
+      https://symfony.com/doc/current/components/routing.html#how-it-works'
+  -
+    question: 'Which of the following is a benefit of Symfony\'s component-based architecture?'
+    answers:
+      - { value: 'It forces developers to use the entire framework, even for small projects.', correct: false }
+      - { value: 'It allows developers to use individual Symfony components in any PHP project, promoting reusability and flexibility.', correct: true }
+      - { value: 'It eliminates the need for Composer for dependency management.', correct: false }
+      - { value: 'It restricts the use of third-party libraries.', correct: false }
+    help: |
+      'Symfony\'s components are decoupled and can be used independently in any PHP project, offering great flexibility.
+      https://symfony.com/doc/current/components/index.html'
+  -
+    question: 'What is the primary goal of Symfony\'s "Backward Compatibility Promise"?'
+    answers:
+      - { value: 'To ensure that applications never need to be updated to newer Symfony versions.', correct: false }
+      - { value: 'To provide a clear and predictable upgrade path for applications by minimizing breaking changes between minor versions and clearly deprecating features before removal in major versions.', correct: true }
+      - { value: 'To guarantee that all PHP versions are compatible with all Symfony versions.', correct: false }
+      - { value: 'To prevent the use of external libraries in Symfony projects.', correct: false }
+    help: |
+      'The backward compatibility promise aims to make upgrading Symfony applications as smooth as possible by providing clear deprecation paths.
+      https://symfony.com/doc/current/contributing/code/bc.html'
+  -
+    question: 'Which of the following is the correct way to define a service in `config/services.yaml` that uses constructor injection?'
+    answers:
+      - { value: '''
+services:
+    App\\Service\\MyService:
+        arguments: ['@App\\Repository\\MyRepository']
+'''
+      , correct: true }
+      - { value: '''
+services:
+    App\\Service\\MyService:
+        properties:
+            - '@App\\Repository\\MyRepository'
+'''
+      , correct: false }
+      - { value: '''
+services:
+    App\\Service\\MyService:
+        calls:
+            - [setRepository, ['@App\\Repository\\MyRepository']]
+'''
+      , correct: false }
+      - { value: '''
+services:
+    App\\Service\\MyService:
+        factory: ['@App\\Repository\\MyRepository', 'create']
+'''
+      , correct: false }
+    help: |
+      'Constructor injection is configured using the `arguments` key in the service definition, where `@` denotes a service reference.
+      https://symfony.com/doc/current/service_container/autowiring.html#autowiring-arguments'
+  -
+    question: 'What is the purpose of the `KernelEvents::CONTROLLER` event?'
+    answers:
+      - { value: 'It is dispatched after the controller has returned a `Response`.', correct: false }
+      - { value: 'It is dispatched right before the controller is executed, allowing modification of the controller or its arguments.', correct: true }
+      - { value: 'It handles the routing of the request to the controller.', correct: false }
+      - { value: 'It is used to log controller execution times.', correct: false }
+    help: |
+      'The `KernelEvents::CONTROLLER` event is dispatched after the controller has been determined but before it is executed. Listeners can modify the controller or its arguments.
+      https://symfony.com/doc/current/reference/events.html#kernel-events'
+  -
+    question: 'Which of the following is a recommended best practice for security in Symfony?'
+    answers:
+      - { value: 'Storing user passwords in plain text in the database.', correct: false }
+      - { value: 'Using strong, modern password hashing algorithms (e.g., Argon2i, bcrypt) provided by the `Security` component.', correct: true }
+      - { value: 'Disabling CSRF protection for all forms to simplify development.', correct: false }
+      - { value: 'Allowing direct access to all files in the `src/` directory from the web.', correct: false }
+    help: |
+      'Symfony\'s `Security` component provides robust tools for password hashing and other security features. Using strong hashing algorithms is crucial.
+      https://symfony.com/doc/current/security.html#password-hashing'
+  -
+    question: 'What is the role of the `VarDumper` component in Symfony?'
+    answers:
+      - { value: 'To manage database migrations.', correct: false }
+      - { value: 'To provide a human-readable and interactive way to dump PHP variables for debugging purposes.', correct: true }
+      - { value: 'To validate form submissions.', correct: false }
+      - { value: 'To handle HTTP caching.', correct: false }
+    help: |
+      'The `VarDumper` component provides enhanced `dump()` functionality for debugging, offering more detailed and interactive output than `var_dump()`.
+      https://symfony.com/doc/current/components/var_dumper.html'
+  -
+    question: 'Which of the following is a common naming convention for configuration files in Symfony?'
+    answers:
+      - { value: '`config.php` for all configurations.', correct: false }
+      - { value: 'Using the bundle name or feature name followed by `.yaml` (e.g., `security.yaml`, `doctrine.yaml`).', correct: true }
+      - { value: 'Randomly generated names for each configuration file.', correct: false }
+      - { value: 'All configuration in a single `app.config` file.', correct: false }
+    help: |
+      'Configuration files are typically named after the component or feature they configure (e.g., `security.yaml`, `framework.yaml`).
+      https://symfony.com/doc/current/best_practices.html#configuration'
+  -
+    question: 'What is the purpose of the `vendor/` directory in a Symfony application?'
+    answers:
+      - { value: 'To store application-specific source code.', correct: false }
+      - { value: 'To contain all third-party libraries and dependencies managed by Composer.', correct: true }
+      - { value: 'To hold web assets like CSS and JavaScript.', correct: false }
+      - { value: 'To store log files and cache.', correct: false }
+    help: |
+      'The `vendor/` directory is where Composer installs all the project\'s dependencies, including Symfony components and other libraries.
+      https://getcomposer.org/doc/01-basic-usage.md#autoloading'
+  -
+    question: 'Which of the following is a key aspect of Symfony\'s adherence to PSRs?'
+    answers:
+      - { value: 'It means Symfony only works with PHP-FIG approved libraries.', correct: false }
+      - { value: 'It promotes interoperability with other PHP libraries and frameworks by implementing common interfaces and standards.', correct: true }
+      - { value: 'It requires all Symfony applications to be built as microservices.', correct: false }
+      - { value: 'It dictates the exact database system to be used.', correct: false }
+    help: |
+      'By adhering to PSRs, Symfony ensures that its components are interoperable with other PHP libraries and frameworks that also implement these standards.
+      https://symfony.com/doc/current/components/index.html#interoperability'
+  -
+    question: 'What is the main responsibility of the `ControllerResolver` in Symfony?'
+    answers:
+      - { value: 'To generate URLs from route names.', correct: false }
+      - { value: 'To determine which controller and action should be executed for a given request.', correct: true }
+      - { value: 'To render Twig templates.', correct: false }
+      - { value: 'To handle form submissions.', correct: false }
+    help: |
+      'The `ControllerResolver` is responsible for taking the request attributes (determined by the router) and finding the callable controller.
+      https://symfony.com/doc/current/components/http_kernel.html#the-controllerresolver'
+  -
+    question: 'What is the purpose of the `ArgumentResolver` in Symfony\'s `HttpKernel`?'
+    answers:
+      - { value: 'To validate arguments passed to console commands.', correct: false }
+      - { value: 'To resolve controller method arguments by injecting services, request attributes, or converting request data.', correct: true }
+      - { value: 'To parse command-line arguments.', correct: false }
+      - { value: 'To define the default values for route parameters.', correct: false }
+    help: |
+      'The `ArgumentResolver` is responsible for determining the values of the arguments to pass to the controller method, including injecting services, converting request attributes, or handling request bodies.
+      https://symfony.com/doc/current/components/http_kernel.html#the-argumentresolver'
+  -
+    question: 'Which of the following is a core principle behind Symfony\'s "Official Best Practices"?'
+    answers:
+      - { value: 'To provide a rigid set of rules that cannot be deviated from.', correct: false }
+      - { value: 'To offer flexible guidelines and conventions that promote maintainable, scalable, and performant applications.', correct: true }
+      - { value: 'To enforce a specific development methodology (e.g., Agile, Waterfall).', correct: false }
+      - { value: 'To dictate the use of a single database technology.', correct: false }
+    help: |
+      'Symfony\'s best practices are a set of recommendations designed to help developers build high-quality applications, while still allowing flexibility.
+      https://symfony.com/doc/current/best_practices.html'
+  -
+    question: 'What is the primary purpose of the `tests/` directory in a Symfony application?'
+    answers:
+      - { value: 'To store application documentation.', correct: false }
+      - { value: 'To contain automated tests (unit, functional, integration) for the application\'s code.', correct: true }
+      - { value: 'To hold temporary files during development.', correct: false }
+      - { value: 'To store user-uploaded files.', correct: false }
+    help: |
+      'The `tests/` directory is where you place your application\'s automated tests, typically using PHPUnit.
+      https://symfony.com/doc/current/testing.html'
+  -
+    question: 'What is the significance of the `APP_ENV` environment variable in a Symfony application?'
+    answers:
+      - { value: 'It defines the application\'s version number.', correct: false }
+      - { value: 'It specifies the application\'s current environment (e.g., `dev`, `prod`, `test`), which influences configuration loading and debugging behavior.', correct: true }
+      - { value: 'It sets the default language for the application.', correct: false }
+      - { value: 'It determines the database connection string.', correct: false }
+    help: |
+      'The `APP_ENV` environment variable is crucial for Symfony to know which environment it\'s running in, affecting how configuration files are loaded and debugging tools are enabled.
+      https://symfony.com/doc/current/configuration/environments.html'
+  -
+    question: 'Which of the following is a key feature of Symfony\'s `Form` component?'
+    answers:
+      - { value: 'It automatically generates HTML forms without any configuration.', correct: false }
+      - { value: 'It provides a robust framework for building, processing, and validating web forms.', correct: true }
+      - { value: 'It is used exclusively for creating API endpoints.', correct: false }
+      - { value: 'It replaces the need for JavaScript for client-side validation.', correct: false }
+    help: |
+      'The `Form` component simplifies the creation, processing, and validation of forms in Symfony applications.
+      https://symfony.com/doc/current/forms.html'
+  -
+    question: 'What is the purpose of the `Validator` component in Symfony?'
+    answers:
+      - { value: 'To validate HTML markup.', correct: false }
+      - { value: 'To validate data against predefined rules (constraints) in any layer of the application.', correct: true }
+      - { value: 'To validate database schema definitions.', correct: false }
+      - { value: 'To validate user input on the client-side only.', correct: false }
+    help: |
+      'The `Validator` component allows you to validate data against a set of rules (constraints), independent of whether it comes from a form, an API, or any other source.
+      https://symfony.com/doc/current/validation.html'
+  -
+    question: 'Which of the following describes Symfony\'s approach to "Convention over Configuration"?'
+    answers:
+      - { value: 'It means Symfony has no configuration files at all.', correct: false }
+      - { value: 'It provides sensible defaults and conventions that reduce the need for explicit configuration, while still allowing full customization.', correct: true }
+      - { value: 'It forces developers to follow a strict, unchangeable directory structure.', correct: false }
+      - { value: 'It prioritizes performance over ease of development.', correct: false }
+    help: |
+      'Symfony embraces "Convention over Configuration," providing smart defaults and conventions to reduce boilerplate, but always allowing you to override them.
+      https://symfony.com/doc/current/best_practices.html#convention-over-configuration'
+  -
+    question: 'What is the purpose of the `config/packages/` directory in a Symfony application?'
+    answers:
+      - { value: 'To store Composer dependencies.', correct: false }
+      - { value: 'To contain configuration files specific to individual Symfony bundles or third-party packages.', correct: true }
+      - { value: 'To define global application parameters.', correct: false }
+      - { value: 'To store application logs.', correct: false }
+    help: |
+      'The `config/packages/` directory holds configuration files for bundles and packages, often generated by Symfony Flex recipes.
+      https://symfony.com/doc/current/best_practices.html#configuration'
+  -
+    question: 'What is the primary benefit of Symfony\'s "Flex" approach for managing project dependencies?'
+    answers:
+      - { value: 'It eliminates the need for Composer entirely.', correct: false }
+      - { value: 'It automates common configuration tasks for packages, reducing manual setup and ensuring consistency.', correct: true }
+      - { value: 'It only allows installation of official Symfony bundles.', correct: false }
+      - { value: 'It guarantees full backward compatibility between all package versions.', correct: false }
+    help: |
+      'Symfony Flex streamlines dependency management by automating configuration through recipes, making it easier to set up and maintain Symfony projects.
+      https://symfony.com/doc/current/setup/flex.html'
+  -
+    question: 'Which of the following best describes the `HttpKernelInterface`?'
+    answers:
+      - { value: 'It is a concrete class that implements the entire request handling logic.', correct: false }
+      - { value: 'It defines the contract for a kernel that can handle HTTP requests and return HTTP responses.', correct: true }
+      - { value: 'It is used only for console commands.', correct: false }
+      - { value: 'It provides methods for interacting with the database.', correct: false }
+    help: |
+      'The `HttpKernelInterface` defines the fundamental contract for any HTTP kernel, specifying the `handle()` method.
+      https://symfony.com/doc/current/components/http_kernel.html#the-httpkernelinterface'
+  -
+    question: 'What is the purpose of the `Logger` component (often integrated via `MonologBridge`) in Symfony?'
+    answers:
+      - { value: 'To manage user authentication.', correct: false }
+      - { value: 'To provide a flexible and powerful logging system for recording application events and errors.', correct: true }
+      - { value: 'To handle HTTP caching mechanisms.', correct: false }
+      - { value: 'To generate random data for testing.', correct: false }
+    help: |
+      'The `Logger` component (using Monolog via `MonologBridge`) provides robust logging capabilities, allowing you to record messages at various levels (debug, info, error, etc.).
+      https://symfony.com/doc/current/logging.html'
+  -
+    question: 'Which of the following is a best practice for naming services in Symfony?'
+    answers:
+      - { value: 'Use very short, cryptic names to save space.', correct: false }
+      - { value: 'Use descriptive, clear names that reflect the service\'s purpose (e.g., `app.user_manager`, `App\\Service\\Mailer`).', correct: true }
+      - { value: 'Always use the fully qualified class name as the service ID.', correct: false }
+      - { value: 'Services should not have names; they are identified by their class.', correct: false }
+    help: |
+      'Clear and descriptive service names improve readability and maintainability. While autowiring often uses FQCNs, explicit service definitions benefit from descriptive names.
+      https://symfony.com/doc/current/service_container.html#service-naming-conventions'
+  -
+    question: 'What is the purpose of the `Translator` component in Symfony?'
+    answers:
+      - { value: 'To convert data between different formats (e.g., JSON to XML).', correct: false }
+      - { value: 'To provide internationalization (i18n) and localization (l10n) capabilities, allowing applications to support multiple languages.', correct: true }
+      - { value: 'To translate PHP code into JavaScript.', correct: false }
+      - { value: 'To translate database queries into different SQL dialects.', correct: false }
+    help: |
+      'The `Translator` component provides tools for internationalizing your application, allowing you to display content in different languages based on the user\'s locale.
+      https://symfony.com/doc/current/translation.html'
+  -
+    question: 'Which of the following is a key feature of Symfony\'s `Security` component?'
+    answers:
+      - { value: 'It provides a built-in firewall system for authentication and authorization.', correct: true }
+      - { value: 'It automatically encrypts all data stored in the database.', correct: false }
+      - { value: 'It prevents all SQL injection attacks automatically.', correct: false }
+      - { value: 'It is only used for API authentication, not web applications.', correct: false }
+    help: |
+      'The `Security` component offers a flexible and powerful system for managing authentication (who the user is) and authorization (what the user can do), including firewalls.
+      https://symfony.com/doc/current/security.html'
+  -
+    question: 'What is the primary role of the `Templating` component (or Twig integration) in Symfony?'
+    answers:
+      - { value: 'To handle database interactions.', correct: false }
+      - { value: 'To render dynamic content using templates (e.g., Twig) and separate presentation from business logic.', correct: true }
+      - { value: 'To manage HTTP sessions.', correct: false }
+      - { value: 'To process form submissions.', correct: false }
+    help: |
+      'The `Templating` component, often used with Twig, is responsible for rendering views and separating the presentation layer from the application logic.
+      https://symfony.com/doc/current/templates.html'
+  -
+    question: 'What is the purpose of the `config/services.yaml` file in a Symfony application?'
+    answers:
+      - { value: 'To define the application\'s database schema.', correct: false }
+      - { value: 'To configure and define the application\'s services and their dependencies.', correct: true }
+      - { value: 'To store environment variables.', correct: false }
+      - { value: 'To define routing rules.', correct: false }
+    help: |
+      'The `config/services.yaml` file is the primary location for defining and configuring services in the Symfony Dependency Injection Container.
+      https://symfony.com/doc/current/service_container.html#defining-services-in-yaml'
+  -
+    question: 'Which of the following is a best practice for organizing templates in Symfony?'
+    answers:
+      - { value: 'All templates should be placed directly in the `templates/` directory.', correct: false }
+      - { value: 'Organize templates into subdirectories under `templates/` based on their feature or controller (e.g., `templates/product/index.html.twig`).', correct: true }
+      - { value: 'Templates should be stored in the `public/` directory.', correct: false }
+      - { value: 'Use a single template file for the entire application.', correct: false }
+    help: |
+      'Symfony recommends organizing templates into subdirectories within the `templates/` directory, reflecting the application\'s structure or features.
+      https://symfony.com/doc/current/templates.html#template-naming'
+  -
+    question: 'What is the purpose of the `PropertyInfo` component in Symfony?'
+    answers:
+      - { value: 'To manage file uploads.', correct: false }
+      - { value: 'To extract information about class properties (e.g., types, mutability, description) from various sources like PHPDoc or Reflection.', correct: true }
+      - { value: 'To validate property values in forms.', correct: false }
+      - { value: 'To serialize and deserialize objects to/from different formats.', correct: false }
+    help: |
+      'The `PropertyInfo` component provides an API to extract information about class properties, useful for serialization, validation, and other data manipulation tasks.
+      https://symfony.com/doc/current/components/property_info.html'
+  -
+    question: 'Which of the following is a key aspect of Symfony\'s `Cache` component?'
+    answers:
+      - { value: 'It only supports file-based caching.', correct: false }
+      - { value: 'It provides a unified API for various caching backends (e.g., filesystem, Redis, Memcached).', correct: true }
+      - { value: 'It automatically caches all database queries.', correct: false }
+      - { value: 'It is only used for HTTP caching, not application data.', correct: false }
+    help: |
+      'The `Cache` component offers a standardized way to interact with different caching systems, providing a unified API.
+      https://symfony.com/doc/current/components/cache.html'
+  -
+    question: 'What is the purpose of the `Workflow` component in Symfony?'
+    answers:
+      - { value: 'To manage database transactions.', correct: false }
+      - { value: 'To define and manage complex state machines and workflows within an application.', correct: true }
+      - { value: 'To generate PDF documents.', correct: false }
+      - { value: 'To handle user authentication flows.', correct: false }
+    help: |
+      'The `Workflow` component allows you to define and manage state machines or workflows, useful for modeling business processes with different states and transitions.
+      https://symfony.com/doc/current/workflow.html'
+```
