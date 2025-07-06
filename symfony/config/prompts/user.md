@@ -1,18 +1,13 @@
+# Rules
+
 Generate multiple-choice questions for Symfony 7 certification preparation, using the structure and constraints defined in the system prompt.
 
-You must cover all the topics. 
-Generate 10 high-quality questions (with at least 3 possible answers each).  
-Include `help` links pointing to official Symfony documentation.  
-Ensure a mix of concept-based and code-based questions.
+## Topic
 
-Output must be in **valid YAML format**, starting with:
+Current topic (category) for questions is "{{ $json.topic }}".
+You must cover all the associated subtopics: {{ $json.subtopics }}. 
 
-```yaml
-category: Controllers
-questions:
-  - question: ...
-```
+## Constraints
 
-Do not include any extra commentary. Only return the raw YAML content.
-
-Once done, go to the next topic until the last.
+- Generate 50 high-quality unique questions.
+- Ensure a mix of concept-based and code-based questions.
