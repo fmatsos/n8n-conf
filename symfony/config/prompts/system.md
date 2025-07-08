@@ -55,7 +55,7 @@ Helps *may have some short explanations* **without code snippet**. But **always 
 Use the following MCP tools to get the latest documentation.
 
 Used Context7 libraries paths are:
-- <libraryID>="symfony/symfony-docs" for subjects about Symfony, with <Context7CompatibleLibraryID> = "symfony/symfony-docs"..
+- LibraryID="symfony/symfony-docs" for subjects about Symfony, with Context7CompatibleLibraryID="symfony/symfony-docs"..
 
 ### 1. Resolve the Symfony library ID:
 
