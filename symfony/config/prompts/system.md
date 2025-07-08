@@ -107,7 +107,8 @@ Use this tool for **each topic** you generate questions for, to ensure freshness
 - Include both **conceptual** and **code-level** questions  
 - Ensure clear English with concise phrasing  
 - Questions should be clear even to a non-native speaker  
-- Vary the difficulty (easy to hard)  
+- Vary the difficulty (easy to hard)
+- Vary question with or without code snippet
 
 ---
 
