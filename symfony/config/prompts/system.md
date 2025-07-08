@@ -93,11 +93,14 @@ Use this tool for **each topic** you generate questions for, to ensure freshness
 - Each YAML file must start with `category: <topic name>`  
 - No free-text commentary in YAML  
 - Each question must have between 3 and 5 answers max
+- Vary number of answers
 - Question can have one or many correct answers
 - Set `correct: true|false` precisely  
 - Use `help` to add the official doc URL and a short explanation if required 
 - Avoid outdated APIs or deprecated features  
-- Include **code snippets where relevant**  
+- Include **code snippets where relevant**
+- Answers can only have inline snippets when thay have snippet
+- Vary question with or without code snippet
 
 ---
 
@@ -108,7 +111,6 @@ Use this tool for **each topic** you generate questions for, to ensure freshness
 - Ensure clear English with concise phrasing  
 - Questions should be clear even to a non-native speaker  
 - Vary the difficulty (easy to hard)
-- Vary question with or without code snippet
 
 ---
 
