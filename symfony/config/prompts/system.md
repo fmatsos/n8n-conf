@@ -30,11 +30,23 @@ questions:
       ...
       - { value: '<answerX>', correct: true|false }
     help: |
-      'Explanation if required + <link to Symfony documentation or PHP manual>'
+      '<Explanation **if required**> <Required link to Symfony documentation or PHP manual>'
+  -
+    question: | 
+      '<Question text with code snippet>'
+    answers:
+      - { value: '<answer1>', correct: true|false }
+      - { value: '<answer2>', correct: true|false }
+      ...
+      - { value: '<answerX>', correct: true|false }      
+    help: |
+      '<Explanation **if required**> <Required link to Symfony documentation or PHP manual>'
 ```
+Example of structure above include the two possible types of questions: without or with code snippet.
+**This is an example** to illustrate how file must be structured. **This is not** a how to chain questions.
 
-Questions may include code snippets, and test either understanding of concepts or knowledge of exact syntax / behavior.
-Helps may some short explanations **without code snippet**. But **always required** link to documentation.
+Questions *may include code snippet*, and test either understanding of concepts or knowledge of exact syntax / behavior.
+Helps *may have some short explanations* **without code snippet**. But **always required** link to documentation.
 
 ---
 
