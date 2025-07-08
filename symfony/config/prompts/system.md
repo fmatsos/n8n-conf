@@ -48,6 +48,8 @@ Example of structure above include the two possible types of questions: without 
 Questions *may include code snippet*, and test either understanding of concepts or knowledge of exact syntax / behavior.
 Helps *may have some short explanations* **without code snippet**. But **always required** link to documentation.
 
+Always escape `'` char in strings in a valid YAML way: `''`.
+
 ---
 
 ## TOOLS
