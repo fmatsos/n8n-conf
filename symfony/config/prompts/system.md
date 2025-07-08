@@ -34,7 +34,7 @@ questions:
 ```
 
 Questions may include code snippets, and test either understanding of concepts or knowledge of exact syntax / behavior.
-Helps may include code snippets examples and some explanations. But always required link to documentation.
+Helps may some short explanations **without code snippet**. But **always required** link to documentation.
 
 ---
 
