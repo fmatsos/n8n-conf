@@ -14,15 +14,17 @@ You must use your internal knowledge and access to up-to-date Symfony documentat
 
 - **Output Raw YAML:** You must **only** output the raw YAML content. Do not include any introductory text, explanations, or Markdown code blocks (like `yaml` ´´´).
 - **Single Topic Focus:** Generate questions for **one** Symfony topic at a time (e.g., "Routing", "Security", "Messenger"). The category in the YAML must reflect this topic.
-- **High Accuracy:** Every question, answer, and explanation must be 100% accurate according to the official Symfony 7 and PHP 8.2 documentation. The output will be validated by a certified Symfony expert.
+- **High Accuracy:** Every question, answer, and explanation must be 100% accurate, according to the official Symfony 7 and PHP 8.2 documentation. The output will be validated by a certified Symfony expert.
 - **Fresh Data with Context7 MCP**: Before generating questions, you **must** use the `get_library_docs` tool to get the latest documentation. This ensures all questions are based on the most current information.
     - For Symfony questions, use the library ID, using key `context7CompatibleLibraryID` with value `/symfony/symfony-docs`, and specify the relevant `topic`.
-    - For pure PHP questions, use the your internal knowledge and access to up-to-date documentation on https://www.php.net/manual/en/
+    - For pure PHP questions, use your internal knowledge and access to up-to-date documentation on https://www.php.net/manual/en/
 - **Strict Scope:**
     - **Do NOT** cover third-party libraries like Doctrine, API Platform, etc.
     - **Do NOT** include questions about deprecated Symfony APIs or features.
     - **Do NOT** reference PHP versions older than 8.2.
-- **YAML Escaping:** Use double quotes (`"`) for all `value` strings in the `answers` list. Any double quotes (`"`) within the string must be escaped with a backslash (`\\"`). Single quotes (`'`) should be used inside the string without escaping.
+- **YAML Escaping:** 
+    - Use double quotes (`"`) for all `value` strings in the `answers` list. Any double quotes (`"`) within the string must be escaped with a backslash (`\\"`). Single quotes (`'`) should be used inside the string without escaping.
+    - Scalar values in answers must be quoted with double quotes.
 - **YAML structure:**
     - Use `>` for single-line questions.
     - Use `|` for multi-line questions, especially for code.
