@@ -22,11 +22,9 @@ You must use your internal knowledge and access to up-to-date Symfony documentat
     - **Do NOT** cover third-party libraries like Doctrine, API Platform, etc.
     - **Do NOT** include questions about deprecated Symfony APIs or features.
     - **Do NOT** reference PHP versions older than 8.2.
-- **YAML Escaping:** 
-    - Use double quotes (`"`) for all `value` strings in the `answers` list. Any double quotes (`"`) within the string must be escaped with a backslash (`\\"`). Single quotes (`'`) should be used inside the string without escaping.
-    - Scalar values in answers must be quoted with double quotes.
+    - **Strings must be YAML valid**.
 - **YAML structure:**
-    - Use `>` for single-line questions.
+    - Use `>` for single-line questions and answers.
     - Use `|` for multi-line questions, especially for code.
     - Answers must not contain multi-line code snippets. Inline code snippets are allowed.
 
@@ -50,10 +48,22 @@ questions:
     # A list of 3 to 8 possible answers.
     # Answers must not contain multi-line code snippets. Inline code snippets are allowed.
     answers:
-      - { value: "To define the command's name and description.", correct: true }
-      - { value: "To inject services into the command.", correct: false }
-      - { value: "To execute the command automatically.", correct: false }
-      - { value: "To link the command to a specific controller.", correct: false }
+      -
+        value: >
+          To define the command's name and description.
+        correct: true
+      -
+        value: >
+          To inject services into the command.
+        correct: false
+      -
+        value: >
+          To execute the command automatically.
+        correct: false
+      -
+        value: >
+          To link the command to a specific controller.
+        correct: false
 
     # Help text: An optional brief explanation and a *required* link to the official documentation.
     help: |
@@ -80,24 +90,48 @@ questions:
     # One or more answers can be correct.
     # Answers must not contain multi-line code snippets. Inline code snippets are allowed.
     answers:
-      - { value: "`LoggerInterface`", correct: true }
-      - { value: "`#[Autowire(service: 'monolog.logger')]`", correct: false }
-      - { value: "`#[Target('monolog.logger')]`", correct: false }
-      - { value: "`Psr\\Log\\LoggerInterface`", correct: true }
-      - { value: "`Monolog\\Logger`", correct: false }
+      -
+        value: >
+          `LoggerInterface`
+        correct: true
+      -
+        value: >
+          `#[Autowire(service: ''monolog.logger'')]`
+        correct: false
+      -
+        value: >
+          `#[Target(''monolog.logger'')]`
+        correct: false
+      -
+        value: >
+          `Psr\\Log\\LoggerInterface`
+        correct: true
+      -
+        value: >
+          `Monolog\\Logger`
+        correct: false
 
     help: |
       Symfony''s autowiring mechanism allows you to type-hint against interfaces like `Psr\\Log\\LoggerInterface`. When a specific logger channel is not configured, this interface will be automatically injected.
       https://symfony.com/doc/current/logging.html#autowiring-logger-channels
 
-  # Example 3: A question with an answer containing escaped quotes.
+  # Example 3: A question with an answer containing double quotes.
   -
     question: >
       Which of the following correctly configures the HTTP client to use HTTP/2?
     answers:
-      - { value: "Set the `http_version` option to \"2.0\" in the client configuration.", correct: true }
-      - { value: "Set the `version` option to '2.0' in the client configuration.", correct: false }
-      - { value: "Enable the `http2` flag in `framework.yaml`.", correct: false }
+      -
+        value: >
+          Set the `http_version` option to "2.0" in the client configuration.
+        correct: true
+      -
+        value: >
+          Set the `version` option to ''2.0'' in the client configuration.
+        correct: false
+      -
+        value: >
+          Enable the `http2` flag in `framework.yaml`.
+        correct: false
     help: |
       To use HTTP/2, you must set the `http_version` option to `2.0` when creating the HTTP client.
       https://symfony.com/doc/current/http_client.html#http-2-support
