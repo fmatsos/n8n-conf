@@ -7,8 +7,6 @@ const month = now.getMonth() + 1;
 const day = now.getDate();
 const baseTag = `v${year}.${month}.${day}`;
 
-console.log(year);
-
 // Extraire les noms de tags valides depuis l'input
 const tags = items.flatMap(item => {
   const name = item.json?.tag_name;
@@ -29,8 +27,10 @@ const increments = todayTags.map(tag => {
 }).filter(n => n !== null);
 
 // Calcul du prochain tag
-const nextIncrement = increments.length > 0 ? Math.max(...increments) + 1 : 0;
-const nextTag = nextIncrement === 0 ? baseTag : `${baseTag}-${nextIncrement}`;
+const higherActualIncrement = increments.length > 0 ? Math.max(...increments) : 0;
+const nextIncrement = todayTags.length > 0 ? higherActualIncrement + 1 : higherActualIncrement;
+
+const nextTag = nextIncrement === 0 ? baseTag : `${baseTag}.${nextIncrement}`;
 
 // Retour au format n8n
 return [{
